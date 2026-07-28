@@ -1,0 +1,28 @@
+# Audio source files (large)
+*.m4a
+*.mp3
+*.wav
+*.flac
+*.webm
+
+# Generated intermediate files
+*.srt
+*.vtt
+*.tsv
+*.txt
+*.json
+!docs/index.json
+!docs/topics.json
+
+# Keep pending queue tracked
+!docs/pending-urls.txt
+
+# Node modules
+node_modules/
+
+# macOS
+.DS_Store
+
+# Local secrets (webhook token prompts)
+TRIGGER.local.md
+docs/TRIGGER.local.md

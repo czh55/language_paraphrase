@@ -1,81 +1,1185 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>场景英译 · language_paraphrase</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景式英语学习墙</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --teal: #0d7377;
-      --teal-2: #14919b;
-      --bg: #f0faf6;
-      --ink: #0a3d3f;
+      --bg: #0b1120;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #60a5fa;
+      --accent2: #a78bfa;
+      --accent3: #f472b6;
+      --tag-blue: rgba(96,165,250,0.15);
+      --tag-purple: rgba(167,139,250,0.15);
+      --tag-green: rgba(52,211,153,0.15);
+      --tag-orange: rgba(251,146,60,0.15);
+      --card-hover: rgba(255,255,255,0.08);
     }
-    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #f0faf6, #d9efe6);
-      color: var(--ink);
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
       min-height: 100vh;
+      color: var(--text);
+      line-height: 1.6;
     }
-    header {
-      background: linear-gradient(90deg, var(--teal), var(--teal-2));
-      color: #fff;
-      padding: 28px 20px 24px;
+
+    /* ====== 顶部区域 ====== */
+    .hero {
+      position: relative;
+      padding: 64px 24px 48px;
+      text-align: center;
+      overflow: hidden;
     }
-    header h1 { margin: 0 0 6px; font-size: 1.4rem; }
-    header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
-    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
-    .card {
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(13,115,119,0.15);
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(96,165,250,0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 40%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ====== 统计栏 ====== */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 0 24px 32px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ====== 日历导航 ====== */
+    .calendar-wrapper {
+      max-width: 360px;
+      margin: 0 auto 48px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+    }
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .cal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .cal-nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .cal-nav-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+    .cal-day-header {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 4px 0;
+      font-weight: 600;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      border-radius: 8px;
+      cursor: default;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      position: relative;
+    }
+    .cal-day.has-data {
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 700;
+      background: rgba(96,165,250,0.12);
+    }
+    .cal-day.has-data:hover {
+      background: rgba(96,165,250,0.25);
+      transform: scale(1.1);
+    }
+    .cal-day.today {
+      border: 2px solid var(--accent);
+    }
+    .cal-day.other-month {
+      color: var(--text-muted);
+      opacity: 0.3;
+    }
+    .cal-today-btn {
+      display: block;
+      margin: 12px auto 0;
+      padding: 6px 16px;
       border-radius: 12px;
-      padding: 16px 18px;
-      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .card a { color: var(--teal); font-weight: 700; text-decoration: none; }
-    .card a:hover { text-decoration: underline; }
-    .meta { color: #4a6b6d; font-size: 0.85rem; margin-top: 6px; }
-    .empty { color: #4a6b6d; }
+    .cal-today-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    /* ====== 主内容区 ====== */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ====== 时间线 ====== */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 8px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(96,165,250,0.4), rgba(167,139,250,0.2), transparent);
+    }
+    .date-group {
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .date-dot {
+      position: absolute;
+      left: -28px;
+      top: 10px;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(96,165,250,0.15);
+    }
+    .date-label {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .date-label .weekday {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--surface);
+    }
+    .date-label .count-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(96,165,250,0.12);
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    /* ====== 卡片 ====== */
+    .card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.25s;
+      border-radius: 0 3px 3px 0;
+    }
+    .card:hover {
+      background: var(--card-hover);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateX(4px);
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .card-time {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .card-summary {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .card-tag {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .tag-blue   { background: var(--tag-blue);   color: #60a5fa; }
+    .tag-purple { background: var(--tag-purple); color: #a78bfa; }
+    .tag-green  { background: var(--tag-green);  color: #34d399; }
+    .tag-orange { background: var(--tag-orange); color: #fb923c; }
+    .card-link-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: all 0.2s;
+    }
+    .card:hover .card-link-icon {
+      opacity: 1;
+      right: 16px;
+    }
+    .card-error {
+      opacity: 0.5;
+      border-left: 3px solid #ef4444;
+    }
+    .card-error:hover {
+      opacity: 0.7;
+      transform: none;
+    }
+    .card-error .card-title {
+      color: #f87171;
+    }
+    .card-source-link {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .card-source-link:hover {
+      color: var(--accent);
+    }
+    .card-duration {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(167,139,250,0.1);
+    }
+
+    /* ====== 专题区 ====== */
+    .topics-section {
+      max-width: 860px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-heading h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .section-heading p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .topic-series {
+      background: linear-gradient(135deg, rgba(96,165,250,0.08), rgba(167,139,250,0.06));
+      border: 1px solid rgba(96,165,250,0.18);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .topic-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f472b6;
+      background: rgba(244,114,182,0.12);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+    .topic-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .topic-subtitle {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .topic-summary {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .topic-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .topic-stat {
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    .topic-stat strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .topic-cover-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 18px;
+    }
+    .topic-cover-link:hover { color: #93c5fd; }
+    .topic-chapters {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .chapter-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      min-height: 120px;
+    }
+    .chapter-card:hover {
+      background: var(--card-hover);
+      border-color: rgba(96,165,250,0.25);
+      transform: translateY(-2px);
+    }
+    .chapter-order {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 6px;
+    }
+    .chapter-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .chapter-summary {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .chapter-meta {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .podcast-section-heading {
+      max-width: 860px;
+      margin: 0 auto 20px;
+      padding: 0 24px;
+    }
+    .podcast-section-heading h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .podcast-section-heading p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ====== 搜索 ====== */
+    .search-bar {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus {
+      border-color: rgba(96,165,250,0.4);
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.1);
+    }
+    .search-icon {
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .search-empty {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* ====== 空状态 ====== */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .empty-icon {
+      font-size: 72px;
+      margin-bottom: 20px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .empty-state h2 {
+      font-size: 22px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .empty-hint {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ====== 响应式 ====== */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 30px; }
+      .hero { padding: 40px 16px 32px; }
+      .stats-bar { gap: 24px; }
+      .stat-num { font-size: 28px; }
+      .timeline { padding-left: 32px; }
+      .timeline::before { left: 12px; }
+      .date-dot { left: -22px; width: 10px; height: 10px; }
+      .date-label { font-size: 18px; }
+      .card { padding: 18px; }
+      .card-title { font-size: 16px; }
+      .search-bar { padding: 0 12px; }
+      .search-input { padding: 12px 16px 12px 40px; }
+      .search-icon { left: 28px; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>场景英译 · Scene English</h1>
-    <p>情景英语表达学习（小红书 / B站视频）</p>
-  </header>
-  <main>
-    <div id="list" class="empty">加载中…</div>
-  </main>
+  <div class="hero">
+    <h1>场景式英语学习墙</h1>
+    <p>B 站 / 小红书视频 → 场景切分 → 逐句英译 · 情景表达学习</p>
+  </div>
+
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-num" id="totalCount">0</div>
+      <div class="stat-label">总总结</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="totalDuration">0h</div>
+      <div class="stat-label">总时长</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="totalDays">0</div>
+      <div class="stat-label">覆盖天数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="totalTopics">0</div>
+      <div class="stat-label">专题</div>
+    </div>
+  </div>
+
+  <!-- 专题 -->
+  <div class="topics-section" id="topicsSection" style="display:none;">
+    <div class="section-heading">
+      <div>
+        <h2>专题</h2>
+        <p>系列课程浓缩的可滚动知识长图</p>
+      </div>
+    </div>
+    <div id="topicsContainer"></div>
+  </div>
+
+  <!-- 播客标题 -->
+  <div class="podcast-section-heading" id="podcastHeading" style="display:none;">
+    <h2>情景英译</h2>
+    <p>识别场景并逐句翻译，练场景式英文表达</p>
+  </div>
+
+  <!-- 日历 -->
+  <div class="calendar-wrapper" id="calendarWrapper">
+    <div class="cal-header">
+      <button class="cal-nav-btn" id="calPrev">&larr;</button>
+      <span class="cal-title" id="calTitle"></span>
+      <button class="cal-nav-btn" id="calNext">&rarr;</button>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-day-header">日</div>
+      <div class="cal-day-header">一</div>
+      <div class="cal-day-header">二</div>
+      <div class="cal-day-header">三</div>
+      <div class="cal-day-header">四</div>
+      <div class="cal-day-header">五</div>
+      <div class="cal-day-header">六</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <button class="cal-today-btn" id="calToday">回到今天</button>
+  </div>
+
+  <!-- 搜索 -->
+  <div class="search-bar" id="searchBar">
+    <span class="search-icon">&#x1F50D;</span>
+    <input class="search-input" id="searchInput" type="text" placeholder="搜索情景英译或专题...">
+  </div>
+
+  <!-- 主内容 -->
+  <div class="container" id="mainContainer">
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">&#x1F4ED;</span>
+      <h2>还没有内容</h2>
+      <p>提交播客链接生成总结，或添加专题长图</p>
+      <div class="empty-hint">curl -X POST &lt;webhook-url&gt; -d '{"url":"..."}'</div>
+    </div>
+    <div class="timeline" id="timeline" style="display:none;"></div>
+    <div class="search-empty" id="searchEmpty" style="display:none;">没有找到匹配的总结</div>
+  </div>
+
   <script>
-    async function load() {
-      const el = document.getElementById("list");
-      try {
-        const res = await fetch("./index.json", { cache: "no-store" });
-        const items = await res.json();
-        if (!items.length) {
-          el.textContent = "暂无条目。";
+    (function() {
+      let allData = [];
+      let allTopics = [];
+      let dateMap = {};
+      let calYear, calMonth;
+
+      const $ = id => document.getElementById(id);
+
+      function escapeHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s || '';
+        return d.innerHTML;
+      }
+
+      const TAG_COLORS = ['tag-blue','tag-purple','tag-green','tag-orange'];
+
+      const DISPLAY_SPREAD_THRESHOLD = 3;
+      const DISPLAY_RANGE_DAYS = 7;
+
+      function hashString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return Math.abs(hash);
+      }
+
+      function toDateKey(date) {
+        return date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0');
+      }
+
+      /** 同一天条目过多时，仅将超出阈值的条目用稳定哈希分散到过去 7 天内展示 */
+      function applyDisplayDates(items) {
+        const counts = {};
+        items.forEach(item => {
+          const d = item.date || '';
+          counts[d] = (counts[d] || 0) + 1;
+        });
+
+        const spreadDates = new Set(
+          Object.keys(counts).filter(d => counts[d] > DISPLAY_SPREAD_THRESHOLD)
+        );
+
+        if (spreadDates.size === 0) {
+          items.forEach(item => { item.displayDate = item.date; });
           return;
         }
-        el.className = "";
-        el.innerHTML = items
-          .slice()
-          .reverse()
-          .map((it) => {
-            const page = encodeURI(it.html);
-            return `<article class="card">
-              <a href="./${page}">${it.title}</a>
-              <div class="meta">${it.date} · ${it.platform} · ${it.scenes} scenes · ${it.sentences || "?"} sentences${it.speech ? " · 🔊 支持朗读" : ""} · ${it.duration_sec || "?"}s</div>
-              <div class="meta"><a href="${it.url}" rel="noopener" target="_blank">原始链接</a></div>
-            </article>`;
-          })
-          .join("");
-      } catch (e) {
-        el.textContent = "无法加载 index.json：" + e.message;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - (DISPLAY_RANGE_DAYS - 1));
+
+        const keptOnDate = {};
+
+        items.forEach(item => {
+          const d = item.date || '';
+          if (!spreadDates.has(d)) {
+            item.displayDate = d;
+            return;
+          }
+          const kept = keptOnDate[d] || 0;
+          if (kept < DISPLAY_SPREAD_THRESHOLD) {
+            item.displayDate = d;
+            keptOnDate[d] = kept + 1;
+            return;
+          }
+          const seed = hashString(item.url || item.filename || item.title || '');
+          const dayOffset = seed % DISPLAY_RANGE_DAYS;
+          const disp = new Date(startDate);
+          disp.setDate(disp.getDate() + dayOffset);
+          item.displayDate = toDateKey(disp);
+        });
       }
-    }
-    load();
+
+      async function loadData() {
+        try {
+          const resp = await fetch('index.json');
+          if (!resp.ok) throw new Error('Failed');
+          allData = await resp.json();
+        } catch (e) {
+          allData = [];
+        }
+        try {
+          const resp = await fetch('topics.json');
+          if (!resp.ok) throw new Error('Failed');
+          allTopics = await resp.json();
+        } catch (e) {
+          allTopics = [];
+        }
+        buildDateMap();
+        render();
+      }
+
+      function buildDateMap() {
+        dateMap = {};
+        applyDisplayDates(allData);
+        allData.forEach(item => {
+          const d = item.displayDate || item.date || '';
+          if (!dateMap[d]) dateMap[d] = [];
+          dateMap[d].push(item);
+        });
+      }
+
+      function render() {
+        const hasPodcasts = allData.length > 0;
+        const hasTopics = allTopics.length > 0;
+        const hasData = hasPodcasts || hasTopics;
+
+        $('searchBar').style.display = hasData ? 'block' : 'none';
+        $('calendarWrapper').style.display = hasPodcasts ? 'block' : 'none';
+        $('topicsSection').style.display = hasTopics ? 'block' : 'none';
+        $('podcastHeading').style.display = hasPodcasts ? 'block' : 'none';
+
+        if (!hasData) {
+          $('emptyState').style.display = '';
+          $('timeline').style.display = 'none';
+          $('searchEmpty').style.display = 'none';
+          updateStats(0, 0);
+          return;
+        }
+
+        $('emptyState').style.display = 'none';
+
+        const query = $('searchInput').value.trim().toLowerCase();
+        buildTopics(query);
+
+        if (hasPodcasts) {
+          renderPodcasts(query);
+        } else {
+          $('timeline').style.display = 'none';
+          $('searchEmpty').style.display = 'none';
+        }
+      }
+
+      function buildTopics(query) {
+        const container = $('topicsContainer');
+        container.innerHTML = '';
+
+        const filteredTopics = allTopics.filter(function(topic) {
+          if (!query) return true;
+          const haystack = [
+            topic.title,
+            topic.subtitle,
+            topic.summary,
+            (topic.tags || []).join(' ')
+          ].concat((topic.items || []).map(function(item) {
+            return [item.title, item.summary].join(' ');
+          })).join(' ').toLowerCase();
+          return haystack.indexOf(query) !== -1;
+        });
+
+        $('totalTopics').textContent = filteredTopics.length;
+
+        filteredTopics.forEach(function(topic) {
+          const series = document.createElement('div');
+          series.className = 'topic-series';
+
+          const stats = topic.stats || {};
+          const statsHtml = [
+            stats.lessons ? '<span class="topic-stat"><strong>' + stats.lessons + '</strong> 节课</span>' : '',
+            stats.images ? '<span class="topic-stat"><strong>' + stats.images + '</strong> 张长图</span>' : '',
+            stats.doctors ? '<span class="topic-stat"><strong>' + stats.doctors + '</strong> 位医生</span>' : '',
+            stats.duration ? '<span class="topic-stat">总时长 <strong>' + escapeHtml(stats.duration) + '</strong></span>' : ''
+          ].filter(Boolean).join('');
+
+          let tagsHtml = '';
+          if (topic.tags && topic.tags.length > 0) {
+            tagsHtml = '<div class="card-tags" style="margin-top:0;margin-bottom:12px">' +
+              topic.tags.map(function(t, i) {
+                return '<span class="card-tag ' + TAG_COLORS[i % TAG_COLORS.length] + '">' + escapeHtml(t) + '</span>';
+              }).join('') +
+              '</div>';
+          }
+
+          series.innerHTML =
+            '<div class="topic-header">' +
+              '<div>' +
+                '<div class="topic-badge">专题</div>' +
+                '<div class="topic-title">' + escapeHtml(topic.title) + '</div>' +
+                (topic.subtitle ? '<div class="topic-subtitle">' + escapeHtml(topic.subtitle) + '</div>' : '') +
+              '</div>' +
+            '</div>' +
+            tagsHtml +
+            '<div class="topic-summary">' + escapeHtml(topic.summary || '') + '</div>' +
+            (statsHtml ? '<div class="topic-stats">' + statsHtml + '</div>' : '') +
+            (topic.cover ? '<a class="topic-cover-link" href="' + escapeHtml(topic.cover) + '" target="_blank">📖 打开总目录 →</a>' : '');
+
+          const chapters = document.createElement('div');
+          chapters.className = 'topic-chapters';
+
+          (topic.items || []).forEach(function(item) {
+            if (item.order === 0) return;
+            if (query) {
+              const itemHaystack = ((item.title || '') + ' ' + (item.summary || '')).toLowerCase();
+              const topicHaystack = [
+                topic.title,
+                topic.subtitle,
+                topic.summary,
+                (topic.tags || []).join(' ')
+              ].join(' ').toLowerCase();
+              if (itemHaystack.indexOf(query) === -1 && topicHaystack.indexOf(query) === -1) return;
+            }
+
+            const card = document.createElement('a');
+            card.className = 'chapter-card';
+            card.href = item.filename;
+            card.target = '_blank';
+            card.innerHTML =
+              '<div class="chapter-order">第 ' + String(item.order).padStart(2, '0') + ' 篇</div>' +
+              '<div class="chapter-title">' + escapeHtml(item.title) + '</div>' +
+              '<div class="chapter-summary">' + escapeHtml(item.summary || '') + '</div>' +
+              (item.lessons ? '<div class="chapter-meta">' + item.lessons + ' 节课</div>' : '');
+
+            chapters.appendChild(card);
+          });
+
+          series.appendChild(chapters);
+          container.appendChild(series);
+        });
+      }
+
+      function topicMatchesQuery(query) {
+        return allTopics.some(function(topic) {
+          const haystack = [
+            topic.title,
+            topic.subtitle,
+            topic.summary,
+            (topic.tags || []).join(' ')
+          ].concat((topic.items || []).map(function(item) {
+            return [item.title, item.summary].join(' ');
+          })).join(' ').toLowerCase();
+          return haystack.indexOf(query) !== -1;
+        });
+      }
+
+      function renderPodcasts(query) {
+        const days = Object.keys(dateMap).sort().reverse();
+        updateStats(allData.length, days.length);
+
+        let filteredDays = days;
+        let visibleCount = 0;
+
+        if (query) {
+          filteredDays = days.filter(function(d) {
+            const items = dateMap[d].filter(function(item) {
+              return (item.title || '').toLowerCase().includes(query) ||
+                (item.summary || '').toLowerCase().includes(query) ||
+                (item.url || '').toLowerCase().includes(query) ||
+                (item.error_message || '').toLowerCase().includes(query);
+            });
+            dateMap[d]._filtered = items;
+            if (items.length > 0) visibleCount++;
+            return items.length > 0;
+          });
+        } else {
+          days.forEach(function(d) { dateMap[d]._filtered = dateMap[d]; });
+        }
+
+        if (query && visibleCount === 0 && !topicMatchesQuery(query)) {
+          $('timeline').style.display = 'none';
+          $('searchEmpty').style.display = '';
+        } else {
+          $('timeline').style.display = query && visibleCount === 0 ? 'none' : '';
+          $('searchEmpty').style.display = 'none';
+          if (!query || visibleCount > 0) buildTimeline(filteredDays);
+        }
+
+        buildCalendar();
+      }
+
+      function buildTimeline(days) {
+        const tl = $('timeline');
+        tl.innerHTML = '';
+
+        if (days.length === 0) return;
+
+        const WEEKDAYS = ['周日','周一','周二','周三','周四','周五','周六'];
+
+        days.forEach(dateStr => {
+          const items = dateMap[dateStr]._filtered || dateMap[dateStr];
+          if (items.length === 0) return;
+
+          const d = new Date(dateStr + 'T00:00:00');
+          const display = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+          const wd = WEEKDAYS[d.getDay()];
+
+          const group = document.createElement('div');
+          group.className = 'date-group';
+
+          group.innerHTML = '<div class="date-dot"></div>';
+
+          const label = document.createElement('div');
+          label.className = 'date-label';
+          label.innerHTML = '<span>' + display + '</span><span class="weekday">' + wd + '</span><span class="count-badge">' + items.length + ' 期</span>';
+          group.appendChild(label);
+
+          items.forEach(item => {
+            var isError = item.error;
+            const card = document.createElement('a');
+            card.className = 'card' + (isError ? ' card-error' : '');
+            card.href = isError ? (item.url || '#') : item.filename;
+            card.target = isError ? '_blank' : '_blank';
+
+            let tagsHtml = '';
+            if (item.tags && item.tags.length > 0) {
+              tagsHtml = '<div class="card-tags">' +
+                item.tags.map((t, i) => '<span class="card-tag ' + TAG_COLORS[i % TAG_COLORS.length] + '">' + escapeHtml(t) + '</span>').join('') +
+                '</div>';
+            }
+
+            var titleText = isError
+              ? '⚠ ' + escapeHtml(item.title || '处理失败')
+              : escapeHtml(item.title || item.filename.replace('.svg',''));
+
+            var summaryText = isError
+              ? escapeHtml(item.error_message || '未能成功生成总结')
+              : escapeHtml(item.summary || '');
+
+            var sourceLink = (item.url && !isError)
+              ? '<a class="card-source-link" href="' + escapeHtml(item.url) + '" target="_blank">📎 原文链接</a>'
+              : '';
+
+            var durationHtml = (item.duration && !isError)
+              ? '<span class="card-duration">⏱ ' + escapeHtml(item.duration) + '</span>'
+              : '';
+
+            card.innerHTML =
+              '<div class="card-header">' +
+                '<span class="card-title">' + titleText + '</span>' +
+              '</div>' +
+              '<div class="card-summary">' + summaryText + '</div>' +
+              tagsHtml +
+              durationHtml +
+              sourceLink +
+              '<span class="card-link-icon">&#x2197;</span>';
+
+            group.appendChild(card);
+          });
+
+          tl.appendChild(group);
+        });
+      }
+
+      function buildCalendar() {
+        const now = new Date();
+        if (calYear === undefined) { calYear = now.getFullYear(); calMonth = now.getMonth(); }
+
+        const year = calYear, month = calMonth;
+        $('calTitle').textContent = year + '年' + (month + 1) + '月';
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevMonthDays = new Date(year, month, 0).getDate();
+
+        const today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+
+        const grid = $('calGrid');
+        grid.innerHTML = '';
+
+        for (let i = firstDay - 1; i >= 0; i--) {
+          const d = prevMonthDays - i;
+          const cell = document.createElement('div');
+          cell.className = 'cal-day other-month';
+          cell.textContent = d;
+          grid.appendChild(cell);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+          const dateKey = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+          const cell = document.createElement('div');
+          cell.className = 'cal-day';
+          cell.textContent = d;
+
+          if (dateMap[dateKey]) {
+            cell.classList.add('has-data');
+            cell.title = dateMap[dateKey].length + ' 期总结';
+            cell.addEventListener('click', function() { scrollToDate(dateKey); });
+          }
+          if (dateKey === today) {
+            cell.classList.add('today');
+          }
+
+          grid.appendChild(cell);
+        }
+
+        const remaining = 42 - firstDay - daysInMonth;
+        for (let d = 1; d <= remaining; d++) {
+          const cell = document.createElement('div');
+          cell.className = 'cal-day other-month';
+          cell.textContent = d;
+          grid.appendChild(cell);
+        }
+      }
+
+      function scrollToDate(dateKey) {
+        const tl = $('timeline');
+        const groups = tl.querySelectorAll('.date-group');
+        for (var i = 0; i < groups.length; i++) {
+          var g = groups[i];
+          var label = g.querySelector('.date-label');
+          if (!label) continue;
+          var text = label.textContent || '';
+          // dateKey like "2026-06-21", substring(5) = "06-21"
+          if (text.indexOf(dateKey.substring(5)) !== -1) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            g.style.transition = 'background 0.3s';
+            g.style.background = 'rgba(96,165,250,0.08)';
+            g.style.borderRadius = '12px';
+            g.style.padding = '12px';
+            setTimeout(function() { g.style.background = 'transparent'; }, 1200);
+            break;
+          }
+        }
+      }
+
+      function countValid(items) {
+        var c = 0;
+        items.forEach(function(item) { if (!item.error) c++; });
+        return c;
+      }
+      function updateStats(count, days) {
+        var errorCount = allData.filter(function(item) { return item.error; }).length;
+        var validCount = count - errorCount;
+        $('totalCount').textContent = validCount;
+        $('totalDays').textContent = days;
+        if (errorCount > 0) {
+          $('totalCount').textContent = validCount + ' (+' + errorCount + ' 失败)';
+        }
+
+        // 计算总时长
+        var totalMinutes = 0;
+        allData.forEach(function(item) {
+          if (item.error || !item.duration) return;
+          var m = item.duration.match(/(\d+)\s*小时?/);
+          if (m) totalMinutes += parseInt(m[1]) * 60;
+          m = item.duration.match(/(\d+)\s*分/);
+          if (m) totalMinutes += parseInt(m[1]);
+        });
+        if (totalMinutes >= 60) {
+          $('totalDuration').textContent = Math.floor(totalMinutes/60) + 'h' + (totalMinutes%60 > 0 ? totalMinutes%60 + 'm' : '');
+        } else {
+          $('totalDuration').textContent = totalMinutes + 'm';
+        }
+        if (totalMinutes === 0) $('totalDuration').textContent = '0h';
+      }
+
+      $('calPrev').addEventListener('click', function() {
+        calMonth--;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        buildCalendar();
+      });
+      $('calNext').addEventListener('click', function() {
+        calMonth++;
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        buildCalendar();
+      });
+      $('calToday').addEventListener('click', function() {
+        var now = new Date();
+        calYear = now.getFullYear();
+        calMonth = now.getMonth();
+        buildCalendar();
+      });
+      $('searchInput').addEventListener('input', function() {
+        render();
+      });
+
+      loadData();
+    })();
   </script>
 </body>
 </html>
