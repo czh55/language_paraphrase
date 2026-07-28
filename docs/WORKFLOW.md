@@ -20,16 +20,19 @@
 3. 安装依赖（仅首次）：`ffmpeg` + `openai-whisper`  
 4. `whisper {slug}.m4a --model small --language Chinese --output_dir .`  
 5. 切 4–12 个关键场景；逐句中文｜地道英文｜可选语域批注；每场景 2–4 组 paraphrase + chunks；必须含：**场景地图、今日可练、避坑、认知转变**  
-6. 写 `generate-{slug}.mjs`，用根目录 `./svg-auto-height.mjs` 的 `buildSvg`，输出 `docs/{slug}-场景英译.svg`（**青绿主题**）  
+6. 生成响应式 `docs/{slug}-场景英译.html`（**青绿主题**）：逐句中英对照自然换行；每句英文有朗读按钮；每个场景有整体朗读按钮  
 7. 质量自检（见下）  
-8. 更新 `docs/index.json`（含 `platform` / `scenes` / `svg_height`）  
+8. 更新 `docs/index.json`（含 `platform` / `scenes` / `sentences` / `html` / `speech`）  
 9. `git add docs/`（及必要脚手架）→ commit → **`git push origin main`（必须，Pages 才能展示）**  
-10. 删除 `generate-*.mjs` 与临时音视频/转录文件；若来自队列则更新 `pending-urls.txt`
+10. 删除临时音视频/转录文件；若来自队列则更新 `pending-urls.txt`
 
-## SVG 约束
+## HTML 页面约束
 
-- 使用 `svg-auto-height.mjs` 计算高度；**禁止** `rsvg-convert` / Inkscape  
-- 主题色：`#0d7377` / `#14919b` 青绿  
+- 使用语义化 HTML + 响应式 CSS，不使用固定宽高画布，避免文字遮挡和大面积空白  
+- 桌面端充分利用宽度；窄屏自动改为单栏；长文本必须可换行  
+- 使用浏览器 Web Speech API（`speechSynthesis`）朗读英文，提供速度选择、停止按钮和不支持时的提示  
+- 每句英文必须有独立朗读按钮；每个场景必须有整段朗读按钮  
+- 主题色：`#0d7377` / `#14919b` 青绿
 - 不改 `.gitignore`
 
 ## 质量自检清单
@@ -37,6 +40,7 @@
 - [ ] 场景数 4–12  
 - [ ] 含场景地图 / 今日可练 / 避坑 / 认知转变  
 - [ ] 逐句有中英对照；ASR 专有名词已按语境校正  
-- [ ] SVG 可打开，`viewBox` 高度与 `index.json.svg_height` 一致  
-- [ ] `index.json` 含 platform、scenes、svg、url、date  
+- [ ] 每句英文与每个场景均有朗读按钮，朗读文本非空  
+- [ ] HTML 在桌面和移动宽度下无横向溢出、重叠或大面积无效空白  
+- [ ] `index.json` 含 platform、scenes、sentences、html、speech、url、date  
 - [ ] 已推送到 `main`

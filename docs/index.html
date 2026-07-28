@@ -63,10 +63,10 @@
           .slice()
           .reverse()
           .map((it) => {
-            const svg = encodeURI(it.svg);
+            const page = encodeURI(it.html);
             return `<article class="card">
-              <a href="./${svg}">${it.title}</a>
-              <div class="meta">${it.date} · ${it.platform} · ${it.scenes} scenes · ${it.duration_sec || "?"}s</div>
+              <a href="./${page}">${it.title}</a>
+              <div class="meta">${it.date} · ${it.platform} · ${it.scenes} scenes · ${it.sentences || "?"} sentences${it.speech ? " · 🔊 支持朗读" : ""} · ${it.duration_sec || "?"}s</div>
               <div class="meta"><a href="${it.url}" rel="noopener" target="_blank">原始链接</a></div>
             </article>`;
           })

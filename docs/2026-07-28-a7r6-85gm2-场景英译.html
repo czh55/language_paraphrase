@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="索尼 A7R6 与 85mm F1.4 GM II 人像写真视频场景英译学习卡" />
+  <title>索尼 A7R6 × 85mm F1.4 GM II｜场景英译</title>
+  <style>
+    :root {
+      --teal-950:#073f42; --teal-800:#0d686c; --teal-700:#0f7c80; --teal-600:#14919b;
+      --mint-100:#dff4ec; --mint-50:#f0faf6; --ink:#183536; --muted:#607879;
+      --line:#d7e8e2; --paper:#fff; --amber:#a85d08; --shadow:0 12px 32px rgba(7,63,66,.08);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:24px; }
+    body { margin:0; color:var(--ink); background:#edf7f2; font-family:Inter,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif; line-height:1.65; }
+    button, select { font:inherit; }
+    a { color:inherit; }
+    .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
+    .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+    .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
+    h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
+    .hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:9px; align-items:center; }
+    .chip { border:1px solid rgba(255,255,255,.28); border-radius:99px; padding:5px 11px; font-size:.82rem; background:rgba(255,255,255,.08); }
+    .source-link { font-weight:750; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.5); }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:24px; }
+    .toolbar label { font-size:.82rem; opacity:.82; }
+    .toolbar select { color:#fff; background:#0a5d61; border:1px solid rgba(255,255,255,.3); border-radius:8px; padding:7px 9px; }
+    .stop-btn { display:none; color:#fff; background:#8c3b2a; border:0; border-radius:8px; padding:8px 12px; cursor:pointer; }
+    .stop-btn.visible { display:inline-flex; }
+    .speech-status { min-height:1.4em; font-size:.82rem; opacity:.88; }
+    .page { width:min(1440px,100%); margin:auto; padding:28px clamp(16px,3vw,44px) 64px; display:grid; grid-template-columns:minmax(230px,280px) minmax(0,1fr); gap:30px; align-items:start; }
+    .sidebar { position:sticky; top:20px; min-width:0; }
+    .sidebar-box { background:rgba(255,255,255,.8); border:1px solid var(--line); border-radius:16px; padding:17px; box-shadow:var(--shadow); backdrop-filter:blur(12px); }
+    .sidebar h2 { margin:0 0 13px; font-size:.9rem; letter-spacing:.08em; color:var(--teal-800); }
+    .map-link { display:grid; grid-template-columns:34px minmax(0,1fr); gap:9px; padding:10px 6px; text-decoration:none; border-top:1px solid var(--line); }
+    .map-link:hover b { color:var(--teal-700); }
+    .map-id { width:30px; height:30px; display:grid; place-items:center; border-radius:9px; color:#fff; background:var(--teal-700); font-size:.72rem; font-weight:800; }
+    .map-link b { display:block; font-size:.78rem; line-height:1.4; }
+    .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
+    .content { min-width:0; }
+    .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+    .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
+    .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
+    .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
+    .scene-card h2 { margin:18px 0 2px; font-size:clamp(1.35rem,2.4vw,2rem); line-height:1.25; color:var(--teal-950); }
+    .scene-title-en { margin:0 0 18px; color:var(--teal-600); font-weight:700; font-size:.98rem; }
+    .context { margin:0 0 20px; padding:12px 15px; color:#496566; background:var(--mint-50); border-left:3px solid var(--teal-600); border-radius:0 10px 10px 0; font-size:.88rem; }
+    .context b { margin-right:10px; color:var(--teal-800); }
+    .sentence-list { display:grid; gap:12px; }
+    .sentence { position:relative; display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; padding:16px; border:1px solid #e2ece8; border-radius:14px; background:#fcfefd; min-width:0; }
+    .sentence-no { color:var(--teal-600); font-size:.76rem; font-weight:850; font-variant-numeric:tabular-nums; padding-top:4px; }
+    .bilingual { min-width:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(14px,2vw,28px); }
+    .lang-block { min-width:0; }
+    .lang-block p { margin:5px 0 0; overflow-wrap:anywhere; }
+    .en-block { padding-left:clamp(14px,2vw,28px); border-left:1px solid var(--line); }
+    .en-block p { color:#0b5c60; font-weight:650; }
+    .lang-tag { display:inline-block; color:var(--muted); font-size:.66rem; font-weight:850; letter-spacing:.12em; }
+    .en-head { display:flex; justify-content:space-between; gap:10px; align-items:center; min-height:30px; }
+    .note { grid-column:2; margin:1px 0 0; color:#708182; font-size:.78rem; }
+    .note span { margin-right:7px; color:var(--amber); font-weight:750; }
+    .speak-btn { display:inline-flex; align-items:center; gap:7px; border:1px solid #b8d9d1; border-radius:9px; padding:7px 11px; color:var(--teal-800); background:#f5fbf8; cursor:pointer; white-space:nowrap; font-size:.78rem; font-weight:750; transition:.15s ease; }
+    .speak-btn:hover { color:#fff; background:var(--teal-700); border-color:var(--teal-700); transform:translateY(-1px); }
+    .speak-btn.playing { color:#fff; background:var(--teal-700); border-color:var(--teal-700); }
+    .speak-btn.compact { padding:4px 8px; font-size:.7rem; }
+    .speak-btn.icon-only { padding:3px 7px; margin-left:6px; }
+    .speak-btn.icon-only span:last-child { display:none; }
+    .paraphrase { margin-top:18px; border-top:1px solid var(--line); }
+    .paraphrase summary { padding:16px 0 3px; color:var(--teal-800); cursor:pointer; font-weight:800; }
+    .paraphrase summary span { color:var(--muted); font-size:.75rem; font-weight:500; margin-left:8px; }
+    .paraphrase ol { margin:12px 0 0; padding-left:22px; }
+    .paraphrase li { padding:7px 0 9px 5px; }
+    .paraphrase li p { margin:0; font-size:.9rem; font-weight:650; }
+    .chunks { margin-top:4px; color:var(--teal-700); font-size:.78rem; }
+    .study-section { margin:38px 0 0; }
+    .section-heading { display:flex; align-items:baseline; gap:10px; margin:0 0 15px; color:var(--teal-950); font-size:1.35rem; }
+    .section-heading small { color:var(--teal-600); font-size:.78rem; letter-spacing:.05em; }
+    .study-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .study-grid article { padding:17px; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 6px 18px rgba(7,63,66,.05); min-width:0; }
+    .study-grid p { margin:0; }
+    .practice-en { margin-top:9px; color:var(--teal-700); font-weight:650; overflow-wrap:anywhere; }
+    .wrong { color:#a24831; text-decoration:line-through; overflow-wrap:anywhere; }
+    .right { color:var(--teal-700); font-weight:750; margin:5px 0; overflow-wrap:anywhere; }
+    .pitfalls p { color:var(--muted); font-size:.82rem; }
+    .shifts article { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1.5fr); gap:12px; align-items:center; }
+    .shifts b { color:var(--teal-600); font-size:1.2rem; }
+    .shifts strong { color:var(--teal-800); }
+    footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:center; }
+    @media (max-width:900px) {
+      .page { grid-template-columns:1fr; }
+      .sidebar { position:static; }
+      .sidebar-box { overflow-x:auto; padding:12px; }
+      .sidebar h2 { padding-left:5px; }
+      .map-nav { display:flex; width:max-content; gap:8px; }
+      .map-link { width:220px; border:1px solid var(--line); border-radius:10px; padding:8px; }
+      .bilingual { grid-template-columns:1fr; }
+      .en-block { padding:12px 0 0; border-left:0; border-top:1px dashed var(--line); }
+    }
+    @media (max-width:620px) {
+      .hero-inner { padding-top:32px; }
+      .page { padding-inline:10px; gap:18px; }
+      .scene-card { border-radius:14px; padding:17px 13px; }
+      .scene-topline { align-items:flex-start; }
+      .scene-speak span:last-child { display:none; }
+      .sentence { grid-template-columns:26px minmax(0,1fr); padding:13px 10px; gap:6px; }
+      .note { grid-column:2; }
+      .study-grid { grid-template-columns:1fr; }
+      .shifts article { grid-template-columns:1fr; gap:5px; }
+      .shifts b { transform:rotate(90deg); justify-self:start; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .speak-btn { transition:none; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Scene English · 人像摄影评测口播</p>
+      <h1>索尼 A7R6 × 85mm F1.4 GM II 人像写真</h1>
+      <p class="hero-en">Sony A7R6 × 85mm F1.4 GM II Portrait Shoot</p>
+      <div class="hero-meta"><span class="chip">2026-07-28</span><span class="chip">小红书</span><span class="chip">04:38</span><span class="chip">9 个场景</span><a class="source-link" href="https://xhslink.com/o/5ZAoHVkUkOF" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+      <div class="toolbar"><label for="speech-rate">朗读速度</label><select id="speech-rate"><option value="0.85">慢速 0.85×</option><option value="1" selected>正常 1×</option><option value="1.15">快速 1.15×</option></select><button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button><span id="speech-status" class="speech-status" role="status" aria-live="polite"></span></div>
+    </div>
+  </header>
+  <main class="page">
+    <aside class="sidebar" aria-label="场景地图"><div class="sidebar-box"><h2>场景地图 · SCENE MAP</h2><nav class="map-nav"><a class="map-link" href="#s1"><span class="map-id">S1</span><span><b>开场：画质旗舰 × 人像镜皇</b><small>00:00–00:31 · Opening: Resolution Flagship Meets Portrait King</small></span></a>
+<a class="map-link" href="#s2"><span class="map-id">S2</span><span><b>机身规格与手持重心</b><small>00:31–00:59 · Body Specs &amp; Handheld Balance</small></span></a>
+<a class="map-link" href="#s3"><span class="map-id">S3</span><span><b>毛孔级细节：碾碎放大焦虑</b><small>00:59–01:34 · Pore-Level Detail: Crushing Pixel-Peeping Anxiety</small></span></a>
+<a class="map-link" href="#s4"><span class="map-id">S4</span><span><b>边缘画质：半身构图实测</b><small>01:34–01:54 · Edge Sharpness: Half-Body Framing Test</small></span></a>
+<a class="map-link" href="#s5"><span class="map-id">S5</span><span><b>8.5 档防抖：高像素不怕抖</b><small>01:54–02:36 · 8.5-Stop IBIS: High-Res Without Handshake Fear</small></span></a>
+<a class="map-link" href="#s6"><span class="map-id">S6</span><span><b>AI 姿态识别与跟焦碾压</b><small>02:36–03:19 · AI Pose Recognition &amp; Relentless Tracking</small></span></a>
+<a class="map-link" href="#s7"><span class="map-id">S7</span><span><b>奶油虚化与室外散景</b><small>03:19–03:48 · Creamy Bokeh &amp; Outdoor Specular Highlights</small></span></a>
+<a class="map-link" href="#s8"><span class="map-id">S8</span><span><b>AI 自动白平衡：混合光源肤色</b><small>03:48–04:09 · AI Auto WB: Skin Tones in Mixed Light</small></span></a>
+<a class="map-link" href="#s9"><span class="map-id">S9</span><span><b>值不值得：生产力工具结语</b><small>04:09–04:37 · Worth It? A Productivity-Tool Verdict</small></span></a></nav></div></aside>
+    <div class="content">
+      
+      <section class="scene-card" id="s1" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S1</span><span class="time">00:00–00:31</span></div><button class="speak-btn scene-speak" type="button" data-speak="With its brand-new CMOS and processor combo, the Sony A7R6 has become the resolution flagship of Sony&#x27;s full-frame mirrorless lineup. Today we&#x27;re pairing it with the 85mm F1.4 GM II to see what kind of magical moments this combo can deliver. The A7R6 plus the 85mm F1.4 GM II — Sony&#x27;s portrait king — is basically the top-tier setup for full-frame portrait work. Pair elite resolution with a G Master prime, and we&#x27;re just as curious about the sparks that&#x27;ll fly." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>开场：画质旗舰 × 人像镜皇</h2>
+        <p class="scene-title-en">Opening: Resolution Flagship Meets Portrait King</p>
+        <p class="context"><b>情境</b>评测开场，介绍 A7R6 与 85mm F1.4 GM II 组合，抛出「顶配写真」期待。语域：相机评测口播，热情但偏专业。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>索尼 A7R6 凭借着全新的 CMOS 和处理器的组合，成为了目前索尼全画幅微单系统中的画质旗舰。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="With its brand-new CMOS and processor combo, the Sony A7R6 has become the resolution flagship of Sony&#x27;s full-frame mirrorless lineup." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">With its brand-new CMOS and processor combo, the Sony A7R6 has become the resolution flagship of Sony&#x27;s full-frame mirrorless lineup.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>画质旗舰 → resolution flagship（比 image-quality king 更贴科技评测）</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>那今天呢我们就把它和 85 F1.4 GM 二代镜头组合在一起，看看它们能迸发出怎样的精彩瞬间。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Today we&#x27;re pairing it with the 85mm F1.4 GM II to see what kind of magical moments this combo can deliver." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Today we&#x27;re pairing it with the 85mm F1.4 GM II to see what kind of magical moments this combo can deliver.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>迸发 → deliver / spark；口语可用 magical moments</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>索尼画质旗舰 A7R6 和人像镜皇 85 F1.4 GM 二代这套组合，可以算是全画幅人像写真类拍摄的顶配了。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="The A7R6 plus the 85mm F1.4 GM II — Sony&#x27;s portrait king — is basically the top-tier setup for full-frame portrait work." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">The A7R6 plus the 85mm F1.4 GM II — Sony&#x27;s portrait king — is basically the top-tier setup for full-frame portrait work.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>镜皇 → portrait king；顶配 → top-tier / maxed-out setup</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>顶级画质表现配上索尼 GM 大师系列的顶级定焦镜头，会迸发出怎样的火花，我们同样期待。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Pair elite resolution with a G Master prime, and we&#x27;re just as curious about the sparks that&#x27;ll fly." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Pair elite resolution with a G Master prime, and we&#x27;re just as curious about the sparks that&#x27;ll fly.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>迸发火花 → sparks that&#x27;ll fly（比喻保留）</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>3 组表达</span></summary>
+          <ol><li><p>介绍顶配组合：可以算是……的顶配了  →  This is basically the top-tier / maxed-out setup for…</p><div class="chunks">basically · top-tier setup · maxed-out · for portrait work</div></li>
+<li><p>抛出期待：看看它们能迸发出怎样的精彩瞬间  →  Let&#x27;s see what kind of magical moments this combo can deliver.</p><div class="chunks">magical moments · this combo · can deliver</div></li>
+<li><p>人像镜皇：人像镜皇  →  the portrait king / the go-to portrait lens</p><div class="chunks">portrait king · go-to · portrait lens</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s2" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S2</span><span class="time">00:31–00:59</span></div><button class="speak-btn scene-speak" type="button" data-speak="The A7R6 packs a newly developed 61-megapixel full-frame stacked CMOS, paired with the next-gen BIONZ XR2 image processor. Readout speed is about 5.6× faster than the previous A7R5. And the 85mm F1.4 GM II — Sony&#x27;s crowning portrait lens — is 178g lighter and 13% smaller than its predecessor. Together, the balance feels right — even long handheld shoots don&#x27;t feel front-heavy. Image quality also sits near the peak of today&#x27;s 35mm full-frame systems." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>机身规格与手持重心</h2>
+        <p class="scene-title-en">Body Specs &amp; Handheld Balance</p>
+        <p class="context"><b>情境</b>讲传感器、处理器、镜头减重与机镜重心。语域：参数口播 + 使用感受。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>这台索尼 A7R6 搭载了全新开发的 6680 万像素全画幅堆栈式 CMOS，配合新一代 BIONZ XR2 影像处理器。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="The A7R6 packs a newly developed 61-megapixel full-frame stacked CMOS, paired with the next-gen BIONZ XR2 image processor." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">The A7R6 packs a newly developed 61-megapixel full-frame stacked CMOS, paired with the next-gen BIONZ XR2 image processor.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>搭载 → packs / is equipped with；堆栈式 → stacked</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>读出速度比上一代的 A7R5 提升了约 5.6 倍。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Readout speed is about 5.6× faster than the previous A7R5." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Readout speed is about 5.6× faster than the previous A7R5.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>读出速度 → readout speed</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>而 85 F1.4 GM 二代作为索尼人像镜头的钢顶之作，比上一代轻了 178g，体积也缩小了 13%。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="And the 85mm F1.4 GM II — Sony&#x27;s crowning portrait lens — is 178g lighter and 13% smaller than its predecessor." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">And the 85mm F1.4 GM II — Sony&#x27;s crowning portrait lens — is 178g lighter and 13% smaller than its predecessor.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>钢顶之作 → crowning / crowning achievement</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>它们两个组合在一起重心配比合理，长时间手持拍摄并不会觉得头重脚轻。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Together, the balance feels right — even long handheld shoots don&#x27;t feel front-heavy." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Together, the balance feels right — even long handheld shoots don&#x27;t feel front-heavy.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>头重脚轻 → front-heavy（摄影常用）</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">05</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>画质也是目前整个 135 全画幅系统里的顶峰之一。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Image quality also sits near the peak of today&#x27;s 35mm full-frame systems." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Image quality also sits near the peak of today&#x27;s 35mm full-frame systems.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>135 → 35mm full-frame</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>3 组表达</span></summary>
+          <ol><li><p>描述装备配置：搭载了全新开发的……  →  It packs a newly developed…</p><div class="chunks">packs · newly developed · paired with</div></li>
+<li><p>手持重心：不会觉得头重脚轻  →  doesn&#x27;t feel front-heavy / top-heavy</p><div class="chunks">front-heavy · handheld · balance feels right</div></li>
+<li><p>对比上一代：比上一代轻了 178g  →  is 178g lighter than its predecessor</p><div class="chunks">lighter than · its predecessor · 13% smaller</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s3" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S3</span><span class="time">00:59–01:34</span></div><button class="speak-btn scene-speak" type="button" data-speak="First, resolution — terrifying detail down to the pore level. What&#x27;s a portrait shooter&#x27;s worst fear? You zoom in and the hair melts into mush, lash edges go soft. The A7R6&#x27;s 61MP, plus the GM II&#x27;s center sharpness wide open at F1.4, just crushes that anxiety. In real tests we shot portraits under all kinds of tricky lighting — F1.4 wide open, focus locked on the model&#x27;s eye. Back home, we punched in to 200% on the computer — every detail at the focus point stayed crystal clear, and the catchlight in the pupil even showed as a complete specular highlight. Zoom in again: iris texture is layered and crisp — the detail is honestly scary-good." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>毛孔级细节：碾碎放大焦虑</h2>
+        <p class="scene-title-en">Pore-Level Detail: Crushing Pixel-Peeping Anxiety</p>
+        <p class="context"><b>情境</b>从人像「放大怕糊」切入，强调 F1.4 全开中心解析与眼神光。语域：痛点共鸣 + 实测夸张。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>先说画质——放大到毛孔级别的恐怖细节。人像拍摄最怕什么？放大一看，发丝糊成一团，睫毛边缘发虚。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="First, resolution — terrifying detail down to the pore level. What&#x27;s a portrait shooter&#x27;s worst fear? You zoom in and the hair melts into mush, lash edges go soft." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">First, resolution — terrifying detail down to the pore level. What&#x27;s a portrait shooter&#x27;s worst fear? You zoom in and the hair melts into mush, lash edges go soft.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>恐怖细节 → terrifying detail（保留夸张语气）</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>索尼 A7R6 的 6600 万像素，加上 85 GM 二代在 F1.4 全开时的中心解析力，直接把这个焦虑给碾碎了。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="The A7R6&#x27;s 61MP, plus the GM II&#x27;s center sharpness wide open at F1.4, just crushes that anxiety." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">The A7R6&#x27;s 61MP, plus the GM II&#x27;s center sharpness wide open at F1.4, just crushes that anxiety.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>碾碎焦虑 → crushes that anxiety</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>实测中我们在各种复杂光源环境下拍摄了人像测试，F1.4 光圈全开，对焦点锁定在模特的眼睛上。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="In real tests we shot portraits under all kinds of tricky lighting — F1.4 wide open, focus locked on the model&#x27;s eye." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">In real tests we shot portraits under all kinds of tricky lighting — F1.4 wide open, focus locked on the model&#x27;s eye.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>复杂光源 → tricky lighting</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>回家导入电脑放大到 200%，焦点处的每一个细节都清晰可辨；瞳孔中的眼神光都可以呈现出一个完整的光斑。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Back home, we punched in to 200% on the computer — every detail at the focus point stayed crystal clear, and the catchlight in the pupil even showed as a complete specular highlight." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Back home, we punched in to 200% on the computer — every detail at the focus point stayed crystal clear, and the catchlight in the pupil even showed as a complete specular highlight.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>眼神光 → catchlight；光斑 → specular highlight / specular disc</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">05</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>再次放大，眼睛虹膜的纹理层次分明，细节表现堪称恐怖。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Zoom in again: iris texture is layered and crisp — the detail is honestly scary-good." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Zoom in again: iris texture is layered and crisp — the detail is honestly scary-good.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>虹膜 → iris；堪称恐怖 → scary-good</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>4 组表达</span></summary>
+          <ol><li><p>表达痛点：人像拍摄最怕什么  →  What&#x27;s a portrait shooter&#x27;s worst fear?</p><div class="chunks">worst fear · portrait shooter · zoom in</div></li>
+<li><p>碾碎焦虑：直接把这个焦虑给碾碎了  →  just crushes that anxiety / puts that worry to rest</p><div class="chunks">crushes · that anxiety · puts … to rest</div></li>
+<li><p>眼神光：瞳孔中的眼神光  →  the catchlight in the pupil</p><div class="chunks">catchlight · in the pupil · specular highlight</div></li>
+<li><p>放大检视：放大到 200%  →  punch in to 200% / zoom in to 200%</p><div class="chunks">punch in · zoom in · crystal clear</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s4" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S4</span><span class="time">01:34–01:54</span></div><button class="speak-btn scene-speak" type="button" data-speak="What surprised us even more was the edge performance — wide open at F1.4, the GM II&#x27;s edge resolution clearly beats the Mark I. We shot a half-body set with the model on the right third of the frame. Zoom in on the focus point — textures stay razor-sharp, not smeared. Thanks to the GM II&#x27;s optics, even the frame edges still hold a very high resolving standard." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>边缘画质：半身构图实测</h2>
+        <p class="scene-title-en">Edge Sharpness: Half-Body Framing Test</p>
+        <p class="context"><b>情境</b>半身构图把人放在右侧三分线，检验 F1.4 全开边缘解析。语域：实测描述。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>更让我们感到惊喜的是边缘画质：85 GM 二代在 F1.4 全开时，边缘分辨率显著优于一代。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="What surprised us even more was the edge performance — wide open at F1.4, the GM II&#x27;s edge resolution clearly beats the Mark I." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">What surprised us even more was the edge performance — wide open at F1.4, the GM II&#x27;s edge resolution clearly beats the Mark I.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>一代 → the Mark I / Gen 1</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>我们拍了一组半身构图，模特位于画面右侧三分之一处；放大看焦点细节，纹理锐利，没有糊成一片。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="We shot a half-body set with the model on the right third of the frame. Zoom in on the focus point — textures stay razor-sharp, not smeared." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">We shot a half-body set with the model on the right third of the frame. Zoom in on the focus point — textures stay razor-sharp, not smeared.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>糊成一片 → smeared / mushy</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>在索尼 85 F1.4 GM 二代的优秀光学表现下，画面边缘依然保持着极高的解析力水准。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Thanks to the GM II&#x27;s optics, even the frame edges still hold a very high resolving standard." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Thanks to the GM II&#x27;s optics, even the frame edges still hold a very high resolving standard.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>解析力水准 → resolving standard / resolving power</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>3 组表达</span></summary>
+          <ol><li><p>边缘画质惊喜：更让我们感到惊喜的是边缘画质  →  What surprised us even more was the edge performance</p><div class="chunks">what surprised us · even more · edge performance</div></li>
+<li><p>构图位置：模特位于画面右侧三分之一处  →  with the model on the right third of the frame</p><div class="chunks">on the right third · of the frame · half-body</div></li>
+<li><p>锐利不糊：纹理锐利没有糊成一片  →  textures stay razor-sharp, not smeared</p><div class="chunks">razor-sharp · not smeared · stay</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s5" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S5</span><span class="time">01:54–02:36</span></div><button class="speak-btn scene-speak" type="button" data-speak="Next up, the A7R6 body — that maxed-out 8.5-stop IBIS. On high-res bodies, the real enemy was never AF — it&#x27;s camera shake. A 61MP sensor is extremely sensitive to the tiniest vibration. With older high-res bodies, shutter speed was always the number photographers watched like a hawk. The A7R6&#x27;s 8.5-stop in-body stabilization is Sony&#x27;s strongest yet. In dim indoor tests, even at 1/30s, keeper rates stayed impressively high. Zoom in on the model&#x27;s eyes — sharp, clean, no double imaging. For portrait shooters, that&#x27;s a real productivity boost. You stop constantly worrying whether the shot is soft, and can put more attention on framing and directing the model." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>8.5 档防抖：高像素不怕抖</h2>
+        <p class="scene-title-en">8.5-Stop IBIS: High-Res Without Handshake Fear</p>
+        <p class="context"><b>情境</b>高像素怕微抖；室内暗光 1/30s 手持仍高成片率。语域：痛点 + 生产力收益。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>再来聊一下索尼 A7R6 机身——这个顶配的 8.5 档防抖。高像素机型最大的敌人从来不是对焦，而是抖动。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Next up, the A7R6 body — that maxed-out 8.5-stop IBIS. On high-res bodies, the real enemy was never AF — it&#x27;s camera shake." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Next up, the A7R6 body — that maxed-out 8.5-stop IBIS. On high-res bodies, the real enemy was never AF — it&#x27;s camera shake.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>8.5 档防抖 → 8.5-stop IBIS</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>6600 万像素的传感器对任何微小的震动都极其敏感；以往高像素机型拍人像，快门速度永远都是摄影师警惕的关键。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="A 61MP sensor is extremely sensitive to the tiniest vibration. With older high-res bodies, shutter speed was always the number photographers watched like a hawk." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">A 61MP sensor is extremely sensitive to the tiniest vibration. With older high-res bodies, shutter speed was always the number photographers watched like a hawk.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>警惕的关键 → watched like a hawk</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>A7R6 上的 8.5 档机身防抖是索尼目前最强的防抖系统。实测中我们在光线较暗的室内拍摄，快门即使降到 1/30 秒，成片率依然非常高。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="The A7R6&#x27;s 8.5-stop in-body stabilization is Sony&#x27;s strongest yet. In dim indoor tests, even at 1/30s, keeper rates stayed impressively high." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">The A7R6&#x27;s 8.5-stop in-body stabilization is Sony&#x27;s strongest yet. In dim indoor tests, even at 1/30s, keeper rates stayed impressively high.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>成片率 → keeper rate</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>放大看模特的眼睛，清晰锐利没有重影。这对人像摄影师来说是一个实实在在的生产力提升。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Zoom in on the model&#x27;s eyes — sharp, clean, no double imaging. For portrait shooters, that&#x27;s a real productivity boost." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Zoom in on the model&#x27;s eyes — sharp, clean, no double imaging. For portrait shooters, that&#x27;s a real productivity boost.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>重影 → double imaging / ghosting</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">05</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>你不再需要时刻担心这张糊没糊，可以把更多注意力放在构图和与模特的沟通上。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="You stop constantly worrying whether the shot is soft, and can put more attention on framing and directing the model." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">You stop constantly worrying whether the shot is soft, and can put more attention on framing and directing the model.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>糊没糊 → whether the shot is soft；沟通 → directing / communicating with</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>4 组表达</span></summary>
+          <ol><li><p>真正的敌人：最大的敌人从来不是对焦，而是抖动  →  the real enemy was never AF — it&#x27;s camera shake</p><div class="chunks">the real enemy · was never · camera shake</div></li>
+<li><p>成片率：成片率依然非常高  →  keeper rates stayed impressively high</p><div class="chunks">keeper rates · stayed · impressively high</div></li>
+<li><p>生产力提升：实实在在的生产力提升  →  a real / tangible productivity boost</p><div class="chunks">productivity boost · tangible · real</div></li>
+<li><p>把注意力放回创作：可以把更多注意力放在构图和沟通上  →  put more attention on framing and directing the model</p><div class="chunks">put more attention on · framing · directing the model</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s6" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S6</span><span class="time">02:36–03:19</span></div><button class="speak-btn scene-speak" type="button" data-speak="On AF, the A7R6&#x27;s AI human-pose recognition keeps a lock even when the model turns her back. In portrait work, the model won&#x27;t face the camera forever — turning away, looking down, profile shots, getting blocked by foreground — that&#x27;s all normal. No matter how she poses, the green AF box stays glued to her eye — never lost it once. Even back-to-camera, it can lock onto head and body. Plus the GM II&#x27;s dual XD linear motors are about 3× faster than the previous generation — this combo&#x27;s subject tracking is basically unfair. She walks freely, spins, flips her hair — the camera feels like it has eyes of its own, glued to the pupil. Continuous AF/AE calculations keep every frame properly exposed with solid focus." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>AI 姿态识别与跟焦碾压</h2>
+        <p class="scene-title-en">AI Pose Recognition &amp; Relentless Tracking</p>
+        <p class="context"><b>情境</b>背身、甩发、走动等姿态下眼部/头部锁定；镜头双线性马达跟焦。语域：动态抓拍场景。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>在自动对焦表现上，A7R6 这次搭载的 AI 人体姿态识别，模特背身也能牢牢锁住。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="On AF, the A7R6&#x27;s AI human-pose recognition keeps a lock even when the model turns her back." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">On AF, the A7R6&#x27;s AI human-pose recognition keeps a lock even when the model turns her back.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>牢牢锁住 → keeps a lock / locks on hard</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>在人像摄影中，模特不可能永远正脸对着镜头——转身、低头、侧脸、被前景挡住，这些都是常态。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="In portrait work, the model won&#x27;t face the camera forever — turning away, looking down, profile shots, getting blocked by foreground — that&#x27;s all normal." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">In portrait work, the model won&#x27;t face the camera forever — turning away, looking down, profile shots, getting blocked by foreground — that&#x27;s all normal.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>常态 → that&#x27;s all normal / par for the course</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>无论模特如何摆姿，绿色对焦框始终牢牢锁在她的眼睛上，一次都没丢；即使背对镜头，也能锁定头部和身体。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="No matter how she poses, the green AF box stays glued to her eye — never lost it once. Even back-to-camera, it can lock onto head and body." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">No matter how she poses, the green AF box stays glued to her eye — never lost it once. Even back-to-camera, it can lock onto head and body.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>牢牢锁 → stays glued to</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>另外 85 GM 二代的双 XD 线性马达组，对焦速度较上一代提升了三倍；这套组合的跟焦能力堪称碾压。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Plus the GM II&#x27;s dual XD linear motors are about 3× faster than the previous generation — this combo&#x27;s subject tracking is basically unfair." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Plus the GM II&#x27;s dual XD linear motors are about 3× faster than the previous generation — this combo&#x27;s subject tracking is basically unfair.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>堪称碾压 → basically unfair / in a league of its own</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">05</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>模特在镜头前随意走动、转身甩头发，相机就像长了眼睛一样死死咬住瞳孔；每秒多次 AF/AE 计算，确保每张曝光准确、焦点扎实。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="She walks freely, spins, flips her hair — the camera feels like it has eyes of its own, glued to the pupil. Continuous AF/AE calculations keep every frame properly exposed with solid focus." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">She walks freely, spins, flips her hair — the camera feels like it has eyes of its own, glued to the pupil. Continuous AF/AE calculations keep every frame properly exposed with solid focus.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>死死咬住 → glued to / locked onto</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>4 组表达</span></summary>
+          <ol><li><p>背身锁定：模特背身也能牢牢锁住  →  keeps a lock even when the model turns her back</p><div class="chunks">keeps a lock · turns her back · even when</div></li>
+<li><p>对焦框不丢：绿色对焦框始终牢牢锁在眼睛上  →  the green AF box stays glued to her eye</p><div class="chunks">AF box · stays glued to · never lost it</div></li>
+<li><p>跟焦碾压：跟焦能力堪称碾压  →  subject tracking is basically unfair / in a league of its own</p><div class="chunks">subject tracking · basically unfair · in a league of its own</div></li>
+<li><p>甩发抓拍：转身甩头发……死死咬住瞳孔  →  spins and flips her hair — glued to the pupil</p><div class="chunks">flips her hair · glued to · the pupil</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s7" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S7</span><span class="time">03:19–03:48</span></div><button class="speak-btn scene-speak" type="button" data-speak="We also got a taste of the GM II&#x27;s creamy bokeh from its 11-blade aperture. Wide open at F1.4, the background melts like butter — soft-edged highlights, excellent onion-ring control, and a gentle transition with texture and depth. Outdoors we shot a set against layered leaves and dappled light. Wide open, the bokeh balls are round and soft — like an Impressionist painting. Yet facial sharpness doesn&#x27;t drop off at all — skin texture and light falloff stay natural and refined." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>奶油虚化与室外散景</h2>
+        <p class="scene-title-en">Creamy Bokeh &amp; Outdoor Specular Highlights</p>
+        <p class="context"><b>情境</b>11 片光圈叶片、F1.4 奶油虚化、树叶斑驳光影。语域：美学描述。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>顺便我们还体验了一下 85 F1.4 二代 11 片光圈叶片的奶油虚化感。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="We also got a taste of the GM II&#x27;s creamy bokeh from its 11-blade aperture." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">We also got a taste of the GM II&#x27;s creamy bokeh from its 11-blade aperture.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>奶油虚化 → creamy bokeh</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>F1.4 全开时背景虚化如奶油般化开，背景光斑边缘柔和，二线性控制非常优秀，带有纹理和纵深的柔和虚化过渡。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Wide open at F1.4, the background melts like butter — soft-edged highlights, excellent onion-ring control, and a gentle transition with texture and depth." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Wide open at F1.4, the background melts like butter — soft-edged highlights, excellent onion-ring control, and a gentle transition with texture and depth.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>二线性 → onion rings；虚化过渡 → bokeh transition</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>我们在室外拍了一组人像：背景是层层叠叠的树叶和斑驳的光影。F1.4 全开，散景光斑圆润柔和，像一幅印象派油画。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Outdoors we shot a set against layered leaves and dappled light. Wide open, the bokeh balls are round and soft — like an Impressionist painting." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Outdoors we shot a set against layered leaves and dappled light. Wide open, the bokeh balls are round and soft — like an Impressionist painting.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>斑驳光影 → dappled light；散景光斑 → bokeh balls</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>而模特面部锐度丝毫不减，皮肤的质感和光影过渡自然细腻。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Yet facial sharpness doesn&#x27;t drop off at all — skin texture and light falloff stay natural and refined." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Yet facial sharpness doesn&#x27;t drop off at all — skin texture and light falloff stay natural and refined.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>丝毫不减 → doesn&#x27;t drop off at all</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>3 组表达</span></summary>
+          <ol><li><p>奶油虚化：背景虚化如奶油般化开  →  the background melts like butter / creamy bokeh</p><div class="chunks">melts like butter · creamy bokeh · wide open</div></li>
+<li><p>斑驳光影：斑驳的光影  →  dappled light / mottled light and shadow</p><div class="chunks">dappled light · layered leaves · outdoors</div></li>
+<li><p>印象派比喻：像一幅印象派的油画  →  like an Impressionist painting</p><div class="chunks">like an · Impressionist · painting</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s8" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S8</span><span class="time">03:48–04:09</span></div><button class="speak-btn scene-speak" type="button" data-speak="The A7R6 also adds AI deep-learning auto white balance, combining visible-light and IR sensors to read the light source. In mixed lighting — say daylight from the window plus warm indoor lamps — skin tones still look healthy and natural. No weird yellow or cyan cast — so in post you don&#x27;t have to sweat correcting white balance." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>AI 自动白平衡：混合光源肤色</h2>
+        <p class="scene-title-en">AI Auto WB: Skin Tones in Mixed Light</p>
+        <p class="context"><b>情境</b>窗外日光 + 室内暖光混合，肤色自然，减轻后期校正。语域：实用后期效率。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>索尼 A7R6 这次也新增了基于 AI 深度学习的自动白平衡，结合可见光与红外线传感器判断光源。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="The A7R6 also adds AI deep-learning auto white balance, combining visible-light and IR sensors to read the light source." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">The A7R6 also adds AI deep-learning auto white balance, combining visible-light and IR sensors to read the light source.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>自动白平衡 → auto white balance (AWB)</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>实际拍摄中，在混合光源——比如窗外日光加室内暖黄灯光——的环境下，模特的肤色依然呈现出健康自然的质感。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="In mixed lighting — say daylight from the window plus warm indoor lamps — skin tones still look healthy and natural." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">In mixed lighting — say daylight from the window plus warm indoor lamps — skin tones still look healthy and natural.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>混合光源 → mixed lighting</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>没有出现偏黄或者偏青的情况；后期调色时就不用费心费力地校正白平衡了。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="No weird yellow or cyan cast — so in post you don&#x27;t have to sweat correcting white balance." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">No weird yellow or cyan cast — so in post you don&#x27;t have to sweat correcting white balance.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>偏青 → cyan cast；费心费力 → sweat / fuss over</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>3 组表达</span></summary>
+          <ol><li><p>混合光源举例：窗外日光加室内暖黄灯光  →  daylight from the window plus warm indoor lamps</p><div class="chunks">daylight from the window · warm indoor lamps · mixed lighting</div></li>
+<li><p>肤色自然：肤色依然呈现出健康自然的质感  →  skin tones still look healthy and natural</p><div class="chunks">skin tones · healthy and natural · still look</div></li>
+<li><p>省后期：不用费心费力地校正白平衡  →  you don&#x27;t have to sweat correcting white balance</p><div class="chunks">don&#x27;t have to sweat · correcting · white balance</div></li></ol>
+        </details>
+      </section>
+      <section class="scene-card" id="s9" data-scene>
+        <div class="scene-topline"><div><span class="scene-id">S9</span><span class="time">04:09–04:37</span></div><button class="speak-btn scene-speak" type="button" data-speak="So — is the combo worth it? The A7R6 plus the 85 GM II runs well over 30,000 yuan; it&#x27;s not cheap. But if you&#x27;re a working portrait photographer or a serious enthusiast with portraits at the center, the experience this combo delivers is hard to replace. Terrifying resolving power from ~61MP, handheld confidence from 8.5-stop IBIS, grab-shot efficiency from AI AF, peak wide-open optics from the GM II — Treat them as productivity tools for shipping strong images efficiently, and every yuan is spent where it counts." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <h2>值不值得：生产力工具结语</h2>
+        <p class="scene-title-en">Worth It? A Productivity-Tool Verdict</p>
+        <p class="context"><b>情境</b>价格不菲，但对职业/深度人像用户体验不可替代；总结解析力、防抖、AF、全开画质。</p>
+        <div class="sentence-list">
+          <article class="sentence">
+            <div class="sentence-no">01</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>总结一下这套组合值不值得：索尼 A7R6 和 85 GM 二代加起来超过三万，并不算便宜。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="So — is the combo worth it? The A7R6 plus the 85 GM II runs well over 30,000 yuan; it&#x27;s not cheap." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">So — is the combo worth it? The A7R6 plus the 85 GM II runs well over 30,000 yuan; it&#x27;s not cheap.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>值不值得 → is it worth it?</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">02</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>但如果你是一个以人像写真为核心的职业摄影师或者深度爱好者，这套组合带来的体验是无可替代的。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="But if you&#x27;re a working portrait photographer or a serious enthusiast with portraits at the center, the experience this combo delivers is hard to replace." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">But if you&#x27;re a working portrait photographer or a serious enthusiast with portraits at the center, the experience this combo delivers is hard to replace.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>深度爱好者 → serious enthusiast；无可替代 → hard to replace</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">03</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>6680 万像素带来的恐怖解析力、8.5 档防抖带来的手持信心、AI 对焦带来的抓拍效率、85 GM 二代全开时巅峰的画质——</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Terrifying resolving power from ~61MP, handheld confidence from 8.5-stop IBIS, grab-shot efficiency from AI AF, peak wide-open optics from the GM II —" aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Terrifying resolving power from ~61MP, handheld confidence from 8.5-stop IBIS, grab-shot efficiency from AI AF, peak wide-open optics from the GM II —</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>手持信心 → handheld confidence；抓拍效率 → grab-shot efficiency</p>
+          </article>
+          <article class="sentence">
+            <div class="sentence-no">04</div>
+            <div class="bilingual">
+              <div class="lang-block zh-block"><span class="lang-tag">中文</span><p>如果把它们当做高效出片的生产力工具的话，可以说每一分钱都花在了刀刃上。</p></div>
+              <div class="lang-block en-block"><div class="en-head"><span class="lang-tag">EN</span><button class="speak-btn compact" type="button" data-speak="Treat them as productivity tools for shipping strong images efficiently, and every yuan is spent where it counts." aria-label="朗读本句"><span aria-hidden="true">▶</span><span>朗读本句</span></button></div><p class="english">Treat them as productivity tools for shipping strong images efficiently, and every yuan is spent where it counts.</p></div>
+            </div>
+            <p class="note"><span>表达提示</span>花在刀刃上 → spent where it counts / money well spent</p>
+          </article></div>
+        <details class="paraphrase">
+          <summary>Paraphrase &amp; Chunks <span>4 组表达</span></summary>
+          <ol><li><p>值不值得：这套组合值不值得  →  Is the combo worth it?</p><div class="chunks">worth it · the combo · not cheap</div></li>
+<li><p>目标用户：以人像写真为核心的职业摄影师  →  a working portrait photographer with portraits at the center</p><div class="chunks">working photographer · at the center · serious enthusiast</div></li>
+<li><p>花在刀刃上：每一分钱都花在了刀刃上  →  every yuan is spent where it counts / money well spent</p><div class="chunks">spent where it counts · money well spent · productivity tools</div></li>
+<li><p>高效出片：高效出片的生产力工具  →  productivity tools for shipping strong images efficiently</p><div class="chunks">shipping · strong images · efficiently</div></li></ol>
+        </details>
+      </section>
+      <section class="study-section" id="practice"><h2 class="section-heading">今日可练 <small>PRACTICE TODAY</small></h2><div class="study-grid"><article><p>用「top-tier setup / maxed-out combo」介绍一套器材顶配</p><div class="practice-en">This is basically the top-tier setup for full-frame portraits. <button class="speak-btn icon-only" type="button" data-speak="This is basically the top-tier setup for full-frame portraits." aria-label="朗读练习句"><span aria-hidden="true">▶</span><span>朗读练习句</span></button></div></article><article><p>用「crushes that anxiety」表达彻底解决某类担心</p><div class="practice-en">The center sharpness wide open just crushes that pixel-peeping anxiety. <button class="speak-btn icon-only" type="button" data-speak="The center sharpness wide open just crushes that pixel-peeping anxiety." aria-label="朗读练习句"><span aria-hidden="true">▶</span><span>朗读练习句</span></button></div></article><article><p>用「keeper rate」讨论成片率</p><div class="practice-en">Even at 1/30s indoors, keeper rates stayed impressively high. <button class="speak-btn icon-only" type="button" data-speak="Even at 1/30s indoors, keeper rates stayed impressively high." aria-label="朗读练习句"><span aria-hidden="true">▶</span><span>朗读练习句</span></button></div></article><article><p>用「stays glued to」描述对焦不丢</p><div class="practice-en">The AF box stays glued to her eye the whole time. <button class="speak-btn icon-only" type="button" data-speak="The AF box stays glued to her eye the whole time." aria-label="朗读练习句"><span aria-hidden="true">▶</span><span>朗读练习句</span></button></div></article></div></section>
+      <section class="study-section pitfalls" id="pitfalls"><h2 class="section-heading">避坑 <small>PITFALLS</small></h2><div class="study-grid"><article><div class="wrong">✕ image quality flagship ship</div><div class="right">✓ resolution flagship / IQ flagship</div><p>「画质旗舰」在相机语境更常说 resolution / IQ flagship，不要直译 ship。</p></article><article><div class="wrong">✕ head heavy foot light</div><div class="right">✓ front-heavy</div><p>「头重脚轻」指镜头前重，摄影英语是 front-heavy，不是字面翻译。</p></article><article><div class="wrong">✕ finished photo rate</div><div class="right">✓ keeper rate / hit rate</div><p>「成片率」口语是 keeper rate，不是 finished-photo rate。</p></article><article><div class="wrong">✕ cream blur feeling</div><div class="right">✓ creamy bokeh</div><p>「奶油虚化」固定说法是 creamy bokeh。</p></article></div></section>
+      <section class="study-section shifts" id="mindset"><h2 class="section-heading">认知转变 <small>MINDSET SHIFTS</small></h2><div class="study-grid"><article><span>把评测当参数朗读</span><b aria-hidden="true">→</b><strong>用场景句（怕糊、怕抖、怕丢焦）练「痛点 → 解决方案」表达</strong></article><article><span>逐字直译「碾碎 / 钢顶 / 刀刃」</span><b aria-hidden="true">→</b><strong>换成英语里同力度的习语：crush anxiety / crowning lens / spent where it counts</strong></article><article><span>只记规格数字</span><b aria-hidden="true">→</b><strong>练「规格 → 拍摄动作 → 结果感受」三拍子口播（61MP → punch in 200% → scary-good detail）</strong></article></div></section>
+      <footer>ASR 专有名词已按语境校正 · 使用浏览器 Web Speech API 朗读英文</footer>
+    </div>
+  </main>
+  <script>
+    (() => {
+      const synth = window.speechSynthesis;
+      const status = document.getElementById('speech-status');
+      const stop = document.getElementById('stop-speech');
+      const rate = document.getElementById('speech-rate');
+      let activeButton = null;
+
+      const reset = () => {
+        activeButton?.classList.remove('playing');
+        activeButton = null;
+        stop.classList.remove('visible');
+        status.textContent = '';
+      };
+
+      const getEnglishVoice = () => {
+        const voices = synth.getVoices();
+        return voices.find(v => /^en-(US|GB)/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
+      };
+
+      const speak = (text, button) => {
+        if (!synth) { status.textContent = '当前浏览器不支持语音朗读。'; return; }
+        synth.cancel();
+        activeButton?.classList.remove('playing');
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = Number(rate.value);
+        const voice = getEnglishVoice();
+        if (voice) utterance.voice = voice;
+        activeButton = button;
+        button.classList.add('playing');
+        stop.classList.add('visible');
+        status.textContent = button.classList.contains('scene-speak') ? '正在朗读整个场景…' : '正在朗读…';
+        utterance.onend = reset;
+        utterance.onerror = (event) => {
+          if (event.error !== 'canceled' && event.error !== 'interrupted') status.textContent = '朗读失败，请检查浏览器语音设置。';
+          else reset();
+        };
+        synth.speak(utterance);
+      };
+
+      document.addEventListener('click', event => {
+        const button = event.target.closest('[data-speak]');
+        if (!button) return;
+        if (button === activeButton && synth.speaking) { synth.cancel(); reset(); return; }
+        speak(button.dataset.speak, button);
+      });
+      stop.addEventListener('click', () => { synth?.cancel(); reset(); });
+      window.addEventListener('beforeunload', () => synth?.cancel());
+      if (!synth) status.textContent = '当前浏览器不支持语音朗读。';
+    })();
+  </script>
+</body>
+</html>
