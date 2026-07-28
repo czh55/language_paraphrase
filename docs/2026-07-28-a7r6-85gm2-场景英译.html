@@ -66,6 +66,9 @@
     .speak-btn.compact { padding:4px 8px; font-size:.7rem; }
     .speak-btn.icon-only { padding:3px 7px; margin-left:6px; }
     .speak-btn.icon-only span:last-child { display:none; }
+    .pronounce-word { display:inline; margin:0; padding:0 2px; color:inherit; background:rgba(20,145,155,.08); border:0; border-bottom:1px dashed var(--teal-600); border-radius:3px; font:inherit; font-weight:inherit; line-height:inherit; cursor:pointer; }
+    .pronounce-word:hover, .pronounce-word:focus-visible { color:var(--teal-950); background:#cceee4; border-bottom-style:solid; outline:2px solid rgba(20,145,155,.24); outline-offset:2px; }
+    .pronounce-word.playing { color:#fff; background:var(--teal-700); border-bottom-color:var(--teal-700); }
     .paraphrase { margin-top:18px; border-top:1px solid var(--line); }
     .paraphrase summary { padding:16px 0 3px; color:var(--teal-800); cursor:pointer; font-weight:800; }
     .paraphrase summary span { color:var(--muted); font-size:.75rem; font-weight:500; margin-left:8px; }
@@ -118,7 +121,7 @@
       <p class="eyebrow">Scene English · 人像摄影评测口播</p>
       <h1>索尼 A7R6 × 85mm F1.4 GM II 人像写真</h1>
       <p class="hero-en">Sony A7R6 × 85mm F1.4 GM II Portrait Shoot</p>
-      <div class="hero-meta"><span class="chip">2026-07-28</span><span class="chip">小红书</span><span class="chip">04:38</span><span class="chip">9 个场景</span><a class="source-link" href="https://xhslink.com/o/5ZAoHVkUkOF" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+      <div class="hero-meta"><span class="chip">2026-07-28</span><span class="chip">小红书</span><span class="chip">04:38</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://xhslink.com/o/5ZAoHVkUkOF" target="_blank" rel="noopener">查看原视频 ↗</a></div>
       <div class="toolbar"><label for="speech-rate">朗读速度</label><select id="speech-rate"><option value="0.85">慢速 0.85×</option><option value="1" selected>正常 1×</option><option value="1.15">快速 1.15×</option></select><button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button><span id="speech-status" class="speech-status" role="status" aria-live="polite"></span></div>
     </div>
   </header>
@@ -585,6 +588,56 @@
         return voices.find(v => /^en-(US|GB)/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
       };
 
+      const difficultWords = new Set([
+        'af', 'ae', 'aperture', 'bionz', 'bokeh', 'catchlight', 'cmos', 'cyan',
+        'dappled', 'flagship', 'foreground', 'front-heavy', 'ghosting', 'ibis',
+        'iris', 'mirrorless', 'onion-ring', 'pixel-peeping', 'portrait', 'pupil',
+        'resolving', 'sharpness', 'specular', 'stabilization', 'wide-open'
+      ]);
+
+      const shouldPronounce = word => {
+        const normalized = word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
+        const lettersOnly = normalized.replace(/[^a-z]/g, '');
+        return lettersOnly.length >= 8 || difficultWords.has(normalized);
+      };
+
+      const markPronounceableWords = root => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+        const wordPattern = /[A-Za-z]+(?:[-'’][A-Za-z]+)*/g;
+        textNodes.forEach(node => {
+          if (node.parentElement?.closest('button, script, style')) return;
+          const text = node.nodeValue;
+          let match;
+          let last = 0;
+          const fragment = document.createDocumentFragment();
+          let changed = false;
+          while ((match = wordPattern.exec(text))) {
+            const word = match[0];
+            if (!shouldPronounce(word)) continue;
+            changed = true;
+            fragment.append(text.slice(last, match.index));
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'pronounce-word';
+            button.dataset.speak = word;
+            button.setAttribute('aria-label', `朗读单词 ${word}`);
+            button.title = `点击听 ${word} 的发音`;
+            button.textContent = word;
+            fragment.append(button);
+            last = match.index + word.length;
+          }
+          if (!changed) return;
+          fragment.append(text.slice(last));
+          node.replaceWith(fragment);
+        });
+      };
+
+      document.querySelectorAll(
+        '.english, .scene-title-en, .paraphrase li p, .chunks, .practice-en, .wrong, .right'
+      ).forEach(markPronounceableWords);
+
       const speak = (text, button) => {
         if (!synth) { status.textContent = '当前浏览器不支持语音朗读。'; return; }
         synth.cancel();
@@ -597,7 +650,11 @@
         activeButton = button;
         button.classList.add('playing');
         stop.classList.add('visible');
-        status.textContent = button.classList.contains('scene-speak') ? '正在朗读整个场景…' : '正在朗读…';
+        status.textContent = button.classList.contains('scene-speak')
+          ? '正在朗读整个场景…'
+          : button.classList.contains('pronounce-word')
+            ? `正在朗读单词：${text}`
+            : '正在朗读…';
         utterance.onend = reset;
         utterance.onerror = (event) => {
           if (event.error !== 'canceled' && event.error !== 'interrupted') status.textContent = '朗读失败，请检查浏览器语音设置。';
