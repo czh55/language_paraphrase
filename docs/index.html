@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>场景英译 · language_paraphrase</title>
+  <style>
+    :root {
+      --teal: #0d7377;
+      --teal-2: #14919b;
+      --bg: #f0faf6;
+      --ink: #0a3d3f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Noto Sans SC", "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f0faf6, #d9efe6);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, var(--teal), var(--teal-2));
+      color: #fff;
+      padding: 28px 20px 24px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 1.4rem; }
+    header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+    .card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(13,115,119,0.15);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+    .card a { color: var(--teal); font-weight: 700; text-decoration: none; }
+    .card a:hover { text-decoration: underline; }
+    .meta { color: #4a6b6d; font-size: 0.85rem; margin-top: 6px; }
+    .empty { color: #4a6b6d; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>场景英译 · Scene English</h1>
+    <p>情景英语表达学习（小红书 / B站视频）</p>
+  </header>
+  <main>
+    <div id="list" class="empty">加载中…</div>
+  </main>
+  <script>
+    async function load() {
+      const el = document.getElementById("list");
+      try {
+        const res = await fetch("./index.json", { cache: "no-store" });
+        const items = await res.json();
+        if (!items.length) {
+          el.textContent = "暂无条目。";
+          return;
+        }
+        el.className = "";
+        el.innerHTML = items
+          .slice()
+          .reverse()
+          .map((it) => {
+            const svg = encodeURI(it.svg);
+            return `<article class="card">
+              <a href="./${svg}">${it.title}</a>
+              <div class="meta">${it.date} · ${it.platform} · ${it.scenes} scenes · ${it.duration_sec || "?"}s</div>
+              <div class="meta"><a href="${it.url}" rel="noopener" target="_blank">原始链接</a></div>
+            </article>`;
+          })
+          .join("");
+      } catch (e) {
+        el.textContent = "无法加载 index.json：" + e.message;
+      }
+    }
+    load();
+  </script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# pending URLs（一行一个）
+# 支持 bilibili.com / b23.tv / xiaohongshu.com / xhslink.com
