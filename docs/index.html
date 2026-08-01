@@ -1012,7 +1012,7 @@
             var isError = item.error;
             const card = document.createElement('a');
             card.className = 'card' + (isError ? ' card-error' : '');
-            card.href = isError ? (item.url || '#') : item.filename;
+            card.href = isError ? (item.url || '#') : (item.filename || item.html || '#');
             card.target = isError ? '_blank' : '_blank';
 
             let tagsHtml = '';
@@ -1024,7 +1024,7 @@
 
             var titleText = isError
               ? '⚠ ' + escapeHtml(item.title || '处理失败')
-              : escapeHtml(item.title || item.filename.replace('.svg',''));
+              : escapeHtml(item.title || (item.filename || item.html || '').replace('.svg','').replace('.html',''));
 
             var summaryText = isError
               ? escapeHtml(item.error_message || '未能成功生成总结')
