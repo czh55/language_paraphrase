@@ -1,5 +1,21 @@
 [
   {
+    "slug": "rx10v-professional",
+    "date": "2026-08-01",
+    "title": "来自胖卡的冲击：索尼RX10V上手测试！",
+    "title_en": "Sony RX10V Hands-On Test: The Fat Card Strikes Back",
+    "platform": "bilibili",
+    "url": "https://b23.tv/u2SQBTP",
+    "webpage_url": "https://www.bilibili.com/video/BV1V2gh6BEDo",
+    "duration_sec": 160,
+    "scenes": 9,
+    "sentences": 32,
+    "html": "rx10v-professional-场景英译.html",
+    "audio": "audio/rx10v-professional",
+    "narration": "audio/rx10v-professional/narration.mp3",
+    "speech": true
+  },
+  {
     "slug": "crab-london",
     "date": "2026-08-01",
     "title": "蟹 逅 伦 敦！",
