@@ -9,8 +9,10 @@
     "webpage_url": "https://www.bilibili.com/video/BV1uT3G6jE3m",
     "duration_sec": 439,
     "scenes": 9,
-    "sentences": 52,
+    "sentences": 56,
     "html": "crab-london-场景英译.html",
+    "audio": "audio/crab-london",
+    "narration": "audio/crab-london/narration.mp3",
     "speech": true
   },
   {

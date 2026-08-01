@@ -165,6 +165,45 @@ Whisper 转录中文内容时常有同音字错误，**必须在生成翻译前�
 
 ---
 
+## Step 5.5：生成音频（edge-tts 神经网络语音）
+
+在生成 HTML 之前，使用 Python 脚本调用 edge-tts（微软免费神经网络语音）生成高质量 MP3 音频。
+
+### 安装依赖
+
+```bash
+pip3 install --break-system-packages edge-tts
+```
+
+系统需要 `ffmpeg`（用于合并超长段落音频）。
+
+### 运行脚本
+
+```bash
+python3 scripts/generate_audio.py --slug={slug}
+```
+
+### 产出文件
+
+| 音频类型 | 语音 | 文件 | 用途 |
+|---------|------|------|------|
+| 中文讲解旁白 | zh-CN-XiaoxiaoNeural | `docs/audio/{slug}/narration.mp3` | Hero 区域中文语音讲解播放器（2-5 分钟） |
+| 场景英文朗读 | en-US-JennyNeural | `docs/audio/{slug}/s{N}.mp3` | 每个场景「朗读整个场景」按钮 |
+| 逐句英文朗读 | 同上 | `docs/audio/{slug}/s{N}-{idx:02d}.mp3` | 每个句子「朗读本句」按钮 |
+| 练习句朗读 | 同上 | `docs/audio/{slug}/practice-{idx}.mp3` | 今日可练区域「朗读练习句」按钮 |
+| 音频清单 | — | `docs/audio/{slug}/manifest.json` | 所有音频文件的索引 |
+
+### 脚本核心逻辑
+
+`scripts/generate_audio.py` 参考 `daily-lyric-learning/scripts/generate_audio.py`：
+
+- `build_narration_script(meta, scenes)` — 组装中文旁白稿（开场白 + 逐场景讲解 + 可练导语 + 结语）
+- `synthesize_speech(text, output_path, voice)` — 调用 edge-tts 生成 MP3，超长段落自动分块后用 ffmpeg 合并
+- `generate_scene_mp3` / `generate_sentence_mp3` / `generate_practice_mp3` — 分别生成三类英文音频
+- `generate_narration` — 生成中文旁白 MP3 + 旁白稿 txt
+
+---
+
 ## Step 6：生成 HTML（交互式场景英译学习卡）
 
 在仓库根目录创建 `generate-{slug}.mjs`，**直接生成完整的 HTML 文件**（不再依赖 `svg-auto-height.mjs`）。
@@ -230,6 +269,20 @@ console.log('Generated:', OUT);
       <button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button>
       <span id="speech-status" class="speech-status" role="status" aria-live="polite"></span>
     </div>
+    <div class="narration-player" id="narration-player">
+      <p class="audio-label">🎧 语音讲解</p>
+      <audio id="narration-audio" controls preload="metadata"
+        src="audio/{slug}/narration.mp3">
+        您的浏览器不支持音频播放
+      </audio>
+      <div class="playback-speed">
+        <span class="speed-label">速度</span>
+        <button type="button" class="speed-btn active" onclick="setNarrationSpeed(0.75)">0.75x</button>
+        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1)">1x</button>
+        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1.25)">1.25x</button>
+        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1.5)">1.5x</button>
+      </div>
+    </div>
   </div>
 </header>
 ```
@@ -260,7 +313,7 @@ console.log('Generated:', OUT);
       <div class="scene-topline">
         <div><span class="scene-id">S1</span><span class="time">00:00–00:31</span></div>
         <button class="speak-btn scene-speak" type="button"
-          data-speak="{拼接该场景所有英文句，形成完整段落，用于「朗读整个场景」}"
+          data-audio="audio/{slug}/s1.mp3"
           aria-label="朗读整个场景">
           <span aria-hidden="true">▶</span><span>朗读整个场景</span>
         </button>
@@ -280,7 +333,7 @@ console.log('Generated:', OUT);
               <div class="en-head">
                 <span class="lang-tag">EN</span>
                 <button class="speak-btn compact" type="button"
-                  data-speak="{该句英文翻译}"
+                  data-audio="audio/{slug}/s1-01.mp3"
                   aria-label="朗读本句">
                   <span aria-hidden="true">▶</span><span>朗读本句</span>
                 </button>
@@ -317,7 +370,7 @@ console.log('Generated:', OUT);
           <div class="practice-en">
             {英文例句}
             <button class="speak-btn icon-only" type="button"
-              data-speak="{英文例句}" aria-label="朗读练习句">
+              data-audio="audio/{slug}/practice-0.mp3" aria-label="朗读练习句">
               <span aria-hidden="true">▶</span><span>朗读练习句</span>
             </button>
           </div>
@@ -362,122 +415,150 @@ console.log('Generated:', OUT);
 #### (g) 页脚
 
 ```html
-    <footer>ASR 专有名词已按语境校正 · 使用浏览器 Web Speech API 朗读英文</footer>
+    <footer>ASR 专有名词已按语境校正 · 场景/句子朗读使用 edge-tts 神经网络语音 · 单词发音使用浏览器 Web Speech API</footer>
   </div><!-- .content -->
 </main><!-- .page -->
 ```
 
 #### (h) JavaScript 语音朗读（必须包含完整脚本）
 
+MP3 优先方案：场景/句子/练习朗读使用 edge-tts 生成的 MP3 音频，单词点击发音使用 Web Speech API fallback。
+
 ```javascript
 (() => {
-  const synth = window.speechSynthesis;
+  let activeAudio = null;
+  let activeBtn = null;
   const status = document.getElementById('speech-status');
-  const stop = document.getElementById('stop-speech');
-  const rate = document.getElementById('speech-rate');
-  let activeButton = null;
+  const stopBtn = document.getElementById('stop-speech');
+  const rateSel = document.getElementById('speech-rate');
 
+  // 停止当前播放
   const reset = () => {
-    activeButton?.classList.remove('playing');
-    activeButton = null;
-    stop.classList.remove('visible');
+    if (activeAudio) { activeAudio.pause(); activeAudio = null; }
+    activeBtn?.classList.remove('playing');
+    activeBtn = null;
+    stopBtn.classList.remove('visible');
     status.textContent = '';
   };
 
-  const getEnglishVoice = () => {
-    const voices = synth.getVoices();
-    return voices.find(v => /^en-(US|GB)/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
+  // === MP3 播放：场景/句子/练习朗读 ===
+  const playAudio = (url, btn) => {
+    reset();
+    const audio = new Audio(url);
+    audio.playbackRate = Number(rateSel.value);
+    activeAudio = audio;
+    activeBtn = btn;
+    btn.classList.add('playing');
+    stopBtn.classList.add('visible');
+    status.textContent = btn.classList.contains('scene-speak')
+      ? '正在朗读整个场景…'
+      : '正在朗读…';
+
+    audio.onended = () => {
+      if (activeAudio === audio) reset();
+    };
+    audio.onerror = () => {
+      status.textContent = '音频加载失败，请检查网络。';
+      if (activeAudio === audio) reset();
+    };
+    audio.play().catch(() => {
+      status.textContent = '播放失败，请检查浏览器音频设置。';
+      if (activeAudio === audio) reset();
+    });
   };
 
-  // ★ 硬词表：根据视频主题定制，包含该领域 20+ 个专业英文词
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-audio]');
+    if (!btn) return;
+    e.preventDefault();
+    if (btn === activeBtn && activeAudio) {
+      reset();
+      return;
+    }
+    playAudio(btn.dataset.audio, btn);
+  });
+
+  stopBtn.addEventListener('click', reset);
+
+  // === Web Speech API：单词发音 ===
+  const synth = window.speechSynthesis;
+  const getEnglishVoice = () => {
+    const voices = synth.getVoices();
+    return voices.find(v => /^en-(US|GB)/i.test(v.lang))
+        || voices.find(v => /^en/i.test(v.lang)) || null;
+  };
+
+  // ★ 硬词表：根据视频主题定制，≥20 个
   const difficultWords = new Set([
-    // 示例（每期视频替换为实际主题词）：
-    // 'portrait', 'bokeh', 'aperture', 'shutter', 'stabilization',
-    // 'bionz', 'catchlight', 'cmos', 'dappled', 'flagship',
-    // 'foreground', 'front-heavy', 'ghosting', 'ibis', 'iris',
-    // 'mirrorless', 'onion-ring', 'pixel-peeping', 'resolving',
-    // 'sharpness', 'specular', 'wide-open'
+    // 示例：'portrait', 'bokeh', 'aperture', ...
   ]);
 
   const shouldPronounce = word => {
-    const normalized = word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
-    const lettersOnly = normalized.replace(/[^a-z]/g, '');
-    return lettersOnly.length >= 8 || difficultWords.has(normalized);
+    const n = word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
+    return n.replace(/[^a-z]/g, '').length >= 8 || difficultWords.has(n);
   };
 
   const markPronounceableWords = root => {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    const wordPattern = /[A-Za-z]+(?:[-'’][A-Za-z]+)*/g;
-    textNodes.forEach(node => {
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
       if (node.parentElement?.closest('button, script, style')) return;
       const text = node.nodeValue;
-      let match;
-      let last = 0;
-      const fragment = document.createDocumentFragment();
-      let changed = false;
-      while ((match = wordPattern.exec(text))) {
-        const word = match[0];
-        if (!shouldPronounce(word)) continue;
+      let m, last = 0, changed = false;
+      const frag = document.createDocumentFragment();
+      const re = /[A-Za-z]+(?:[-'\\u2019][A-Za-z]+)*/g;
+      while ((m = re.exec(text))) {
+        if (!shouldPronounce(m[0])) continue;
         changed = true;
-        fragment.append(text.slice(last, match.index));
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'pronounce-word';
-        button.dataset.speak = word;
-        button.setAttribute('aria-label', `朗读单词 ${word}`);
-        button.title = `点击听 ${word} 的发音`;
-        button.textContent = word;
-        fragment.append(button);
-        last = match.index + word.length;
+        frag.append(text.slice(last, m.index));
+        const wb = document.createElement('button');
+        wb.type = 'button'; wb.className = 'pronounce-word';
+        wb.dataset.speak = m[0];
+        wb.setAttribute('aria-label', '\\u6717\\u8bfb\\u5355\\u8bcd ' + m[0]);
+        wb.title = '\\u70b9\\u51fb\\u542c ' + m[0] + ' \\u53d1\\u97f3';
+        wb.textContent = m[0];
+        frag.append(wb);
+        last = m.index + m[0].length;
       }
       if (!changed) return;
-      fragment.append(text.slice(last));
-      node.replaceWith(fragment);
+      frag.append(text.slice(last));
+      node.replaceWith(frag);
     });
   };
 
-  // 自动标注所有英文区域中的长单词和专业词
   document.querySelectorAll(
     '.english, .scene-title-en, .paraphrase li p, .chunks, .practice-en, .wrong, .right'
   ).forEach(markPronounceableWords);
 
-  const speak = (text, button) => {
-    if (!synth) { status.textContent = '当前浏览器不支持语音朗读。'; return; }
+  document.addEventListener('click', e => {
+    const wb = e.target.closest('.pronounce-word');
+    if (!wb) return;
+    e.preventDefault();
+    if (!synth) return;
     synth.cancel();
-    activeButton?.classList.remove('playing');
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = Number(rate.value);
-    const voice = getEnglishVoice();
-    if (voice) utterance.voice = voice;
-    activeButton = button;
-    button.classList.add('playing');
-    stop.classList.add('visible');
-    status.textContent = button.classList.contains('scene-speak')
-      ? '正在朗读整个场景…'
-      : button.classList.contains('pronounce-word')
-        ? `正在朗读单词：${text}`
-        : '正在朗读…';
-    utterance.onend = reset;
-    utterance.onerror = (event) => {
-      if (event.error !== 'canceled' && event.error !== 'interrupted')
-        status.textContent = '朗读失败，请检查浏览器语音设置。';
-      else reset();
-    };
-    synth.speak(utterance);
-  };
-
-  document.addEventListener('click', event => {
-    const button = event.target.closest('[data-speak]');
-    if (!button) return;
-    if (button === activeButton && synth.speaking) { synth.cancel(); reset(); return; }
-    speak(button.dataset.speak, button);
+    if (activeAudio) { activeAudio.pause(); activeAudio = null; }
+    activeBtn?.classList.remove('playing');
+    activeBtn = wb;
+    wb.classList.add('playing');
+    const u = new SpeechSynthesisUtterance(wb.dataset.speak);
+    u.lang = 'en-US';
+    u.rate = 0.88;
+    const v = getEnglishVoice();
+    if (v) u.voice = v;
+    u.onend = () => { activeBtn?.classList.remove('playing'); activeBtn = null; };
+    u.onerror = () => { activeBtn?.classList.remove('playing'); activeBtn = null; };
+    synth.speak(u);
   });
-  stop.addEventListener('click', () => { synth?.cancel(); reset(); });
-  window.addEventListener('beforeunload', () => synth?.cancel());
-  if (!synth) status.textContent = '当前浏览器不支持语音朗读。';
+  // 旁白变速
+  window.setNarrationSpeed = rate => {
+    const audio = document.getElementById('narration-audio');
+    if (!audio) return;
+    audio.playbackRate = rate;
+    document.querySelectorAll('#narration-player .speed-btn').forEach(b => {
+      b.classList.toggle('active', parseFloat(b.textContent) === rate);
+    });
+  };
 })();
 ```
 
@@ -591,6 +672,13 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
   .shifts b { transform:rotate(90deg); justify-self:start; }
 }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .speak-btn { transition:none; } }
+.narration-player { margin-top:18px; }
+.audio-label { color:rgba(255,255,255,.88); font-size:.82rem; margin:0 0 8px; }
+.narration-player audio { width:100%; max-width:480px; border-radius:8px; }
+.playback-speed { display:flex; align-items:center; gap:6px; margin-top:6px; }
+.speed-label { color:rgba(255,255,255,.7); font-size:.72rem; }
+.speed-btn { color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:6px; padding:3px 8px; font-size:.7rem; cursor:pointer; }
+.speed-btn.active { background:rgba(255,255,255,.28); border-color:rgba(255,255,255,.5); }
 ```
 
 ### 运行
@@ -609,18 +697,20 @@ node generate-{slug}.mjs
 - [ ] 场景数在 4–12，且有时间范围
 - [ ] 每个关键场景有逐句中英对照表
 - [ ] **每个句子有表达提示**（`<p class="note">`，含关键词对译 + 语境说明）
-- [ ] 每个场景有场景级朗读文本（`data-speak` 完整英文段落）
+- [ ] 每个场景有场景级朗读音频（`data-audio` 指向 `audio/{slug}/s{N}.mp3`）
+- [ ] 每个句子有逐句朗读音频（`data-audio` 指向 `audio/{slug}/s{N}-{idx:02d}.mp3`）
 - [ ] 每个关键场景有 paraphrase（≥2 种说法），使用 `<details>` 可折叠结构，含 chunks
 - [ ] Paraphrase 每组含中文意图 → 英文替换说法 + chunks 标注
 - [ ] 避坑使用 wrong/right 对照格式（删除线红 ✕ + 加粗绿 ✓），4 组
 - [ ] 认知转变使用三列对照格式（以前思维 → 新思维），3 组
-- [ ] 今日可练使用卡片 grid 布局，4 个练习卡，每卡含中文意图 + 英文例句 + 朗读按钮
+- [ ] 今日可练使用卡片 grid 布局，4 个练习卡，每卡含中文意图 + 英文例句 + 朗读按钮（`data-audio` 指向练习 MP3）
 - [ ] 硬词表覆盖视频主题领域词（≥20 个），按视频主题定制
-- [ ] Hero 头部含 eyebrow 分类、中英标题、meta chips、速度控制工具栏
+- [ ] Hero 头部含 narration 中文语音播放器（`<audio>` 元素 + 变速按钮）
 - [ ] 侧边栏场景地图可点击跳转，含编号徽章 + 中英标题 + 时间
-- [ ] 页脚标注「ASR 专有名词已按语境校正 · 使用浏览器 Web Speech API 朗读英文」
+- [ ] 页脚标注「场景/句子朗读使用 edge-tts 神经网络语音 · 单词发音使用浏览器 Web Speech API」
+- [ ] 音频文件齐全：narration.mp3 + 每个场景 s{N}.mp3 + 每句 s{N}-idx.mp3 + 练习 practice-idx.mp3
 - [ ] 不是「内容总结文」，而是「可开口练的情景英语」
-- [ ] HTML 单文件，CSS/JS 内嵌，无外部依赖
+- [ ] HTML 单文件，CSS/JS 内嵌<br><br>音频通过 `<audio>` 元素加载外部 MP3（edge-tts 生成）
 
 ---
 
@@ -697,7 +787,8 @@ rm generate-{slug}.mjs
 |------|------|
 | `{slug}.m4a` | 原始音频（可选保留） |
 | `{slug}.json` / `.srt` | 转录产物（可选保留） |
-| `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，单文件，CSS/JS 内嵌） |
+| `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，CSS/JS 内嵌，通过 `<audio>` 加载 MP3） |
+| `docs/audio/{slug}/` | **音频目录**：narration.mp3（中文讲解）+ 场景/逐句/练习英文 MP3（edge-tts 生成） |
 
 ---
 
@@ -708,7 +799,8 @@ rm generate-{slug}.mjs
 - 不修改 `.gitignore`
 - 同 URL 不重复处理
 - **所有视频处理产出必须为 HTML 格式**，不再使用 SVG
-- CSS 和 JS 直接内嵌在 HTML 中（单文件，无外部依赖）
+- 音频使用 edge-tts 预生成 MP3（Python 脚本 `scripts/generate_audio.py`）
+- 播放器加载 MP3 文件，不是运行时合成语音
 - 不依赖 `svg-auto-height.mjs`
 - 硬词表根据视频主题定制（非固定模板）
 - **必须 push 到 main**，否则 Pages 不更新

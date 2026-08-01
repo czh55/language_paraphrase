@@ -1,6 +1,7 @@
 # Audio source files (large)
 *.m4a
 *.mp3
+!docs/audio/
 *.wav
 *.flac
 *.webm
