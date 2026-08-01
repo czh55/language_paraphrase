@@ -81,10 +81,11 @@ yt-dlp --skip-download --write-thumbnail -o "{slug}-thumb.%(ext)s" "{url}"
 ### 2.3 下载视频画面流（用于场景截图抽帧）
 
 ```bash
-# B 站：下载低画质 mp4 画面流（仅供抽帧，越小越好）
-yt-dlp -f "bv[ext=mp4][height<=480]/bv[ext=mp4]/bv/b" -o "{slug}-video.%(ext)s" "{url}"
+# B 站：下载 1080p mp4 画面流（逐级降级，仅供抽帧）
+yt-dlp -f "bv[ext=mp4][height<=1080]/bv[ext=mp4][height<=720]/bv[ext=mp4][height<=480]/bv[ext=mp4]/bv/b" -o "{slug}-video.%(ext)s" "{url}"
 ```
 
+- 首选 1080p；B 站部分 1080p 需会员时自动逐级降 720p/480p/可用最佳
 - 画面流仅用于抽帧，抽完即删（见 Step 10）
 - 小红书若画面流失败（下载受限）：**降级策略**——场景图统一复用 `hero.jpg`，在 `index.json` 增加 `"frames_fallback": true` 字段
 - 若画面流与音频同一 URL，2.1 与 2.3 的下载可合并执行
@@ -243,7 +244,7 @@ python3 scripts/extract_frames.py --slug={slug} --video={slug}-video.mp4 --thumb
 | 文件 | 说明 |
 |------|------|
 | `docs/images/{slug}/hero.jpg` | 视频封面（由封面缩略图转换而来），用于 Hero 区 |
-| `docs/images/{slug}/s1.jpg` ~ `s{N}.jpg` | 各场景时间轴中点的关键帧（720p 宽 jpg），用于场景卡片 |
+| `docs/images/{slug}/s1.jpg` ~ `s{N}.jpg` | 各场景时间轴中点的关键帧（保留源分辨率，宽度超 1920 才缩小），用于场景卡片 |
 
 ### 脚本核心逻辑
 
@@ -251,6 +252,7 @@ python3 scripts/extract_frames.py --slug={slug} --video={slug}-video.mp4 --thumb
 
 - **时间轴来源**（按优先级）：`docs/audio/{slug}/audio-input.json` 的 `scenes[].time` → 不存在则解析 `docs/{slug}-场景英译.html` 中 `<span class="time">` 文本
 - **抽帧时机**：每个场景取时间区间中点 `(start+end)//2`，用 `ffmpeg -ss {sec} -i {video} -frames:v 1` 抽取
+- **分辨率**：保留源分辨率不放大（`scale=min(iw,1920):-2`），低于 1920 宽原样输出，保证清晰度
 - `--print-scenes` 模式可仅预览解析出的场景时间轴，便于校验
 - 输出缺帧场景清单，失败则 Step 7 自检会拦截
 
@@ -627,7 +629,7 @@ a { color:inherit; }
 .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
 .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
 .hero-flex { display:flex; gap:clamp(18px,3vw,40px); align-items:flex-start; }
-.hero-cover { width:min(240px,42vw); aspect-ratio:16/10; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
+.hero-cover { width:min(240px,42vw); height:auto; max-height:320px; object-fit:contain; object-position:center; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
 .hero-text { min-width:0; flex:1; }
 .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
 h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
@@ -652,7 +654,7 @@ h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1
 .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
 .content { min-width:0; }
 .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
-.scene-frame { display:block; width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
+.scene-frame { display:block; width:100%; max-height:480px; object-fit:contain; object-position:center; background:rgba(7,63,66,.04); border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
 .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
 .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
 .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }

@@ -13,7 +13,7 @@
 
 输出到 docs/images/{slug}/：
   hero.jpg   视频封面（由 --thumb 复制/转换而来）
-  s1.jpg..s{N}.jpg   各场景中点关键帧
+  s1.jpg..s{N}.jpg   各场景中点关键帧（保留源分辨率，宽度超 1920 才缩小）
 """
 from __future__ import annotations
 
@@ -92,13 +92,17 @@ def load_scene_times(slug: str) -> list[tuple[int, int]]:
 
 
 def extract_frame(video: Path, sec: int, out: Path) -> bool:
-    """在指定秒抽取一帧，输出 720p 宽的 jpg。"""
+    """在指定秒抽取一帧。
+
+    保留源分辨率不放大：仅当宽度超过 1920 时缩小（控制体积），
+    源分辨率低于 1920 则原样输出，保证最清晰。
+    """
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
         "ffmpeg", "-y", "-loglevel", "error",
         "-ss", str(sec), "-i", str(video),
         "-frames:v", "1",
-        "-vf", "scale=-2:720",
+        "-vf", "scale=w='min(iw,1920)':h=-2",
         "-q:v", "2",
         str(out),
     ]
