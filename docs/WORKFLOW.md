@@ -114,39 +114,60 @@ whisper {slug}.m4a --model small --language Chinese --output_dir .
 | `scene_id` | S1, S2… |
 | `time_range` | 如 `00:12–00:48` |
 | `scene_title` | 中英短标题，如「点单｜Ordering」 |
-| `context` | 1–2 句情景说明（谁在哪、要完成什么） |
+| `context` | 1–2 句情景说明（谁在哪、要完成什么）+ 语域标注（casual/formal/评测口播等） |
 
-### 5.2 逐句中英对照
+### 5.2 逐句双层对照（表达提示必填）
 
-场景内按句（或自然意群）列出：
+场景内按句（或自然意群）列出。**每句必须有 3 项**：
 
-1. **中文原文**（尽量贴近转录，可轻微润色口误）
+1. **中文原文**（贴近转录，可轻微润色口误，ASR 错误必须先行矫正，见 5.5）
 2. **英文翻译**（地道口语优先，不是逐字直译）
-3. **表达批注**（可选）：语域（casual/polite）、语气、易错点
+3. **表达提示**（`<p class="note">` 格式，**必填**）：标注关键词翻译对照和语境说明
+   - 格式：`<span>表达提示</span>画质旗舰 → resolution flagship（比 image-quality king 更贴科技评测）`
+   - 每句至少 1 条提示，关键句可 2-3 条
 
 ### 5.3 Paraphrase（学习重点）
 
-每个关键场景至少提供 **2–4 组可替换说法**：
+每个关键场景至少提供 **2–4 组可替换说法**，使用 `<details class="paraphrase">` 可折叠结构：
 
+- `<summary>Paraphrase &amp; Chunks <span>N 组表达</span></summary>`
+- 每组格式：`<li><p>中文意图 → 英文替换说法</p><div class="chunks">chunk · chunk · chunk</div></li>`
 - 同一意图的 2–3 种英文说法（正式 / 日常 / 更短）
 - 标注「什么场合用哪个」
 - 抽出 3–8 个 **chunk**（如 `I'd like to…` / `Could I get…`）
 
 ### 5.4 必须包含的学习模块
 
-1. **场景地图**：全文场景一览（时间轴）
-2. **关键场景详解**：对照 + paraphrase
-3. **今日可练**：3–5 个口头替换练习（给中文意图，写出/说出英文）
-4. **避坑**：直译腔、中式英语、礼貌层级用错
-5. **认知转变**：以前只会说 X，现在场景里可以说 Y/Z
+1. **场景地图**：全文场景一览（时间轴），每个场景有编号、时间、中英标题
+2. **关键场景详解**：逐句对照 + 表达提示 + 可折叠 paraphrase
+3. **今日可练**：4 个口头替换练习（给中文意图 + 英文例句）
+4. **避坑**：4 个直译腔/中式英语对照（✕ 错误 → ✓ 正确 + 解释）
+5. **认知转变**：3 个思维转变（以前思维 → 新思维，箭头分隔）
 
 **不要**做成普通「视频内容总结」；主目标是**学场景式英文表达**。
 
+### 5.5 转录纠错（必做）
+
+Whisper 转录中文内容时常有同音字错误，**必须在生成翻译前人工校对修正**：
+
+- 常见错误类型：同音错字（大本中→大本钟、果将→果酱、沈頓→伦敦、壁路→秘鲁、指条→纸条）
+- 中文原文使用修正后的版本
+- 英文翻译以修正后的中文语义为准
+- 在 HTML 页脚标注「ASR 专有名词已按语境校正」
+
+### 5.6 场景级语音文本（必做）
+
+每个场景需要合成一段**完整的英文口播文本**（拼接该场景所有英文句），填入场景卡片的 `data-speak` 属性，用于「朗读整个场景」按钮。文本要求：
+
+- 自然连读：同一说话人的相邻句子用句号或分号连接，避免生硬断开
+- 专有名词发音：数字、型号、品牌名写全（61 → sixty-one，F1.4 → F one point four）
+- 完整段落：形成一段可以通读的短文
+
 ---
 
-## Step 6：生成 SVG
+## Step 6：生成 HTML（交互式场景英译学习卡）
 
-在仓库根目录创建 `generate-{slug}.mjs`，**必须**使用 `svg-auto-height.mjs` 的 `buildSvg`。
+在仓库根目录创建 `generate-{slug}.mjs`，**直接生成完整的 HTML 文件**（不再依赖 `svg-auto-height.mjs`）。
 
 ### 脚本模板
 
@@ -154,113 +175,422 @@ whisper {slug}.m4a --model small --language Chinese --output_dir .
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { buildSvg } from './svg-auto-height.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(DIR, 'docs', '{slug}-场景英译.svg');
+const OUT = path.join(DIR, 'docs', '{slug}-场景英译.html');
 
-const CSS = `/* 见下方完整 CSS */`;
-const body = `<!-- 见下方 body 区模板 -->`;
+// CSS（从下方完整 CSS 模板复制，不变）
+const CSS = `{完整 CSS 模板}`;
 
-const { svg, height } = await buildSvg({ css: CSS, body, width: 1320 });
-fs.writeFileSync(OUT, svg, 'utf8');
-console.log('Generated:', OUT, 'height:', height, 'px');
+// body 按下方 HTML 结构模板填充
+const HTML = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="{视频标题}视频场景英译学习卡" />
+  <title>{视频标题}｜场景英译</title>
+  <style>${CSS}</style>
+</head>
+<body>
+  {...填充下方 HTML 结构模板...}
+  <script>{填充下方 JS 脚本模板}</script>
+</body>
+</html>`;
+
+fs.writeFileSync(OUT, HTML, 'utf8');
+console.log('Generated:', OUT);
 ```
 
-### body 区模板
+### HTML 必须包含的 8 个固定区域
+
+#### (a) Hero 头部区域
 
 ```html
-<div class="container">
-
-<h1>{视频标题}</h1>
-<div class="meta">
-  <span class="tag tag-blue">{B站|小红书}</span>
-  <span class="tag tag-green">场景英译</span>
-  <span class="tag tag-orange">{时长}</span>
-  <span class="tag tag-purple">{场景数} scenes</span>
-</div>
-<div class="summary-line">{一句话：学到哪类情景表达}</div>
-
-<div class="timeline">
-  <h3>场景地图</h3>
-  <div class="timeline-item">
-    <span class="timeline-time">00:12</span>
-    <span class="timeline-text">S1 点单｜Ordering</span>
-  </div>
-</div>
-
-<div class="section">
-  <h2 class="sec-title">S1 点单｜Ordering <span class="tag tag-gray">00:12–00:48</span></h2>
-  <div class="card">
-    <p class="context">情景：在咖啡店柜台点饮品</p>
-    <table>
-      <tr><th>中文</th><th>English</th></tr>
-      <tr><td>你好，我想要一杯拿铁</td><td>Hi, I'd like a latte, please.</td></tr>
-    </table>
-    <div class="highlight">
-      <strong>Paraphrase</strong>
-      <ul>
-        <li>Could I get a latte?</li>
-        <li>Can I have a latte, please?</li>
-      </ul>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Scene English · {视频主题分类，如"伦敦旅行Vlog"}</p>
+    <h1>{视频标题}</h1>
+    <p class="hero-en">{英文副标题}</p>
+    <div class="hero-meta">
+      <span class="chip">YYYY-MM-DD</span>
+      <span class="chip">{B站|小红书}</span>
+      <span class="chip">{时长}</span>
+      <span class="chip">{N} 个场景</span>
+      <span class="chip">点下划线单词听发音</span>
+      <a class="source-link" href="{原视频链接}" target="_blank" rel="noopener">查看原视频 ↗</a>
     </div>
-    <div class="action">Chunks：I'd like… / Could I get… / for here or to go</div>
+    <div class="toolbar">
+      <label for="speech-rate">朗读速度</label>
+      <select id="speech-rate">
+        <option value="0.85">慢速 0.85×</option>
+        <option value="1" selected>正常 1×</option>
+        <option value="1.15">快速 1.15×</option>
+      </select>
+      <button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button>
+      <span id="speech-status" class="speech-status" role="status" aria-live="polite"></span>
+    </div>
   </div>
-</div>
-
-<div class="conclusion">
-  <h2>今日可练 & 认知转变</h2>
-  <h3>口头练习</h3>
-  <ol>...</ol>
-  <h3>避坑</h3>
-  <ul>...</ul>
-  <h3>认知转变</h3>
-  <p>以前只会说…… 现在在这个场景可以说……</p>
-</div>
-
-</div>
+</header>
 ```
 
-### 完整 CSS（必须使用）
+#### (b) 侧边栏场景地图
+
+```html
+<main class="page">
+  <aside class="sidebar" aria-label="场景地图">
+    <div class="sidebar-box">
+      <h2>场景地图 · SCENE MAP</h2>
+      <nav class="map-nav">
+        <a class="map-link" href="#s1">
+          <span class="map-id">S1</span>
+          <span><b>{中文场景标题}</b><small>00:00–00:31 · {English Scene Title}</small></span>
+        </a>
+        <!-- 每个场景一个 link -->
+      </nav>
+    </div>
+  </aside>
+  <div class="content">
+```
+
+#### (c) 场景卡片
+
+```html
+    <section class="scene-card" id="s1" data-scene>
+      <div class="scene-topline">
+        <div><span class="scene-id">S1</span><span class="time">00:00–00:31</span></div>
+        <button class="speak-btn scene-speak" type="button"
+          data-speak="{拼接该场景所有英文句，形成完整段落，用于「朗读整个场景」}"
+          aria-label="朗读整个场景">
+          <span aria-hidden="true">▶</span><span>朗读整个场景</span>
+        </button>
+      </div>
+      <h2>{中文场景标题}</h2>
+      <p class="scene-title-en">{English Scene Title}</p>
+      <p class="context"><b>情境</b>{情景说明}。语域：{casual/formal/评测口播等}</p>
+      <div class="sentence-list">
+        <article class="sentence">
+          <div class="sentence-no">01</div>
+          <div class="bilingual">
+            <div class="lang-block zh-block">
+              <span class="lang-tag">中文</span>
+              <p>{中文原文（ASR 已校正）}</p>
+            </div>
+            <div class="lang-block en-block">
+              <div class="en-head">
+                <span class="lang-tag">EN</span>
+                <button class="speak-btn compact" type="button"
+                  data-speak="{该句英文翻译}"
+                  aria-label="朗读本句">
+                  <span aria-hidden="true">▶</span><span>朗读本句</span>
+                </button>
+              </div>
+              <p class="english">{该句英文翻译}</p>
+            </div>
+          </div>
+          <p class="note"><span>表达提示</span>{关键词 → 英文对照（语境说明）}</p>
+        </article>
+        <!-- 每句一个 article.sentence -->
+      </div>
+      <details class="paraphrase">
+        <summary>Paraphrase &amp; Chunks <span>N 组表达</span></summary>
+        <ol>
+          <li>
+            <p>{中文意图 → 英文替换说法}</p>
+            <div class="chunks">chunk · chunk · chunk</div>
+          </li>
+          <!-- 2-4 组 -->
+        </ol>
+      </details>
+    </section>
+    <!-- 每个场景一个 section.scene-card -->
+```
+
+#### (d) 今日可练
+
+```html
+    <section class="study-section" id="practice">
+      <h2 class="section-heading">今日可练 <small>PRACTICE TODAY</small></h2>
+      <div class="study-grid">
+        <article>
+          <p>{中文练习意图}</p>
+          <div class="practice-en">
+            {英文例句}
+            <button class="speak-btn icon-only" type="button"
+              data-speak="{英文例句}" aria-label="朗读练习句">
+              <span aria-hidden="true">▶</span><span>朗读练习句</span>
+            </button>
+          </div>
+        </article>
+        <!-- 共 4 个 article，2x2 grid -->
+      </div>
+    </section>
+```
+
+#### (e) 避坑
+
+```html
+    <section class="study-section pitfalls" id="pitfalls">
+      <h2 class="section-heading">避坑 <small>PITFALLS</small></h2>
+      <div class="study-grid">
+        <article>
+          <div class="wrong">✕ {错误说法（直译腔/中式英语）}</div>
+          <div class="right">✓ {正确说法}</div>
+          <p>{为什么错，怎么才对}</p>
+        </article>
+        <!-- 共 4 个 article -->
+      </div>
+    </section>
+```
+
+#### (f) 认知转变
+
+```html
+    <section class="study-section shifts" id="mindset">
+      <h2 class="section-heading">认知转变 <small>MINDSET SHIFTS</small></h2>
+      <div class="study-grid">
+        <article>
+          <span>{以前的思维/做法}</span>
+          <b aria-hidden="true">→</b>
+          <strong>{新的思维/做法}</strong>
+        </article>
+        <!-- 共 3 个 article，三列布局 -->
+      </div>
+    </section>
+```
+
+#### (g) 页脚
+
+```html
+    <footer>ASR 专有名词已按语境校正 · 使用浏览器 Web Speech API 朗读英文</footer>
+  </div><!-- .content -->
+</main><!-- .page -->
+```
+
+#### (h) JavaScript 语音朗读（必须包含完整脚本）
+
+```javascript
+(() => {
+  const synth = window.speechSynthesis;
+  const status = document.getElementById('speech-status');
+  const stop = document.getElementById('stop-speech');
+  const rate = document.getElementById('speech-rate');
+  let activeButton = null;
+
+  const reset = () => {
+    activeButton?.classList.remove('playing');
+    activeButton = null;
+    stop.classList.remove('visible');
+    status.textContent = '';
+  };
+
+  const getEnglishVoice = () => {
+    const voices = synth.getVoices();
+    return voices.find(v => /^en-(US|GB)/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || null;
+  };
+
+  // ★ 硬词表：根据视频主题定制，包含该领域 20+ 个专业英文词
+  const difficultWords = new Set([
+    // 示例（每期视频替换为实际主题词）：
+    // 'portrait', 'bokeh', 'aperture', 'shutter', 'stabilization',
+    // 'bionz', 'catchlight', 'cmos', 'dappled', 'flagship',
+    // 'foreground', 'front-heavy', 'ghosting', 'ibis', 'iris',
+    // 'mirrorless', 'onion-ring', 'pixel-peeping', 'resolving',
+    // 'sharpness', 'specular', 'wide-open'
+  ]);
+
+  const shouldPronounce = word => {
+    const normalized = word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
+    const lettersOnly = normalized.replace(/[^a-z]/g, '');
+    return lettersOnly.length >= 8 || difficultWords.has(normalized);
+  };
+
+  const markPronounceableWords = root => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    const wordPattern = /[A-Za-z]+(?:[-'’][A-Za-z]+)*/g;
+    textNodes.forEach(node => {
+      if (node.parentElement?.closest('button, script, style')) return;
+      const text = node.nodeValue;
+      let match;
+      let last = 0;
+      const fragment = document.createDocumentFragment();
+      let changed = false;
+      while ((match = wordPattern.exec(text))) {
+        const word = match[0];
+        if (!shouldPronounce(word)) continue;
+        changed = true;
+        fragment.append(text.slice(last, match.index));
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'pronounce-word';
+        button.dataset.speak = word;
+        button.setAttribute('aria-label', `朗读单词 ${word}`);
+        button.title = `点击听 ${word} 的发音`;
+        button.textContent = word;
+        fragment.append(button);
+        last = match.index + word.length;
+      }
+      if (!changed) return;
+      fragment.append(text.slice(last));
+      node.replaceWith(fragment);
+    });
+  };
+
+  // 自动标注所有英文区域中的长单词和专业词
+  document.querySelectorAll(
+    '.english, .scene-title-en, .paraphrase li p, .chunks, .practice-en, .wrong, .right'
+  ).forEach(markPronounceableWords);
+
+  const speak = (text, button) => {
+    if (!synth) { status.textContent = '当前浏览器不支持语音朗读。'; return; }
+    synth.cancel();
+    activeButton?.classList.remove('playing');
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = Number(rate.value);
+    const voice = getEnglishVoice();
+    if (voice) utterance.voice = voice;
+    activeButton = button;
+    button.classList.add('playing');
+    stop.classList.add('visible');
+    status.textContent = button.classList.contains('scene-speak')
+      ? '正在朗读整个场景…'
+      : button.classList.contains('pronounce-word')
+        ? `正在朗读单词：${text}`
+        : '正在朗读…';
+    utterance.onend = reset;
+    utterance.onerror = (event) => {
+      if (event.error !== 'canceled' && event.error !== 'interrupted')
+        status.textContent = '朗读失败，请检查浏览器语音设置。';
+      else reset();
+    };
+    synth.speak(utterance);
+  };
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-speak]');
+    if (!button) return;
+    if (button === activeButton && synth.speaking) { synth.cancel(); reset(); return; }
+    speak(button.dataset.speak, button);
+  });
+  stop.addEventListener('click', () => { synth?.cancel(); reset(); });
+  window.addEventListener('beforeunload', () => synth?.cancel());
+  if (!synth) status.textContent = '当前浏览器不支持语音朗读。';
+})();
+```
+
+### 完整 CSS 模板（固定不变，直接复制使用）
 
 ```css
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(135deg,#f8fafc,#e2e8f0);padding:48px 60px;color:#1e293b}
-.container{max-width:1200px;margin:0 auto}
-h1{font-size:36px;font-weight:900;background:linear-gradient(135deg,#0f766e,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-h2{font-size:26px;font-weight:700;color:#0f766e;margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
-h3{font-size:20px;font-weight:700;color:#334155;margin-bottom:12px}
-p{font-size:16px;line-height:1.8;color:#475569;margin-bottom:10px}
-ul,ol{padding-left:24px;margin:8px 0}
-li{font-size:15px;line-height:1.8;color:#475569;margin-bottom:6px}
-.tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-right:8px}
-.tag-blue{background:#dbeafe;color:#1e40af}
-.tag-green{background:#d1fae5;color:#065f46}
-.tag-orange{background:#ffedd5;color:#9a3412}
-.tag-purple{background:#ede9fe;color:#6b21a8}
-.tag-red{background:#fee2e2;color:#991b1b}
-.tag-gray{background:#f1f5f9;color:#64748b}
-.meta{margin:12px 0 20px}
-.summary-line{font-size:18px;line-height:1.7;color:#334155;padding:20px 24px;background:#fff;border-radius:12px;border-left:4px solid #14b8a6;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
-.timeline{background:#fff;border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
-.timeline h3{color:#0f766e;margin-bottom:12px}
-.timeline-item{display:flex;align-items:baseline;padding:8px 0;border-bottom:1px solid #f1f5f9}
-.timeline-time{font-size:14px;font-weight:700;color:#0d9488;min-width:70px;font-variant-numeric:tabular-nums}
-.timeline-text{font-size:15px;color:#475569}
-.section{margin-bottom:32px}
-.sec-title{font-size:22px;font-weight:700;color:#0f766e;margin-bottom:16px;padding-left:16px;border-left:4px solid #14b8a6}
-.card{background:#fff;border-radius:16px;padding:32px;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,0.06);border-left:5px solid #14b8a6}
-.card .context{font-size:15px;color:#64748b;margin-bottom:16px;padding:12px 16px;background:#f0fdfa;border-radius:10px}
-.card .highlight{background:#fef3c7;padding:12px 16px;border-radius:10px;margin:12px 0;font-size:15px;color:#92400e;border-left:4px solid #f59e0b}
-.card .action{background:#ecfdf5;padding:12px 16px;border-radius:10px;margin:12px 0;font-size:15px;color:#065f46;border-left:4px solid #10b981}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
-th{background:#f0fdfa;padding:12px 16px;text-align:left;font-weight:700;color:#0f766e;border-bottom:2px solid #99f6e4}
-td{padding:12px 16px;border-bottom:1px solid #e2e8f0;color:#475569;vertical-align:top}
-tr:nth-child(even) td{background:#fafbfc}
-.conclusion{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:20px;padding:36px;margin-top:32px}
-.conclusion h2{font-size:26px;font-weight:800;margin-top:0;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.2);color:#fff}
-.conclusion h3{font-size:18px;font-weight:700;color:rgba(255,255,255,0.9);margin:20px 0 10px}
-.conclusion p,.conclusion li{color:rgba(255,255,255,0.9);font-size:15px}
+:root {
+  --teal-950:#073f42; --teal-800:#0d686c; --teal-700:#0f7c80; --teal-600:#14919b;
+  --mint-100:#dff4ec; --mint-50:#f0faf6; --ink:#183536; --muted:#607879;
+  --line:#d7e8e2; --paper:#fff; --amber:#a85d08; --shadow:0 12px 32px rgba(7,63,66,.08);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:24px; }
+body { margin:0; color:var(--ink); background:#edf7f2; font-family:Inter,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif; line-height:1.65; }
+button, select { font:inherit; }
+a { color:inherit; }
+.hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
+.hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+.eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
+h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
+.hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
+.hero-meta { display:flex; flex-wrap:wrap; gap:9px; align-items:center; }
+.chip { border:1px solid rgba(255,255,255,.28); border-radius:99px; padding:5px 11px; font-size:.82rem; background:rgba(255,255,255,.08); }
+.source-link { font-weight:750; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.5); }
+.toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:24px; }
+.toolbar label { font-size:.82rem; opacity:.82; }
+.toolbar select { color:#fff; background:#0a5d61; border:1px solid rgba(255,255,255,.3); border-radius:8px; padding:7px 9px; }
+.stop-btn { display:none; color:#fff; background:#8c3b2a; border:0; border-radius:8px; padding:8px 12px; cursor:pointer; }
+.stop-btn.visible { display:inline-flex; }
+.speech-status { min-height:1.4em; font-size:.82rem; opacity:.88; }
+.page { width:min(1440px,100%); margin:auto; padding:28px clamp(16px,3vw,44px) 64px; display:grid; grid-template-columns:minmax(230px,280px) minmax(0,1fr); gap:30px; align-items:start; }
+.sidebar { position:sticky; top:20px; min-width:0; }
+.sidebar-box { background:rgba(255,255,255,.8); border:1px solid var(--line); border-radius:16px; padding:17px; box-shadow:var(--shadow); backdrop-filter:blur(12px); }
+.sidebar h2 { margin:0 0 13px; font-size:.9rem; letter-spacing:.08em; color:var(--teal-800); }
+.map-link { display:grid; grid-template-columns:34px minmax(0,1fr); gap:9px; padding:10px 6px; text-decoration:none; border-top:1px solid var(--line); }
+.map-link:hover b { color:var(--teal-700); }
+.map-id { width:30px; height:30px; display:grid; place-items:center; border-radius:9px; color:#fff; background:var(--teal-700); font-size:.72rem; font-weight:800; }
+.map-link b { display:block; font-size:.78rem; line-height:1.4; }
+.map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
+.content { min-width:0; }
+.scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+.scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
+.scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
+.time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
+.scene-card h2 { margin:18px 0 2px; font-size:clamp(1.35rem,2.4vw,2rem); line-height:1.25; color:var(--teal-950); }
+.scene-title-en { margin:0 0 18px; color:var(--teal-600); font-weight:700; font-size:.98rem; }
+.context { margin:0 0 20px; padding:12px 15px; color:#496566; background:var(--mint-50); border-left:3px solid var(--teal-600); border-radius:0 10px 10px 0; font-size:.88rem; }
+.context b { margin-right:10px; color:var(--teal-800); }
+.sentence-list { display:grid; gap:12px; }
+.sentence { position:relative; display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; padding:16px; border:1px solid #e2ece8; border-radius:14px; background:#fcfefd; min-width:0; }
+.sentence-no { color:var(--teal-600); font-size:.76rem; font-weight:850; font-variant-numeric:tabular-nums; padding-top:4px; }
+.bilingual { min-width:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(14px,2vw,28px); }
+.lang-block { min-width:0; }
+.lang-block p { margin:5px 0 0; overflow-wrap:anywhere; }
+.en-block { padding-left:clamp(14px,2vw,28px); border-left:1px solid var(--line); }
+.en-block p { color:#0b5c60; font-weight:650; }
+.lang-tag { display:inline-block; color:var(--muted); font-size:.66rem; font-weight:850; letter-spacing:.12em; }
+.en-head { display:flex; justify-content:space-between; gap:10px; align-items:center; min-height:30px; }
+.note { grid-column:2; margin:1px 0 0; color:#708182; font-size:.78rem; }
+.note span { margin-right:7px; color:var(--amber); font-weight:750; }
+.speak-btn { display:inline-flex; align-items:center; gap:7px; border:1px solid #b8d9d1; border-radius:9px; padding:7px 11px; color:var(--teal-800); background:#f5fbf8; cursor:pointer; white-space:nowrap; font-size:.78rem; font-weight:750; transition:.15s ease; }
+.speak-btn:hover { color:#fff; background:var(--teal-700); border-color:var(--teal-700); transform:translateY(-1px); }
+.speak-btn.playing { color:#fff; background:var(--teal-700); border-color:var(--teal-700); }
+.speak-btn.compact { padding:4px 8px; font-size:.7rem; }
+.speak-btn.icon-only { padding:3px 7px; margin-left:6px; }
+.speak-btn.icon-only span:last-child { display:none; }
+.pronounce-word { display:inline; margin:0; padding:0 2px; color:inherit; background:rgba(20,145,155,.08); border:0; border-bottom:1px dashed var(--teal-600); border-radius:3px; font:inherit; font-weight:inherit; line-height:inherit; cursor:pointer; }
+.pronounce-word:hover, .pronounce-word:focus { color:var(--teal-950); background:#cceee4; border-bottom-style:solid; outline:3px solid rgba(20,145,155,.42); outline-offset:2px; }
+.pronounce-word.playing { color:#fff; background:var(--teal-700); border-bottom-color:var(--teal-700); }
+.paraphrase { margin-top:18px; border-top:1px solid var(--line); }
+.paraphrase summary { padding:16px 0 3px; color:var(--teal-800); cursor:pointer; font-weight:800; }
+.paraphrase summary span { color:var(--muted); font-size:.75rem; font-weight:500; margin-left:8px; }
+.paraphrase ol { margin:12px 0 0; padding-left:22px; }
+.paraphrase li { padding:7px 0 9px 5px; }
+.paraphrase li p { margin:0; font-size:.9rem; font-weight:650; }
+.chunks { margin-top:4px; color:var(--teal-700); font-size:.78rem; }
+.study-section { margin:38px 0 0; }
+.section-heading { display:flex; align-items:baseline; gap:10px; margin:0 0 15px; color:var(--teal-950); font-size:1.35rem; }
+.section-heading small { color:var(--teal-600); font-size:.78rem; letter-spacing:.05em; }
+.study-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.study-grid article { padding:17px; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 6px 18px rgba(7,63,66,.05); min-width:0; }
+.study-grid p { margin:0; }
+.practice-en { margin-top:9px; color:var(--teal-700); font-weight:650; overflow-wrap:anywhere; }
+.wrong { color:#a24831; text-decoration:line-through; overflow-wrap:anywhere; }
+.right { color:var(--teal-700); font-weight:750; margin:5px 0; overflow-wrap:anywhere; }
+.pitfalls p { color:var(--muted); font-size:.82rem; }
+.shifts article { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1.5fr); gap:12px; align-items:center; }
+.shifts b { color:var(--teal-600); font-size:1.2rem; }
+.shifts strong { color:var(--teal-800); }
+footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:center; }
+@media (max-width:900px) {
+  .page { grid-template-columns:1fr; }
+  .sidebar { position:static; }
+  .sidebar-box { overflow-x:auto; padding:12px; }
+  .sidebar h2 { padding-left:5px; }
+  .map-nav { display:flex; width:max-content; gap:8px; }
+  .map-link { width:220px; border:1px solid var(--line); border-radius:10px; padding:8px; }
+  .bilingual { grid-template-columns:1fr; }
+  .en-block { padding:12px 0 0; border-left:0; border-top:1px dashed var(--line); }
+}
+@media (max-width:620px) {
+  .hero-inner { padding-top:32px; }
+  .page { padding-inline:10px; gap:18px; }
+  .scene-card { border-radius:14px; padding:17px 13px; }
+  .scene-topline { align-items:flex-start; }
+  .scene-speak span:last-child { display:none; }
+  .sentence { grid-template-columns:26px minmax(0,1fr); padding:13px 10px; gap:6px; }
+  .note { grid-column:2; }
+  .study-grid { grid-template-columns:1fr; }
+  .shifts article { grid-template-columns:1fr; gap:5px; }
+  .shifts b { transform:rotate(90deg); justify-self:start; }
+}
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .speak-btn { transition:none; } }
 ```
 
 ### 运行
@@ -271,22 +601,26 @@ node generate-{slug}.mjs
 
 优先 Node：`/Applications/Cursor.app/Contents/Resources/app/resources/helpers/node`。
 
-### XML 避坑
-
-- HTML 注释禁止连续 `--`
-- 裸 `<` 转义为 `&lt;`
-- `buildSvg` 已修复 `&` 与 `<br/>`
-
 ---
 
 ## Step 7：质量自检
 
+- [ ] 产出为 HTML 文件（非 SVG），可在浏览器中正常渲染并支持语音朗读
 - [ ] 场景数在 4–12，且有时间范围
-- [ ] 每个关键场景有中英对照表
-- [ ] 每个关键场景有 paraphrase（≥2 种说法）
-- [ ] 有 chunks / 今日可练 / 避坑
+- [ ] 每个关键场景有逐句中英对照表
+- [ ] **每个句子有表达提示**（`<p class="note">`，含关键词对译 + 语境说明）
+- [ ] 每个场景有场景级朗读文本（`data-speak` 完整英文段落）
+- [ ] 每个关键场景有 paraphrase（≥2 种说法），使用 `<details>` 可折叠结构，含 chunks
+- [ ] Paraphrase 每组含中文意图 → 英文替换说法 + chunks 标注
+- [ ] 避坑使用 wrong/right 对照格式（删除线红 ✕ + 加粗绿 ✓），4 组
+- [ ] 认知转变使用三列对照格式（以前思维 → 新思维），3 组
+- [ ] 今日可练使用卡片 grid 布局，4 个练习卡，每卡含中文意图 + 英文例句 + 朗读按钮
+- [ ] 硬词表覆盖视频主题领域词（≥20 个），按视频主题定制
+- [ ] Hero 头部含 eyebrow 分类、中英标题、meta chips、速度控制工具栏
+- [ ] 侧边栏场景地图可点击跳转，含编号徽章 + 中英标题 + 时间
+- [ ] 页脚标注「ASR 专有名词已按语境校正 · 使用浏览器 Web Speech API 朗读英文」
 - [ ] 不是「内容总结文」，而是「可开口练的情景英语」
-- [ ] SVG 高度正常、XML 无错配标签
+- [ ] HTML 单文件，CSS/JS 内嵌，无外部依赖
 
 ---
 
@@ -296,20 +630,37 @@ node generate-{slug}.mjs
 
 ```json
 {
+  "slug": "crab-london",
   "date": "YYYY-MM-DD",
-  "filename": "slug-场景英译.svg",
   "title": "视频标题",
-  "summary": "一句话：学到的情景类型与核心表达，≤120字",
-  "tags": ["点餐", "口语", "小红书"],
-  "url": "https://...",
-  "duration": "3分20秒",
-  "scenes": 6,
+  "title_en": "English Title",
   "platform": "bilibili",
-  "svg_height": 9560
+  "url": "原始短链接",
+  "webpage_url": "解析后的完整 URL",
+  "duration_sec": 439,
+  "scenes": 9,
+  "sentences": 52,
+  "html": "slug-场景英译.html",
+  "speech": true
 }
 ```
 
-`platform`：`bilibili` 或 `xiaohongshu`。失败项加 `"error": true` 与 `error_message`。
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `slug` | 是 | 英文/拼音 slug，与 HTML 文件名一致 |
+| `date` | 是 | 展示日期 `YYYY-MM-DD` |
+| `title` | 是 | 视频中文标题 |
+| `title_en` | 是 | 英文副标题 |
+| `platform` | 是 | `bilibili` 或 `xiaohongshu` |
+| `url` | 是 | 原始短链接（如 `https://b23.tv/xxx`） |
+| `webpage_url` | 是 | 解析后的完整 URL |
+| `duration_sec` | 是 | 视频时长（秒） |
+| `scenes` | 是 | 场景数 |
+| `sentences` | 是 | 总句数 |
+| `html` | 是 | HTML 文件名 `{slug}-场景英译.html` |
+| `speech` | 是 | 是否支持语音朗读（HTML 格式始终为 `true`） |
+
+失败项加 `"error": true` 与 `error_message`。**不再使用** `svg_height` 字段。
 
 ---
 
@@ -344,9 +695,9 @@ rm generate-{slug}.mjs
 
 | 文件 | 说明 |
 |------|------|
-| `{slug}.m4a` | 原始音频 |
-| `{slug}.txt` / `.srt` / `.json` | 转录 |
-| `docs/{slug}-场景英译.svg` | 场景英译长图 |
+| `{slug}.m4a` | 原始音频（可选保留） |
+| `{slug}.json` / `.srt` | 转录产物（可选保留） |
+| `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，单文件，CSS/JS 内嵌） |
 
 ---
 
@@ -356,6 +707,9 @@ rm generate-{slug}.mjs
 - 不修改非 `docs/` 文件（`generate-{slug}.mjs` 除外，用完删除）
 - 不修改 `.gitignore`
 - 同 URL 不重复处理
-- 严禁 `rsvg-convert` / Inkscape
+- **所有视频处理产出必须为 HTML 格式**，不再使用 SVG
+- CSS 和 JS 直接内嵌在 HTML 中（单文件，无外部依赖）
+- 不依赖 `svg-auto-height.mjs`
+- 硬词表根据视频主题定制（非固定模板）
 - **必须 push 到 main**，否则 Pages 不更新
 - 主目标是情景英语，不是视频内容摘要
