@@ -269,19 +269,14 @@ console.log('Generated:', OUT);
       <button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button>
       <span id="speech-status" class="speech-status" role="status" aria-live="polite"></span>
     </div>
-    <div class="narration-player" id="narration-player">
+    <div class="narration-player">
       <p class="audio-label">🎧 语音讲解</p>
-      <audio id="narration-audio" controls preload="metadata"
-        src="audio/{slug}/narration.mp3">
-        您的浏览器不支持音频播放
-      </audio>
-      <div class="playback-speed">
-        <span class="speed-label">速度</span>
-        <button type="button" class="speed-btn active" onclick="setNarrationSpeed(0.75)">0.75x</button>
-        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1)">1x</button>
-        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1.25)">1.25x</button>
-        <button type="button" class="speed-btn" onclick="setNarrationSpeed(1.5)">1.5x</button>
-      </div>
+      <!-- 禁止使用 <audio> 元素：静态 audio 在部分托管环境会触发整文件预加载，
+           导致页面加载卡死。统一使用 data-audio 按钮，通过 JS new Audio() 按需加载 -->
+      <button class="speak-btn" type="button"
+        data-audio="audio/{slug}/narration.mp3" aria-label="播放语音讲解">
+        <span aria-hidden="true">▶</span><span>播放语音讲解</span>
+      </button>
     </div>
   </div>
 </header>
@@ -550,15 +545,6 @@ MP3 优先方案：场景/句子/练习朗读使用 edge-tts 生成的 MP3 音�
     u.onerror = () => { activeBtn?.classList.remove('playing'); activeBtn = null; };
     synth.speak(u);
   });
-  // 旁白变速
-  window.setNarrationSpeed = rate => {
-    const audio = document.getElementById('narration-audio');
-    if (!audio) return;
-    audio.playbackRate = rate;
-    document.querySelectorAll('#narration-player .speed-btn').forEach(b => {
-      b.classList.toggle('active', parseFloat(b.textContent) === rate);
-    });
-  };
 })();
 ```
 
@@ -679,6 +665,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
 .speed-label { color:rgba(255,255,255,.7); font-size:.72rem; }
 .speed-btn { color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:6px; padding:3px 8px; font-size:.7rem; cursor:pointer; }
 .speed-btn.active { background:rgba(255,255,255,.28); border-color:rgba(255,255,255,.5); }
+.narration-player .speak-btn { color:#fff; background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.35); }
 ```
 
 ### 运行
@@ -706,12 +693,12 @@ node generate-{slug}.mjs
 - [ ] 今日可练使用卡片 grid 布局，4 个练习卡，每卡含中文意图 + 英文例句 + 朗读按钮（`data-audio` 指向练习 MP3）
 - [ ] 硬词表覆盖视频主题领域词（≥20 个），按视频主题定制
 - [ ] mark 函数中正则定义在循环外（`const re = ...`），禁止在 `while` 条件内联正则字面量（会导致无限循环卡死浏览器）
-- [ ] Hero 头部含 narration 中文语音播放器（`<audio>` 元素 + 变速按钮）
+- [ ] Hero 头部含 narration 中文语音播放按钮（`data-audio` 指向 narration.mp3，禁止使用静态 `<audio>` 元素，避免预加载卡死浏览器）
 - [ ] 侧边栏场景地图可点击跳转，含编号徽章 + 中英标题 + 时间
 - [ ] 页脚标注「场景/句子朗读使用 edge-tts 神经网络语音 · 单词发音使用浏览器 Web Speech API」
 - [ ] 音频文件齐全：narration.mp3 + 每个场景 s{N}.mp3 + 每句 s{N}-idx.mp3 + 练习 practice-idx.mp3
 - [ ] 不是「内容总结文」，而是「可开口练的情景英语」
-- [ ] HTML 单文件，CSS/JS 内嵌<br><br>音频通过 `<audio>` 元素加载外部 MP3（edge-tts 生成）
+- [ ] HTML 单文件，CSS/JS 内嵌<br><br>音频通过 `data-audio` 按钮 + JS `new Audio()` 按需加载外部 MP3（edge-tts 生成），**禁止静态 `<audio>` 元素**
 
 ---
 
@@ -788,7 +775,7 @@ rm generate-{slug}.mjs
 |------|------|
 | `{slug}.m4a` | 原始音频（可选保留） |
 | `{slug}.json` / `.srt` | 转录产物（可选保留） |
-| `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，CSS/JS 内嵌，通过 `<audio>` 加载 MP3） |
+| `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，CSS/JS 内嵌，音频通过 `data-audio` + JS `new Audio()` 按需加载 MP3） |
 | `docs/audio/{slug}/` | **音频目录**：narration.mp3（中文讲解）+ 场景/逐句/练习英文 MP3（edge-tts 生成） |
 
 ---
