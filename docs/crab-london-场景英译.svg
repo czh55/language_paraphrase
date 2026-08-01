@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="15747" viewBox="0 0 1320 15747">
+  <foreignObject x="0" y="0" width="1320" height="15747">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(135deg,#f8fafc,#e2e8f0);padding:48px 60px;color:#1e293b}
+.container{max-width:1200px;margin:0 auto}
+h1{font-size:36px;font-weight:900;background:linear-gradient(135deg,#0f766e,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+h2{font-size:26px;font-weight:700;color:#0f766e;margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+h3{font-size:20px;font-weight:700;color:#334155;margin-bottom:12px}
+p{font-size:16px;line-height:1.8;color:#475569;margin-bottom:10px}
+ul,ol{padding-left:24px;margin:8px 0}
+li{font-size:15px;line-height:1.8;color:#475569;margin-bottom:6px}
+.tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-right:8px}
+.tag-blue{background:#dbeafe;color:#1e40af}
+.tag-green{background:#d1fae5;color:#065f46}
+.tag-orange{background:#ffedd5;color:#9a3412}
+.tag-purple{background:#ede9fe;color:#6b21a8}
+.tag-red{background:#fee2e2;color:#991b1b}
+.tag-gray{background:#f1f5f9;color:#64748b}
+.meta{margin:12px 0 20px}
+.summary-line{font-size:18px;line-height:1.7;color:#334155;padding:20px 24px;background:#fff;border-radius:12px;border-left:4px solid #14b8a6;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.timeline{background:#fff;border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.timeline h3{color:#0f766e;margin-bottom:12px}
+.timeline-item{display:flex;align-items:baseline;padding:8px 0;border-bottom:1px solid #f1f5f9}
+.timeline-time{font-size:14px;font-weight:700;color:#0d9488;min-width:70px;font-variant-numeric:tabular-nums}
+.timeline-text{font-size:15px;color:#475569}
+.section{margin-bottom:32px}
+.sec-title{font-size:22px;font-weight:700;color:#0f766e;margin-bottom:16px;padding-left:16px;border-left:4px solid #14b8a6}
+.card{background:#fff;border-radius:16px;padding:32px;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,0.06);border-left:5px solid #14b8a6}
+.card .context{font-size:15px;color:#64748b;margin-bottom:16px;padding:12px 16px;background:#f0fdfa;border-radius:10px}
+.card .highlight{background:#fef3c7;padding:12px 16px;border-radius:10px;margin:12px 0;font-size:15px;color:#92400e;border-left:4px solid #f59e0b}
+.card .action{background:#ecfdf5;padding:12px 16px;border-radius:10px;margin:12px 0;font-size:15px;color:#065f46;border-left:4px solid #10b981}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th{background:#f0fdfa;padding:12px 16px;text-align:left;font-weight:700;color:#0f766e;border-bottom:2px solid #99f6e4}
+td{padding:12px 16px;border-bottom:1px solid #e2e8f0;color:#475569;vertical-align:top}
+tr:nth-child(even) td{background:#fafbfc}
+.conclusion{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:20px;padding:36px;margin-top:32px}
+.conclusion h2{font-size:26px;font-weight:800;margin-top:0;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.2);color:#fff}
+.conclusion h3{font-size:18px;font-weight:700;color:rgba(255,255,255,0.9);margin:20px 0 10px}
+.conclusion p,.conclusion li{color:rgba(255,255,255,0.9);font-size:15px}</style>
+      
+<div class="container">
+
+<h1>蟹 逅 伦 敦！</h1>
+<div class="meta">
+  <span class="tag tag-blue">B站</span>
+  <span class="tag tag-green">场景英译</span>
+  <span class="tag tag-orange">7分19秒</span>
+  <span class="tag tag-purple">9 scenes</span>
+</div>
+<div class="summary-line">跟着帕丁顿熊和电影地图游伦敦：从落地第一顿炸鱼薯条，到诺丁山书店、裁缝街 Kingsman，涉及旅行打卡、点餐、天气吐槽、电影取景地介绍等真实旅行场景的英文表达。</div>
+
+<div class="timeline">
+  <h3>场景地图</h3>
+  <div class="timeline-item"><span class="timeline-time">00:00</span><span class="timeline-text">S1 开场：帕丁顿熊的比喻｜Opening: The Paddington Metaphor</span></div>
+  <div class="timeline-item"><span class="timeline-time">00:55</span><span class="timeline-text">S2 初到伦敦：大本钟与天气｜First Impressions: Big Ben &amp; Weather</span></div>
+  <div class="timeline-item"><span class="timeline-time">01:21</span><span class="timeline-text">S3 新冠纪念墙｜COVID Memorial Wall</span></div>
+  <div class="timeline-item"><span class="timeline-time">01:44</span><span class="timeline-text">S4 落地第一顿：炸鱼薯条 &amp; 中餐｜First Meal: Fish &amp; Chips &amp; Chinese</span></div>
+  <div class="timeline-item"><span class="timeline-time">02:36</span><span class="timeline-text">S5 酒吧景观位｜Bar with a View</span></div>
+  <div class="timeline-item"><span class="timeline-time">02:58</span><span class="timeline-text">S6 自然历史博物馆｜Natural History Museum</span></div>
+  <div class="timeline-item"><span class="timeline-time">04:27</span><span class="timeline-text">S7 诺丁山 &amp; 电影书店｜Notting Hill &amp; the Bookshop</span></div>
+  <div class="timeline-item"><span class="timeline-time">05:20</span><span class="timeline-text">S8 裁缝街 &amp; Kingsman｜Savile Row &amp; Kingsman</span></div>
+  <div class="timeline-item"><span class="timeline-time">06:44</span><span class="timeline-text">S9 最后一天：晴天伦敦｜Final Day: Sunny London</span></div>
+</div>
+
+<!-- S1 -->
+<div class="section">
+  <h2 class="sec-title">S1 开场：帕丁顿熊的比喻｜Opening: The Paddington Metaphor <span class="tag tag-gray">00:00–00:51</span></h2>
+  <div class="card">
+    <p class="context">情景：博主在伦敦开场，用帕丁顿熊的故事比喻自己远道而来的心情——从遥远的地方坐飞机过来，带着一箱设备而非果酱。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>伦敦有一只非常著名的小熊，就是帕丁顿熊。</td><td>There's a very famous little bear in London &amp;mdash; Paddington Bear.</td></tr>
+      <tr><td>他是从很远的秘鲁坐船过来的。</td><td>He came all the way from Peru by boat.</td></tr>
+      <tr><td>我觉得我跟他特别的像，也是从大老远的地方坐飞机过来的。</td><td>I feel like I'm a lot like him &amp;mdash; I also came from far away, but by plane.</td></tr>
+      <tr><td>但我大概不是果酱，带的是一箱子的设备。</td><td>But instead of marmalade, I brought a suitcase full of gear.</td></tr>
+      <tr><td>帕丁顿来到伦敦时，脖子上挂着一张写着「请照顾好这只熊」的纸条。</td><td>When Paddington arrived in London, he had a tag around his neck that said "Please look after this bear."</td></tr>
+      <tr><td>第一次来到伦敦的我也想借用一下这句话：请照顾好这只蟹。</td><td>As a first-timer in London, I'd like to borrow that line: Please look after this crab.</td></tr>
+      <tr><td>在真正站在这里之前，我对伦敦的认识其实还蛮零碎的。</td><td>Before actually standing here, my knowledge of London was pretty scattered.</td></tr>
+      <tr><td>大本钟、阴晴不定的天气，还有电影里那些似曾相识的街道。</td><td>Big Ben, unpredictable weather, and streets that felt familiar from movies.</td></tr>
+      <tr><td>所以这一次我想认真当一回游客，也想看看那些电影里的地方现实中到底是什么样的。</td><td>So this time I want to be a proper tourist and see what those movie locations actually look like in real life.</td></tr>
+      <tr><td>欢迎收看本期的邂逅时间——伦敦。</td><td>Welcome to this episode of Encounter Time &amp;mdash; London.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>I'm a lot like him</strong> &amp;rarr; I really identify with him / I can totally relate to him</li>
+        <li><strong>all the way from...</strong> &amp;rarr; all the way over from... / from as far away as...</li>
+        <li><strong>pretty scattered</strong> &amp;rarr; all over the place / kind of random / a bit of a mixed bag</li>
+        <li><strong>a proper tourist</strong> &amp;rarr; a real tourist / do the whole tourist thing / play tourist for real</li>
+        <li><strong>借用了这句话</strong> &amp;rarr; I'd like to steal that line / I'm gonna borrow that phrase / let me quote that</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：all the way from… / a lot like… / instead of… / pretty (scattered) / borrow that line / look after</div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="section">
+  <h2 class="sec-title">S2 初到伦敦：大本钟与天气｜First Impressions: Big Ben &amp; Weather <span class="tag tag-gray">00:55–01:20</span></h2>
+  <div class="card">
+    <p class="context">情景：博主落地伦敦，站在大本钟前吐槽伦敦的阴雨天气，顺便科普伦敦年降雨量其实不如上海。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>家人們到伦敦了！</td><td>Hey guys, we've made it to London!</td></tr>
+      <tr><td>既然是第一次来，那有些游客作业总还是要交一下的。后面是大本钟。</td><td>Since it's my first time, I've gotta do the obligatory tourist stuff. Big Ben's right behind me.</td></tr>
+      <tr><td>但今天一到伦敦这个天气就非常典型，特别的伦敦——阴雨绵绵的。</td><td>But the weather today is just so typical, so London &amp;mdash; drizzly and grey.</td></tr>
+      <tr><td>但是据说其实伦敦全年的降雨量它没有上海多，这个你改心。</td><td>But apparently London's annual rainfall is actually less than Shanghai's &amp;mdash; let that sink in.</td></tr>
+      <tr><td>主要是它每次都是下一点点毛毛雨。可能这就是为什么经常看到伦敦人下雨天不打伞的原因吧。</td><td>It's mainly because it's always just a light drizzle. Maybe that's why you often see Londoners not bothering with umbrellas.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>we've made it!</strong> &amp;rarr; we're here! / we've arrived! / touchdown London!</li>
+        <li><strong>obligatory tourist stuff</strong> &amp;rarr; the must-do tourist checklist / the standard tourist routine</li>
+        <li><strong>so typical, so London</strong> &amp;rarr; classic London / peak London / couldn't be more London</li>
+        <li><strong>let that sink in</strong> &amp;rarr; think about that for a second / chew on that / wrap your head around that</li>
+        <li><strong>not bothering with umbrellas</strong> &amp;rarr; can't be bothered with umbrellas / don't even bother with umbrellas</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：we've made it / gotta do the... / right behind me / so typical / let that sink in / not bothering with…</div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="section">
+  <h2 class="sec-title">S3 新冠纪念墙｜COVID Memorial Wall <span class="tag tag-gray">01:21–01:44</span></h2>
+  <div class="card">
+    <p class="context">情景：博主路过一面满是爱心的墙，发现每颗爱心代表一位新冠逝者。语气从轻松转为沉重。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>我后面这个墙上全都是爱心。</td><td>The wall behind me is covered in hearts.</td></tr>
+      <tr><td>但这里每颗爱心都代表一位新冠逝者。</td><td>But each heart here represents someone who passed away from COVID.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>is covered in hearts</strong> &amp;rarr; is full of hearts / is plastered with hearts / has hearts all over it</li>
+        <li><strong>passed away from COVID</strong> &amp;rarr; died of COVID / lost their life to COVID / was a COVID victim</li>
+        <li><strong>represents</strong> &amp;rarr; stands for / symbolizes / is a tribute to</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：covered in… / each… represents… / passed away from… / in memory of…</div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="section">
+  <h2 class="sec-title">S4 落地第一顿：炸鱼薯条 &amp; 中餐｜First Meal: Fish &amp; Chips &amp; Chinese <span class="tag tag-gray">01:44–02:36</span></h2>
+  <div class="card">
+    <p class="context">情景：博主在伦敦的第一顿吃了炸鱼薯条（仪式感），但还是跑去吃了中餐的肉夹馍（中国胃），感叹中餐出了国价格涨了但魅力不减。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>落地伦敦的第一顿当然要吃炸鱼薯条了。</td><td>For my first meal in London, fish and chips was a no-brainer.</td></tr>
+      <tr><td>我们找到一家从1988年开到现在、号称英国顶尖的老店。</td><td>We found a place that's been around since 1988, supposedly one of the best in the UK.</td></tr>
+      <tr><td>还碰到一个当地人跟我们说这是伦敦最好吃的炸鱼薯条。</td><td>Even ran into a local who told us it's the best fish and chips in London.</td></tr>
+      <tr><td>最好吃不敢说，但伦敦第一顿的仪式感算是有了。</td><td>Can't say if it's the best, but at least we got that first-meal-in-London ritual out of the way.</td></tr>
+      <tr><td>仪式归仪式，但中国胃是不一样的。所以我们来了一家从某个年代开到现在的老店。</td><td>Rituals aside, a Chinese stomach is a different story. So we came to this long-standing spot.</td></tr>
+      <tr><td>来看看这个西安的肉夹馍，折算下来一百多块钱一份。</td><td>Check out this Xi'an-style roujiamo &amp;mdash; works out to over a hundred yuan each.</td></tr>
+      <tr><td>中餐出了国，价格是涨了，魅力倒是一点没打折。</td><td>Chinese food abroad &amp;mdash; the price goes up, but the appeal doesn't drop one bit.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>a no-brainer</strong> &amp;rarr; an obvious choice / a given / goes without saying</li>
+        <li><strong>been around since 1988</strong> &amp;rarr; been open since 1988 / has been serving since 1988</li>
+        <li><strong>ran into a local</strong> &amp;rarr; bumped into a local / a local came up to us</li>
+        <li><strong>got that ritual out of the way</strong> &amp;rarr; checked that box / ticked that off the list</li>
+        <li><strong>rituals aside</strong> &amp;rarr; that said / having said that / but let's be real</li>
+        <li><strong>a different story</strong> &amp;rarr; a whole other matter / that's another thing entirely</li>
+        <li><strong>works out to</strong> &amp;rarr; comes to / adds up to / that's about</li>
+        <li><strong>the appeal doesn't drop one bit</strong> &amp;rarr; still just as good / every bit as tempting</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：a no-brainer / been around since… / ran into… / got… out of the way / …aside / a different story / works out to… / doesn't drop one bit</div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="section">
+  <h2 class="sec-title">S5 酒吧景观位｜Bar with a View <span class="tag tag-gray">02:36–02:56</span></h2>
+  <div class="card">
+    <p class="context">情景：博主没有预约就去了伦敦一家有名的酒吧，结果意外坐到了全场景观位——体验感拉满，账单也一样。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>伦敦还有一家挺有名的酒吧，但是我没有预约，最后只能坐在了吧台位。</td><td>There's this pretty famous bar in London, but I didn't have a reservation, so I ended up at the counter.</td></tr>
+      <tr><td>但是没有想到这个临时的座位真的是全场景佳的景观位。</td><td>But who would've thought &amp;mdash; this last-minute seat turned out to be the best view in the whole place.</td></tr>
+      <tr><td>怎么样，体验感拉满吧？不过账单也一样。</td><td>Pretty amazing experience, right? Though the bill was just as impressive.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>ended up at the counter</strong> &amp;rarr; wound up at the bar / had to settle for the bar seat</li>
+        <li><strong>who would've thought</strong> &amp;rarr; turns out / surprisingly enough / as it happens</li>
+        <li><strong>turned out to be</strong> &amp;rarr; ended up being / happened to be / was actually</li>
+        <li><strong>体验感拉满</strong> &amp;rarr; a top-tier experience / the experience was off the charts / couldn't have asked for more</li>
+        <li><strong>the bill was just as impressive</strong> &amp;rarr; the bill matched the view / you pay for what you get / the price tag was equally stunning</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：ended up at… / who would've thought / turned out to be / off the charts / just as impressive</div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="section">
+  <h2 class="sec-title">S6 自然历史博物馆｜Natural History Museum <span class="tag tag-gray">02:58–04:23</span></h2>
+  <div class="card">
+    <p class="context">情景：博主拿电影当旅行地图，来到帕丁顿熊差点被做成标本的地方——自然历史博物馆，看恐龙化石和动物标本。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>虽然伦敦是第一次来，但有些画面早就在电影里面见过了。</td><td>Even though it's my first time in London, some of these scenes I've already seen in movies.</td></tr>
+      <tr><td>比如眼前的这个帕丁顿车站，是不是还挺熟悉的？</td><td>Like Paddington Station right here &amp;mdash; does it look familiar?</td></tr>
+      <tr><td>今天我们就拿电影当地图，看看银幕外的伦敦。</td><td>Today we're using movies as our map to see London beyond the screen.</td></tr>
+      <tr><td>跟随着帕丁顿熊的足迹，我来到了英国的自然历史博物馆，这里就是帕丁顿熊差点被抓起做成标本的地方。</td><td>Following Paddington's footsteps, I ended up at the Natural History Museum &amp;mdash; the very place where Paddington was almost turned into a stuffed specimen.</td></tr>
+      <tr><td>哇这里真的好壮观！挑高非常的高，像一个城堡一样。</td><td>Wow, this place is absolutely stunning! The ceiling is so high, it's like a castle.</td></tr>
+      <tr><td>这个大厅里面最值得看的就是这个被吊起来的蓝鲸化石。</td><td>The main thing to see in this hall is the blue whale skeleton hanging from the ceiling.</td></tr>
+      <tr><td>它整个动作就是一个向下俯冲捕食的动作，我感觉站在它下面特别的小。</td><td>It's posed mid-dive, like it's swooping down to catch prey. I feel so tiny standing underneath it.</td></tr>
+      <tr><td>这些化石看着确实挺震撼的，但这里还有很多动物标本。</td><td>The fossils are genuinely impressive, but there are also loads of animal specimens here.</td></tr>
+      <tr><td>真的每一只都栩栩如生。能近距离看到这么多难得一见的标本，确实挺厉害的。</td><td>Every single one looks so lifelike. Getting to see so many rare specimens up close is pretty amazing.</td></tr>
+      <tr><td>只是关于它们生前的故事咱就不了解了。希望它们都是在生命结束以后才以这种方式被留在这里的。</td><td>Though I don't really know the stories of how they lived. I just hope they ended up here after their lives ran their natural course.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>beyond the screen</strong> &amp;rarr; off-screen / in real life / the real thing</li>
+        <li><strong>following someone's footsteps</strong> &amp;rarr; retracing someone's steps / walking in someone's path</li>
+        <li><strong>absolutely stunning</strong> &amp;rarr; breathtaking / jaw-dropping / out of this world</li>
+        <li><strong>mid-dive</strong> &amp;rarr; in mid-lunge / frozen mid-pounce / caught in the act of diving</li>
+        <li><strong>swooping down</strong> &amp;rarr; diving down / plunging / lunging</li>
+        <li><strong>feel so tiny</strong> &amp;rarr; feel so small / feel dwarfed / feel puny</li>
+        <li><strong>lifelike</strong> &amp;rarr; so realistic / true to life / uncannily real</li>
+        <li><strong>up close</strong> &amp;rarr; in person / face to face / right in front of you</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：beyond the screen / following… footsteps / the very place where… / posed mid-dive / feel so tiny / up close / ran their natural course</div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="section">
+  <h2 class="sec-title">S7 诺丁山 &amp; 电影书店｜Notting Hill &amp; the Bookshop <span class="tag tag-gray">04:27–05:10</span></h2>
+  <div class="card">
+    <p class="context">情景：博主来到诺丁山，探寻电影《诺丁山》中男女主角相遇的书店原址，发现电影和现实的差距——书店其实是纪念品店，真正的灵感来自另一家从未拍过电影的书店。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>不知道有多少人是先看了《诺丁山》，后来才知道伦敦真的有这个地方叫诺丁山。</td><td>I wonder how many people watched Notting Hill first and only later found out it's an actual place in London.</td></tr>
+      <tr><td>电影里那间小小的旅行书店，也成了很多人记住这里的原因。</td><td>That tiny travel bookshop in the movie is what made this place stick in so many people's minds.</td></tr>
+      <tr><td>这就是电影中男女主角相遇的142号店，但实际上它并不是一家书店，而是一个纪念品商店。</td><td>This is number 142, where the leads meet in the film &amp;mdash; but it's not actually a bookshop, it's a souvenir store.</td></tr>
+      <tr><td>实际上电影中书店的灵感是来自于有生活的这家书店，但有意思的是这里其实也没有真的拍过电影。</td><td>The real-life inspiration for the bookshop was actually this other bookstore, but funnily enough, they never filmed there either.</td></tr>
+      <tr><td>剧组只是照着当时的书店在摄影棚里重新搭了一间。</td><td>The crew just built a replica of it on a soundstage.</td></tr>
+      <tr><td>你看电影不一定是真的，但它确实能让一条街变成让全世界人都来打卡的地方——这个倒是真的。</td><td>Movies may not be real, but they can definitely turn a street into a place people from all over the world come to check out &amp;mdash; that part is very real.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>only later found out</strong> &amp;rarr; it wasn't until later that I realized / only discovered afterwards</li>
+        <li><strong>stick in someone's mind</strong> &amp;rarr; make an impression / leave a mark / be etched in memory</li>
+        <li><strong>funnily enough</strong> &amp;rarr; ironically / the funny thing is / here's the twist</li>
+        <li><strong>built a replica</strong> &amp;rarr; recreated it / made a copy / reconstructed it</li>
+        <li><strong>on a soundstage</strong> &amp;rarr; on a studio set / on a film lot / indoors at a studio</li>
+        <li><strong>come to check out</strong> &amp;rarr; flock to see / make a pilgrimage to / travel to visit</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：only later found out / stick in someone's mind / funnily enough / built a replica / on a soundstage / come to check out / that part is very real</div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="section">
+  <h2 class="sec-title">S8 裁缝街 &amp; Kingsman｜Savile Row &amp; Kingsman <span class="tag tag-gray">05:20–06:41</span></h2>
+  <div class="card">
+    <p class="context">情景：博主来到伦敦裁缝街 Savile Row，探访 Kingsman 电影灵感来源的百年西装店，偷拍店内却被默许，发现一件普通西装要两千多英镑。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>这里就是伦敦的裁缝街，有的店铺已经开了几百年了。</td><td>This is Savile Row &amp;mdash; some of these shops have been around for centuries.</td></tr>
+      <tr><td>听说这边一套定制西装要几千英镑，要等六个星期。</td><td>I heard a bespoke suit here costs a few thousand pounds and takes six weeks.</td></tr>
+      <tr><td>不过让这条街出圈的不只是西装，而是一部叫 Kingsman 的电影。</td><td>But what really put this street on the map wasn't just the suits &amp;mdash; it was a movie called Kingsman.</td></tr>
+      <tr><td>你看这写的 Kingsman。这家店是1849年的时候开的。</td><td>See, it says Kingsman right here. This shop first opened in 1849.</td></tr>
+      <tr><td>据说当时《王牌特工》的导演就是在这里量体彩衣的时候突然来了灵感，于是就拍了这部电影。</td><td>Apparently the director of Kingsman was here getting fitted when inspiration struck, and that's how the movie was born.</td></tr>
+      <tr><td>来，看看这件西装的价钱。好贵，两万多。</td><td>Let's take a look at the price of this suit. So expensive &amp;mdash; over twenty thousand.</td></tr>
+      <tr><td>走进去之后才发现它们上面写了不让我们拍摄，但我还是偷偷摸摸拍了一点。</td><td>After walking in, I noticed a sign saying no filming &amp;mdash; but I still snuck in a few shots.</td></tr>
+      <tr><td>好像也没有制止我，整个偷感非常重。</td><td>They didn't seem to stop me either, so the whole thing felt super sneaky.</td></tr>
+      <tr><td>我悄悄看了一下，它里面的衣服价格还蛮高的，要两千多磅一件。</td><td>I took a quiet look &amp;mdash; the prices inside are pretty steep, over two thousand pounds a piece.</td></tr>
+      <tr><td>就是普通黑色的西装，可能只是我看不出它的特别之处。</td><td>It was just a plain black suit &amp;mdash; maybe I just can't tell what makes it special.</td></tr>
+      <tr><td>不过这地方特别有名，像很多英国的政要，比如丘吉尔、威廉王子，都在这边定制过西装。</td><td>But this place is seriously famous &amp;mdash; loads of British figures like Churchill and Prince William have had suits made here.</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>been around for centuries</strong> &amp;rarr; been standing for hundreds of years / have centuries of history</li>
+        <li><strong>put this street on the map</strong> &amp;rarr; made this street famous / put this street in the spotlight</li>
+        <li><strong>getting fitted</strong> &amp;rarr; being measured / having a fitting / trying on suits</li>
+        <li><strong>inspiration struck</strong> &amp;rarr; he got the idea / a lightbulb went off / it hit him</li>
+        <li><strong>snuck in a few shots</strong> &amp;rarr; secretly filmed a bit / got some sneaky footage / stole a few clips</li>
+        <li><strong>super sneaky</strong> &amp;rarr; so furtive / very stealth-mode / total sneak vibes</li>
+        <li><strong>pretty steep</strong> &amp;rarr; pretty pricey / on the expensive side / not cheap at all</li>
+        <li><strong>can't tell what makes it special</strong> &amp;rarr; don't see what the fuss is about / can't spot the difference</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：put… on the map / getting fitted / inspiration struck / snuck in a few shots / super sneaky / pretty steep / can't tell what makes it special</div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="section">
+  <h2 class="sec-title">S9 最后一天：晴天的伦敦｜Final Day: Sunny London <span class="tag tag-gray">06:44–07:19</span></h2>
+  <div class="card">
+    <p class="context">情景：博主在伦敦的最后一天终于放晴了，阳光下的伦敦像换了一座城市。临别感言——电影里的地方找到了，电影之外的伦敦可能还得再来几次。</p>
+    <table>
+      <tr><th>中文</th><th>English</th></tr>
+      <tr><td>在伦敦的这几天，雨就没怎么停过，但到了最后一天——哎，天晴了。</td><td>The rain barely let up during my days in London, but on the final day &amp;mdash; hey, the sun came out.</td></tr>
+      <tr><td>大本钟还是那个大本钟，可太阳一出来，看起来就像换了一座城市。</td><td>Big Ben is still Big Ben, but when the sun comes out, it feels like a whole different city.</td></tr>
+      <tr><td>至于伦敦到底是什么样，我第一次来确实说不太清。</td><td>As for what London is really like &amp;mdash; honestly, I can't quite put my finger on it after just one visit.</td></tr>
+      <tr><td>电影里的那些地方算是找到了，但电影之外的伦敦可能还得再来几次。</td><td>I managed to find all those movie locations, but the London beyond the movies? Might take a few more trips.</td></tr>
+      <tr><td>当然也欢迎屏幕前的你来分享一下，你眼中的伦敦是什么样子。</td><td>And of course, I'd love for you guys to share &amp;mdash; what does London look like through your eyes?</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>Paraphrase</strong>
+      <ul>
+        <li><strong>barely let up</strong> &amp;rarr; hardly stopped / almost never let up / was pretty much nonstop</li>
+        <li><strong>the sun came out</strong> &amp;rarr; it cleared up / the sun finally showed up / it brightened up</li>
+        <li><strong>feels like a whole different city</strong> &amp;rarr; looks like a completely different place / it's like night and day</li>
+        <li><strong>can't quite put my finger on it</strong> &amp;rarr; can't really pin it down / hard to sum up / I'm not quite sure how to describe it</li>
+        <li><strong>I managed to find</strong> &amp;rarr; I was able to track down / I did get to see / I checked off</li>
+        <li><strong>might take a few more trips</strong> &amp;rarr; might need a few more visits / probably deserves another go / I'll have to come back for that</li>
+      </ul>
+    </div>
+    <div class="action">Chunks：barely let up / the sun came out / a whole different city / put my finger on it / managed to find / might take a few more / through your eyes</div>
+  </div>
+</div>
+
+<div class="conclusion">
+  <h2>今日可练 &amp; 认知转变</h2>
+
+  <h3>口头练习（说出英文）</h3>
+  <ol>
+    <li>「我从大老远的中国飞过来的。」&amp;rarr; <em>I came all the way from China.</em></li>
+    <li>「这家店1988年就开了。」&amp;rarr; <em>This place has been around since 1988.</em></li>
+    <li>「我就随便坐了吧台，结果竟然是最佳的景观位。」&amp;rarr; <em>I ended up at the counter, but it turned out to be the best view in the house.</em></li>
+    <li>「我没法准确描述伦敦是什么感觉。」&amp;rarr; <em>I can't quite put my finger on what London is like.</em></li>
+    <li>「电影让这条街变成了全世界打卡的地方。」&amp;rarr; <em>The movie put this street on the map for people all over the world.</em></li>
+  </ol>
+
+  <h3>避坑</h3>
+  <ul>
+    <li><strong>「到了」别说 arrived to London</strong> &amp;rarr; 地道说法是 <em>made it to London</em> 或 <em>got to London</em>。Arrive 后面用 in（大城市）/ at（小地点），不用 to。</li>
+    <li><strong>「仪式感」不是 ceremony feeling</strong> &amp;rarr; 用 <em>ritual</em> 或整体表达 <em>get the ritual out of the way / check that box</em>。</li>
+    <li><strong>「下雨天不打伞」不是 in rainy days not use umbrella</strong> &amp;rarr; 用 <em>not bothering with umbrellas</em> 或者 <em>don't even bother with umbrellas</em>，bother 表示「费那个劲」。</li>
+    <li><strong>「账单也一样」不是 the bill is also the same</strong> &amp;rarr; 语境是说账单跟体验一样令人印象深刻，说 <em>the bill was just as impressive</em> 或 <em>the bill matched the view</em>。</li>
+    <li><strong>「看不出来特别之处」不是 can't see its special point</strong> &amp;rarr; 说 <em>can't tell what makes it special</em> 或 <em>don't see what the fuss is about</em>。</li>
+  </ul>
+
+  <h3>认知转变</h3>
+  <p>以前在旅行场景里只会说 <em>I want to go to…</em> 和 <em>it's beautiful</em>。现在看完这期视频，可以说：</p>
+  <ul>
+    <li>「到了」&amp;rarr; <em>We made it!</em> 或 <em>We've arrived!</em></li>
+    <li>「一定要做的游客打卡」&amp;rarr; <em>the obligatory tourist stuff</em></li>
+    <li>「结果却是…」&amp;rarr; <em>it turned out to be…</em> / <em>who would've thought…</em></li>
+    <li>「说不清楚」&amp;rarr; <em>I can't quite put my finger on it</em></li>
+    <li>「让某个地方出名」&amp;rarr; <em>put this place on the map</em></li>
+    <li>「价格很贵」&amp;rarr; <em>pretty steep</em> / <em>works out to over…</em></li>
+    <li>「晴天终于来了」&amp;rarr; <em>the sun finally came out</em></li>
+  </ul>
+</div>
+
+</div>
+    </div>
+  </foreignObject>
+</svg>
