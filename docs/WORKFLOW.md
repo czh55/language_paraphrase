@@ -5,11 +5,13 @@
 ```
 Task Progress:
 - [ ] 1. 解析入口，得到视频 url（与可选 date）
-- [ ] 2. yt-dlp 下载音频（m4a）
+- [ ] 2. yt-dlp 下载音频（m4a）+ 封面缩略图 + 视频画面流
 - [ ] 3. 安装依赖（ffmpeg + openai-whisper，仅首次）
 - [ ] 4. Whisper 转录（带时间戳，--model small）
 - [ ] 5. 识别切分关键场景 + 逐句英译 + paraphrase
-- [ ] 6. 生成 SVG（Node .mjs + svg-auto-height.mjs）
+- [ ] 5.5 生成音频（edge-tts，generate_audio.py）
+- [ ] 5.6 场景截图抽帧（extract_frames.py，从场景时间轴抽关键帧）
+- [ ] 6. 生成 HTML（Node .mjs，含 Hero 封面 + 场景截图）
 - [ ] 7. 质量自检
 - [ ] 8. 更新 docs/index.json
 - [ ] 9. Git 提交并推送到 main（**必须**，Pages 才能展示）
@@ -52,7 +54,9 @@ Task Progress:
 
 ---
 
-## Step 2：yt-dlp 下载音频
+## Step 2：yt-dlp 下载音频 + 封面 + 画面流
+
+### 2.1 下载音频（用于 Whisper 转录）
 
 ```bash
 cd ~/Projects/language_paraphrase
@@ -64,6 +68,26 @@ yt-dlp -f "bestaudio[ext=m4a]/bestaudio/best" -o "{slug}.%(ext)s" "{url}"
 - 失败最多重试 3 次
 
 同时用 `yt-dlp --print title --print duration_string` 提取标题与时长。
+
+### 2.2 下载封面缩略图（用于 Hero 区 hero.jpg）
+
+```bash
+yt-dlp --skip-download --write-thumbnail -o "{slug}-thumb.%(ext)s" "{url}"
+```
+
+- 封面独立于视频流，几乎必成功
+- 保留产物路径，Step 5.6 会转成 `docs/images/{slug}/hero.jpg`
+
+### 2.3 下载视频画面流（用于场景截图抽帧）
+
+```bash
+# B 站：下载低画质 mp4 画面流（仅供抽帧，越小越好）
+yt-dlp -f "bv[ext=mp4][height<=480]/bv[ext=mp4]/bv/b" -o "{slug}-video.%(ext)s" "{url}"
+```
+
+- 画面流仅用于抽帧，抽完即删（见 Step 10）
+- 小红书若画面流失败（下载受限）：**降级策略**——场景图统一复用 `hero.jpg`，在 `index.json` 增加 `"frames_fallback": true` 字段
+- 若画面流与音频同一 URL，2.1 与 2.3 的下载可合并执行
 
 小红书若需 cookies，优先使用本机已配置的 `yt-dlp` cookies 方案；仍失败则写入 `index.json` 失败项并结束。
 
@@ -204,6 +228,39 @@ python3 scripts/generate_audio.py --slug={slug}
 
 ---
 
+## Step 5.6：场景截图抽帧（关键帧图片）
+
+在生成 HTML 之前，使用 `scripts/extract_frames.py` 按场景时间轴从视频画面流抽取关键帧，作为每个场景卡片的配图。
+
+### 运行
+
+```bash
+python3 scripts/extract_frames.py --slug={slug} --video={slug}-video.mp4 --thumb={slug}-thumb.jpg
+```
+
+### 产出文件
+
+| 文件 | 说明 |
+|------|------|
+| `docs/images/{slug}/hero.jpg` | 视频封面（由封面缩略图转换而来），用于 Hero 区 |
+| `docs/images/{slug}/s1.jpg` ~ `s{N}.jpg` | 各场景时间轴中点的关键帧（720p 宽 jpg），用于场景卡片 |
+
+### 脚本核心逻辑
+
+`scripts/extract_frames.py` 参考 `scripts/generate_audio.py` 的结构：
+
+- **时间轴来源**（按优先级）：`docs/audio/{slug}/audio-input.json` 的 `scenes[].time` → 不存在则解析 `docs/{slug}-场景英译.html` 中 `<span class="time">` 文本
+- **抽帧时机**：每个场景取时间区间中点 `(start+end)//2`，用 `ffmpeg -ss {sec} -i {video} -frames:v 1` 抽取
+- `--print-scenes` 模式可仅预览解析出的场景时间轴，便于校验
+- 输出缺帧场景清单，失败则 Step 7 自检会拦截
+
+### 降级
+
+- 画面流不可用（如小红书）：不运行本步骤，场景卡片复用 `hero.jpg`，`index.json` 记 `"frames_fallback": true`
+- 抽帧为黑帧/广告帧：时间中点可避免首帧广告；个别场景异常可人工换时间点重抽
+
+---
+
 ## Step 6：生成 HTML（交互式场景英译学习卡）
 
 在仓库根目录创建 `generate-{slug}.mjs`，**直接生成完整的 HTML 文件**（不再依赖 `svg-auto-height.mjs`）。
@@ -248,16 +305,21 @@ console.log('Generated:', OUT);
 ```html
 <header class="hero">
   <div class="hero-inner">
-    <p class="eyebrow">Scene English · {视频主题分类，如"伦敦旅行Vlog"}</p>
-    <h1>{视频标题}</h1>
-    <p class="hero-en">{英文副标题}</p>
-    <div class="hero-meta">
-      <span class="chip">YYYY-MM-DD</span>
-      <span class="chip">{B站|小红书}</span>
-      <span class="chip">{时长}</span>
-      <span class="chip">{N} 个场景</span>
-      <span class="chip">点下划线单词听发音</span>
-      <a class="source-link" href="{原视频链接}" target="_blank" rel="noopener">查看原视频 ↗</a>
+    <div class="hero-flex">
+      <img class="hero-cover" src="images/{slug}/hero.jpg" alt="{视频标题} 封面" loading="lazy">
+      <div class="hero-text">
+        <p class="eyebrow">Scene English · {视频主题分类，如"伦敦旅行Vlog"}</p>
+        <h1>{视频标题}</h1>
+        <p class="hero-en">{英文副标题}</p>
+        <div class="hero-meta">
+          <span class="chip">YYYY-MM-DD</span>
+          <span class="chip">{B站|小红书}</span>
+          <span class="chip">{时长}</span>
+          <span class="chip">{N} 个场景</span>
+          <span class="chip">点下划线单词听发音</span>
+          <a class="source-link" href="{原视频链接}" target="_blank" rel="noopener">查看原视频 ↗</a>
+        </div>
+      </div>
     </div>
     <div class="toolbar">
       <label for="speech-rate">朗读速度</label>
@@ -313,6 +375,7 @@ console.log('Generated:', OUT);
           <span aria-hidden="true">▶</span><span>朗读整个场景</span>
         </button>
       </div>
+      <img class="scene-frame" src="images/{slug}/s1.jpg" alt="{中文场景标题} 场景截图" loading="lazy">
       <h2>{中文场景标题}</h2>
       <p class="scene-title-en">{English Scene Title}</p>
       <p class="context"><b>情境</b>{情景说明}。语域：{casual/formal/评测口播等}</p>
@@ -563,6 +626,9 @@ button, select { font:inherit; }
 a { color:inherit; }
 .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
 .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+.hero-flex { display:flex; gap:clamp(18px,3vw,40px); align-items:flex-start; }
+.hero-cover { width:min(240px,42vw); aspect-ratio:16/10; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
+.hero-text { min-width:0; flex:1; }
 .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
 h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
 .hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
@@ -586,6 +652,7 @@ h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1
 .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
 .content { min-width:0; }
 .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+.scene-frame { display:block; width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
 .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
 .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
 .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
@@ -647,6 +714,9 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
 }
 @media (max-width:620px) {
   .hero-inner { padding-top:32px; }
+  .hero-flex { flex-direction:column; align-items:center; }
+  .hero-cover { width:100%; max-width:360px; }
+  .hero-text { text-align:center; }
   .page { padding-inline:10px; gap:18px; }
   .scene-card { border-radius:14px; padding:17px 13px; }
   .scene-topline { align-items:flex-start; }
@@ -676,6 +746,8 @@ node generate-{slug}.mjs
 
 优先 Node：`/Applications/Cursor.app/Contents/Resources/app/resources/helpers/node`。
 
+模板中的图片引用（`images/{slug}/hero.jpg`、`images/{slug}/s{N}.jpg`）必须与 Step 5.6 实际产出一致；若该期降级（`frames_fallback`），场景卡片复用 `hero.jpg`。
+
 ---
 
 ## Step 7：质量自检
@@ -695,6 +767,9 @@ node generate-{slug}.mjs
 - [ ] mark 函数中正则定义在循环外（`const re = ...`），禁止在 `while` 条件内联正则字面量（会导致无限循环卡死浏览器）
 - [ ] Hero 头部含 narration 中文语音播放按钮（`data-audio` 指向 narration.mp3，禁止使用静态 `<audio>` 元素，避免预加载卡死浏览器）
 - [ ] 侧边栏场景地图可点击跳转，含编号徽章 + 中英标题 + 时间
+- [ ] Hero 头部含封面图 `images/{slug}/hero.jpg`（`<img class="hero-cover">`）
+- [ ] 每个场景卡片含场景截图 `images/{slug}/s{N}.jpg`（`<img class="scene-frame" loading="lazy">`）
+- [ ] 图片文件齐全：`hero.jpg` + 每个场景 `s{N}.jpg`，数量与场景数一致（降级期场景图复用 hero.jpg）
 - [ ] 页脚标注「场景/句子朗读使用 edge-tts 神经网络语音 · 单词发音使用浏览器 Web Speech API」
 - [ ] 音频文件齐全：narration.mp3 + 每个场景 s{N}.mp3 + 每句 s{N}-idx.mp3 + 练习 practice-idx.mp3
 - [ ] 不是「内容总结文」，而是「可开口练的情景英语」
@@ -719,6 +794,7 @@ node generate-{slug}.mjs
   "scenes": 9,
   "sentences": 52,
   "html": "slug-场景英译.html",
+  "cover": "images/slug/hero.jpg",
   "speech": true
 }
 ```
@@ -736,7 +812,9 @@ node generate-{slug}.mjs
 | `scenes` | 是 | 场景数 |
 | `sentences` | 是 | 总句数 |
 | `html` | 是 | HTML 文件名 `{slug}-场景英译.html` |
+| `cover` | 是 | Hero 封面路径 `images/{slug}/hero.jpg` |
 | `speech` | 是 | 是否支持语音朗读（HTML 格式始终为 `true`） |
+| `frames_fallback` | 否 | 画面流不可用时置 `true`（场景图复用 hero.jpg） |
 
 失败项加 `"error": true` 与 `error_message`。**不再使用** `svg_height` 字段。
 
@@ -762,6 +840,8 @@ git push -u origin main
 
 ```bash
 rm generate-{slug}.mjs
+# 删除临时画面流与封面（图片已落盘 docs/images/{slug}/）
+rm {slug}-video.* {slug}-thumb.*
 # 可选：rm {slug}.m4a
 ```
 
@@ -777,6 +857,7 @@ rm generate-{slug}.mjs
 | `{slug}.json` / `.srt` | 转录产物（可选保留） |
 | `docs/{slug}-场景英译.html` | **交互式场景英译学习卡片**（主产出，CSS/JS 内嵌，音频通过 `data-audio` + JS `new Audio()` 按需加载 MP3） |
 | `docs/audio/{slug}/` | **音频目录**：narration.mp3（中文讲解）+ 场景/逐句/练习英文 MP3（edge-tts 生成） |
+| `docs/images/{slug}/` | **图片目录**：hero.jpg（视频封面）+ 各场景关键帧 s1.jpg~s{N}.jpg |
 
 ---
 
@@ -788,6 +869,7 @@ rm generate-{slug}.mjs
 - 同 URL 不重复处理
 - **所有视频处理产出必须为 HTML 格式**，不再使用 SVG
 - 音频使用 edge-tts 预生成 MP3（Python 脚本 `scripts/generate_audio.py`）
+- 场景截图使用 ffmpeg 从视频画面流抽帧（Python 脚本 `scripts/extract_frames.py`），图片存 `docs/images/{slug}/`
 - 播放器加载 MP3 文件，不是运行时合成语音
 - 不依赖 `svg-auto-height.mjs`
 - 硬词表根据视频主题定制（非固定模板）

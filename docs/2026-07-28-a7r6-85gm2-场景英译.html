@@ -18,6 +18,9 @@
     a { color:inherit; }
     .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
     .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+    .hero-flex { display:flex; gap:clamp(18px,3vw,40px); align-items:flex-start; }
+    .hero-cover { width:min(240px,42vw); aspect-ratio:16/10; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
+    .hero-text { min-width:0; flex:1; }
     .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
     h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
     .hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
@@ -41,6 +44,7 @@
     .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
     .content { min-width:0; }
     .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+    .scene-frame { display:block; width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
     .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
     .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
     .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
@@ -102,6 +106,9 @@
     }
     @media (max-width:620px) {
       .hero-inner { padding-top:32px; }
+      .hero-flex { flex-direction:column; align-items:center; }
+      .hero-cover { width:100%; max-width:360px; }
+      .hero-text { text-align:center; }
       .page { padding-inline:10px; gap:18px; }
       .scene-card { border-radius:14px; padding:17px 13px; }
       .scene-topline { align-items:flex-start; }
@@ -118,10 +125,15 @@
 <body>
   <header class="hero">
     <div class="hero-inner">
-      <p class="eyebrow">Scene English · 人像摄影评测口播</p>
-      <h1>索尼 A7R6 × 85mm F1.4 GM II 人像写真</h1>
-      <p class="hero-en">Sony A7R6 × 85mm F1.4 GM II Portrait Shoot</p>
-      <div class="hero-meta"><span class="chip">2026-07-28</span><span class="chip">小红书</span><span class="chip">04:38</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://xhslink.com/o/5ZAoHVkUkOF" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+      <div class="hero-flex">
+        <img class="hero-cover" src="images/2026-07-28-a7r6-85gm2/hero.jpg" alt="索尼 A7R6 × 85mm F1.4 GM II 人像写真 封面" loading="lazy">
+        <div class="hero-text">
+          <p class="eyebrow">Scene English · 人像摄影评测口播</p>
+          <h1>索尼 A7R6 × 85mm F1.4 GM II 人像写真</h1>
+          <p class="hero-en">Sony A7R6 × 85mm F1.4 GM II Portrait Shoot</p>
+          <div class="hero-meta"><span class="chip">2026-07-28</span><span class="chip">小红书</span><span class="chip">04:38</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://xhslink.com/o/5ZAoHVkUkOF" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+        </div>
+      </div>
       <div class="toolbar"><label for="speech-rate">朗读速度</label><select id="speech-rate"><option value="0.85">慢速 0.85×</option><option value="1" selected>正常 1×</option><option value="1.15">快速 1.15×</option></select><button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button><span id="speech-status" class="speech-status" role="status" aria-live="polite"></span></div>
     </div>
   </header>
@@ -139,7 +151,8 @@
       
       <section class="scene-card" id="s1" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S1</span><span class="time">00:00–00:31</span></div><button class="speak-btn scene-speak" type="button" data-speak="With its brand-new CMOS and processor combo, the Sony A7R6 has become the resolution flagship of Sony&#x27;s full-frame mirrorless lineup. Today we&#x27;re pairing it with the 85mm F1.4 GM II to see what kind of magical moments this combo can deliver. The A7R6 plus the 85mm F1.4 GM II — Sony&#x27;s portrait king — is basically the top-tier setup for full-frame portrait work. Pair elite resolution with a G Master prime, and we&#x27;re just as curious about the sparks that&#x27;ll fly." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>开场：画质旗舰 × 人像镜皇</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s1.jpg" alt="开场：画质旗舰 × 人像镜皇 场景截图" loading="lazy">
+      <h2>开场：画质旗舰 × 人像镜皇</h2>
         <p class="scene-title-en">Opening: Resolution Flagship Meets Portrait King</p>
         <p class="context"><b>情境</b>评测开场，介绍 A7R6 与 85mm F1.4 GM II 组合，抛出「顶配写真」期待。语域：相机评测口播，热情但偏专业。</p>
         <div class="sentence-list">
@@ -184,7 +197,8 @@
       </section>
       <section class="scene-card" id="s2" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S2</span><span class="time">00:31–00:59</span></div><button class="speak-btn scene-speak" type="button" data-speak="The A7R6 packs a newly developed 61-megapixel full-frame stacked CMOS, paired with the next-gen BIONZ XR2 image processor. Readout speed is about 5.6× faster than the previous A7R5. And the 85mm F1.4 GM II — Sony&#x27;s crowning portrait lens — is 178g lighter and 13% smaller than its predecessor. Together, the balance feels right — even long handheld shoots don&#x27;t feel front-heavy. Image quality also sits near the peak of today&#x27;s 35mm full-frame systems." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>机身规格与手持重心</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s2.jpg" alt="机身规格与手持重心 场景截图" loading="lazy">
+      <h2>机身规格与手持重心</h2>
         <p class="scene-title-en">Body Specs &amp; Handheld Balance</p>
         <p class="context"><b>情境</b>讲传感器、处理器、镜头减重与机镜重心。语域：参数口播 + 使用感受。</p>
         <div class="sentence-list">
@@ -237,7 +251,8 @@
       </section>
       <section class="scene-card" id="s3" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S3</span><span class="time">00:59–01:34</span></div><button class="speak-btn scene-speak" type="button" data-speak="First, resolution — terrifying detail down to the pore level. What&#x27;s a portrait shooter&#x27;s worst fear? You zoom in and the hair melts into mush, lash edges go soft. The A7R6&#x27;s 61MP, plus the GM II&#x27;s center sharpness wide open at F1.4, just crushes that anxiety. In real tests we shot portraits under all kinds of tricky lighting — F1.4 wide open, focus locked on the model&#x27;s eye. Back home, we punched in to 200% on the computer — every detail at the focus point stayed crystal clear, and the catchlight in the pupil even showed as a complete specular highlight. Zoom in again: iris texture is layered and crisp — the detail is honestly scary-good." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>毛孔级细节：碾碎放大焦虑</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s3.jpg" alt="毛孔级细节：碾碎放大焦虑 场景截图" loading="lazy">
+      <h2>毛孔级细节：碾碎放大焦虑</h2>
         <p class="scene-title-en">Pore-Level Detail: Crushing Pixel-Peeping Anxiety</p>
         <p class="context"><b>情境</b>从人像「放大怕糊」切入，强调 F1.4 全开中心解析与眼神光。语域：痛点共鸣 + 实测夸张。</p>
         <div class="sentence-list">
@@ -291,7 +306,8 @@
       </section>
       <section class="scene-card" id="s4" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S4</span><span class="time">01:34–01:54</span></div><button class="speak-btn scene-speak" type="button" data-speak="What surprised us even more was the edge performance — wide open at F1.4, the GM II&#x27;s edge resolution clearly beats the Mark I. We shot a half-body set with the model on the right third of the frame. Zoom in on the focus point — textures stay razor-sharp, not smeared. Thanks to the GM II&#x27;s optics, even the frame edges still hold a very high resolving standard." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>边缘画质：半身构图实测</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s4.jpg" alt="边缘画质：半身构图实测 场景截图" loading="lazy">
+      <h2>边缘画质：半身构图实测</h2>
         <p class="scene-title-en">Edge Sharpness: Half-Body Framing Test</p>
         <p class="context"><b>情境</b>半身构图把人放在右侧三分线，检验 F1.4 全开边缘解析。语域：实测描述。</p>
         <div class="sentence-list">
@@ -328,7 +344,8 @@
       </section>
       <section class="scene-card" id="s5" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S5</span><span class="time">01:54–02:36</span></div><button class="speak-btn scene-speak" type="button" data-speak="Next up, the A7R6 body — that maxed-out 8.5-stop IBIS. On high-res bodies, the real enemy was never AF — it&#x27;s camera shake. A 61MP sensor is extremely sensitive to the tiniest vibration. With older high-res bodies, shutter speed was always the number photographers watched like a hawk. The A7R6&#x27;s 8.5-stop in-body stabilization is Sony&#x27;s strongest yet. In dim indoor tests, even at 1/30s, keeper rates stayed impressively high. Zoom in on the model&#x27;s eyes — sharp, clean, no double imaging. For portrait shooters, that&#x27;s a real productivity boost. You stop constantly worrying whether the shot is soft, and can put more attention on framing and directing the model." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>8.5 档防抖：高像素不怕抖</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s5.jpg" alt="8.5 档防抖：高像素不怕抖 场景截图" loading="lazy">
+      <h2>8.5 档防抖：高像素不怕抖</h2>
         <p class="scene-title-en">8.5-Stop IBIS: High-Res Without Handshake Fear</p>
         <p class="context"><b>情境</b>高像素怕微抖；室内暗光 1/30s 手持仍高成片率。语域：痛点 + 生产力收益。</p>
         <div class="sentence-list">
@@ -382,7 +399,8 @@
       </section>
       <section class="scene-card" id="s6" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S6</span><span class="time">02:36–03:19</span></div><button class="speak-btn scene-speak" type="button" data-speak="On AF, the A7R6&#x27;s AI human-pose recognition keeps a lock even when the model turns her back. In portrait work, the model won&#x27;t face the camera forever — turning away, looking down, profile shots, getting blocked by foreground — that&#x27;s all normal. No matter how she poses, the green AF box stays glued to her eye — never lost it once. Even back-to-camera, it can lock onto head and body. Plus the GM II&#x27;s dual XD linear motors are about 3× faster than the previous generation — this combo&#x27;s subject tracking is basically unfair. She walks freely, spins, flips her hair — the camera feels like it has eyes of its own, glued to the pupil. Continuous AF/AE calculations keep every frame properly exposed with solid focus." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>AI 姿态识别与跟焦碾压</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s6.jpg" alt="AI 姿态识别与跟焦碾压 场景截图" loading="lazy">
+      <h2>AI 姿态识别与跟焦碾压</h2>
         <p class="scene-title-en">AI Pose Recognition &amp; Relentless Tracking</p>
         <p class="context"><b>情境</b>背身、甩发、走动等姿态下眼部/头部锁定；镜头双线性马达跟焦。语域：动态抓拍场景。</p>
         <div class="sentence-list">
@@ -436,7 +454,8 @@
       </section>
       <section class="scene-card" id="s7" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S7</span><span class="time">03:19–03:48</span></div><button class="speak-btn scene-speak" type="button" data-speak="We also got a taste of the GM II&#x27;s creamy bokeh from its 11-blade aperture. Wide open at F1.4, the background melts like butter — soft-edged highlights, excellent onion-ring control, and a gentle transition with texture and depth. Outdoors we shot a set against layered leaves and dappled light. Wide open, the bokeh balls are round and soft — like an Impressionist painting. Yet facial sharpness doesn&#x27;t drop off at all — skin texture and light falloff stay natural and refined." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>奶油虚化与室外散景</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s7.jpg" alt="奶油虚化与室外散景 场景截图" loading="lazy">
+      <h2>奶油虚化与室外散景</h2>
         <p class="scene-title-en">Creamy Bokeh &amp; Outdoor Specular Highlights</p>
         <p class="context"><b>情境</b>11 片光圈叶片、F1.4 奶油虚化、树叶斑驳光影。语域：美学描述。</p>
         <div class="sentence-list">
@@ -481,7 +500,8 @@
       </section>
       <section class="scene-card" id="s8" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S8</span><span class="time">03:48–04:09</span></div><button class="speak-btn scene-speak" type="button" data-speak="The A7R6 also adds AI deep-learning auto white balance, combining visible-light and IR sensors to read the light source. In mixed lighting — say daylight from the window plus warm indoor lamps — skin tones still look healthy and natural. No weird yellow or cyan cast — so in post you don&#x27;t have to sweat correcting white balance." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>AI 自动白平衡：混合光源肤色</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s8.jpg" alt="AI 自动白平衡：混合光源肤色 场景截图" loading="lazy">
+      <h2>AI 自动白平衡：混合光源肤色</h2>
         <p class="scene-title-en">AI Auto WB: Skin Tones in Mixed Light</p>
         <p class="context"><b>情境</b>窗外日光 + 室内暖光混合，肤色自然，减轻后期校正。语域：实用后期效率。</p>
         <div class="sentence-list">
@@ -518,7 +538,8 @@
       </section>
       <section class="scene-card" id="s9" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S9</span><span class="time">04:09–04:37</span></div><button class="speak-btn scene-speak" type="button" data-speak="So — is the combo worth it? The A7R6 plus the 85 GM II runs well over 30,000 yuan; it&#x27;s not cheap. But if you&#x27;re a working portrait photographer or a serious enthusiast with portraits at the center, the experience this combo delivers is hard to replace. Terrifying resolving power from ~61MP, handheld confidence from 8.5-stop IBIS, grab-shot efficiency from AI AF, peak wide-open optics from the GM II — Treat them as productivity tools for shipping strong images efficiently, and every yuan is spent where it counts." aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
-        <h2>值不值得：生产力工具结语</h2>
+        <img class="scene-frame" src="images/2026-07-28-a7r6-85gm2/s9.jpg" alt="值不值得：生产力工具结语 场景截图" loading="lazy">
+      <h2>值不值得：生产力工具结语</h2>
         <p class="scene-title-en">Worth It? A Productivity-Tool Verdict</p>
         <p class="context"><b>情境</b>价格不菲，但对职业/深度人像用户体验不可替代；总结解析力、防抖、AF、全开画质。</p>
         <div class="sentence-list">

@@ -17,6 +17,9 @@ button, select { font:inherit; }
 a { color:inherit; }
 .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
 .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+.hero-flex { display:flex; gap:clamp(18px,3vw,40px); align-items:flex-start; }
+.hero-cover { width:min(240px,42vw); aspect-ratio:16/10; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
+.hero-text { min-width:0; flex:1; }
 .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
 h1 { max-width:1020px; margin:0; font-size:clamp(1.8rem,3.8vw,3.2rem); line-height:1.13; letter-spacing:-.04em; }
 .hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
@@ -47,6 +50,7 @@ h1 { max-width:1020px; margin:0; font-size:clamp(1.8rem,3.8vw,3.2rem); line-heig
 .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
 .content { min-width:0; }
 .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+.scene-frame { display:block; width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
 .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
 .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
 .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
@@ -97,16 +101,21 @@ h1 { max-width:1020px; margin:0; font-size:clamp(1.8rem,3.8vw,3.2rem); line-heig
 .shifts strong { color:var(--teal-800); }
 footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:center; }
 @media (max-width:900px) { .page { grid-template-columns:1fr; } .sidebar { position:static; } .sidebar-box { overflow-x:auto; padding:12px; } .sidebar h2 { padding-left:5px; } .map-nav { display:flex; width:max-content; gap:8px; } .map-link { width:220px; border:1px solid var(--line); border-radius:10px; padding:8px; } .bilingual { grid-template-columns:1fr; } .en-block { padding:12px 0 0; border-left:0; border-top:1px dashed var(--line); } }
-@media (max-width:620px) { .hero-inner { padding-top:32px; } .page { padding-inline:10px; gap:18px; } .scene-card { border-radius:14px; padding:17px 13px; } .scene-topline { align-items:flex-start; } .scene-speak span:last-child { display:none; } .sentence { grid-template-columns:26px minmax(0,1fr); padding:13px 10px; gap:6px; } .note { grid-column:2; } .study-grid { grid-template-columns:1fr; } .shifts article { grid-template-columns:1fr; gap:5px; } .shifts b { transform:rotate(90deg); justify-self:start; } }
+@media (max-width:620px) { .hero-inner { padding-top:32px; } .hero-flex { flex-direction:column; align-items:center; } .hero-cover { width:100%; max-width:360px; } .hero-text { text-align:center; } .page { padding-inline:10px; gap:18px; } .scene-card { border-radius:14px; padding:17px 13px; } .scene-topline { align-items:flex-start; } .scene-speak span:last-child { display:none; } .sentence { grid-template-columns:26px minmax(0,1fr); padding:13px 10px; gap:6px; } .note { grid-column:2; } .study-grid { grid-template-columns:1fr; } .shifts article { grid-template-columns:1fr; gap:5px; } .shifts b { transform:rotate(90deg); justify-self:start; } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .speak-btn { transition:none; } }</style>
 </head>
 <body>
   <header class="hero">
     <div class="hero-inner">
-      <p class="eyebrow">Scene English · 摄影评测</p>
-      <h1>来自胖卡的冲击：索尼RX10V上手测试！</h1>
-      <p class="hero-en">Sony RX10V Hands-On Test: The Fat Card Strikes Back</p>
-      <div class="hero-meta"><span class="chip">2026-08-01</span><span class="chip">哔哩哔哩</span><span class="chip">2:40</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://b23.tv/u2SQBTP" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+      <div class="hero-flex">
+        <img class="hero-cover" src="images/rx10v-professional/hero.jpg" alt="来自胖卡的冲击：索尼RX10V上手测试！ 封面" loading="lazy">
+        <div class="hero-text">
+          <p class="eyebrow">Scene English · 摄影评测</p>
+          <h1>来自胖卡的冲击：索尼RX10V上手测试！</h1>
+          <p class="hero-en">Sony RX10V Hands-On Test: The Fat Card Strikes Back</p>
+          <div class="hero-meta"><span class="chip">2026-08-01</span><span class="chip">哔哩哔哩</span><span class="chip">2:40</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://b23.tv/u2SQBTP" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+        </div>
+      </div>
       <div class="toolbar"><label for="speech-rate">朗读速度</label><select id="speech-rate"><option value="0.85">慢速 0.85×</option><option value="1" selected>正常 1×</option><option value="1.15">快速 1.15×</option></select><button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button><span id="speech-status" class="speech-status" role="status" aria-live="polite"></span></div>
       <div class="narration-player"><p class="audio-label">🎧 语音讲解</p><button class="speak-btn" type="button" data-audio="audio/rx10v-professional/narration.mp3" aria-label="播放语音讲解"><span aria-hidden="true">▶</span><span>播放语音讲解</span></button></div>
     </div>
@@ -124,6 +133,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     <div class="content">
       <section class="scene-card" id="s1" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S1</span><span class="time">00:00–00:13</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s1.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s1.jpg" alt="开箱：胖卡复活 场景截图" loading="lazy">
       <h2>开箱：胖卡复活</h2>
       <p class="scene-title-en">Unboxing: The Fat Card is Back</p>
       <p class="context"><b>情境</b>博主刚拆开索尼RX10V（昵称&quot;胖卡&quot;），按捺不住想马上上手测试。语域：Vlog即兴口播，激动期待。</p>
@@ -132,6 +142,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s2" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S2</span><span class="time">00:14–00:38</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s2.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s2.jpg" alt="胖卡的意义：长焦用户的最佳选择 场景截图" loading="lazy">
       <h2>胖卡的意义：长焦用户的最佳选择</h2>
       <p class="scene-title-en">Why the Fat Card Matters: The Long-Zoom Champion</p>
       <p class="context"><b>情境</b>解释RX10V系列的市场定位——面对近年垂直兴趣摄影（观鸟、航空、演唱会）的爆发，普通人需要一台价格合理、便携、焦段长的相机。语域：数据向口播，理性分析。</p>
@@ -140,6 +151,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s3" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S3</span><span class="time">00:38–00:55</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s3.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s3.jpg" alt="镜头：24-600mm 蔡司加持 场景截图" loading="lazy">
       <h2>镜头：24-600mm 蔡司加持</h2>
       <p class="scene-title-en">The Lens: 24-600mm with Zeiss Heritage</p>
       <p class="context"><b>情境</b>核心卖点介绍——等效24-600mm超大变焦镜头，蔡司参与设计，填补专业全幅和消费机之间的空白。语域：产品介绍，强调技术规格。</p>
@@ -148,6 +160,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s4" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S4</span><span class="time">00:55–01:09</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s4.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s4.jpg" alt="传感器与处理器：全面升级 场景截图" loading="lazy">
       <h2>传感器与处理器：全面升级</h2>
       <p class="scene-title-en">Sensor &amp; Processor: A Complete Overhaul</p>
       <p class="context"><b>情境</b>介绍全新堆栈式CMOS和与全幅机型同级的BIONZ XR处理器，画质提升显著。语域：技术规格讲解。</p>
@@ -156,6 +169,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s5" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S5</span><span class="time">01:09–01:27</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s5.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s5.jpg" alt="机身设计：重1111克，粗在镜头 场景截图" loading="lazy">
       <h2>机身设计：重1111克，粗在镜头</h2>
       <p class="scene-title-en">Body Design: 1111g, Bulk is in the Glass</p>
       <p class="context"><b>情境</b>机身重量与尺寸——收纳状态下和全幅机加镜头差不多。胖是胖在镜头上，为了足够进光量和600mm端防抖。语域：产品设计讲解，带幽默。</p>
@@ -164,6 +178,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s6" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S6</span><span class="time">01:27–01:53</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s6.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s6.jpg" alt="三大优势 vs 手机超长焦 场景截图" loading="lazy">
       <h2>三大优势 vs 手机超长焦</h2>
       <p class="scene-title-en">Three Advantages vs Phone Super-Telephoto</p>
       <p class="context"><b>情境</b>与主打超长焦的手机对比，RX10V的三大优势：更大光学镜头带来的直观画质、防抖对焦升级、以及画质/重量/价格的合理平衡。语域：科技对比评测。</p>
@@ -172,6 +187,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s7" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S7</span><span class="time">01:53–02:10</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s7.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s7.jpg" alt="无竞争对手的孤独 场景截图" loading="lazy">
       <h2>无竞争对手的孤独</h2>
       <p class="scene-title-en">No Competition in Sight</p>
       <p class="context"><b>情境</b>分析RX10V在市场中没有真正的对手——尼康P1100传感器太小，半幅机身加腾龙长焦镜头在便携性和体验上没有优势。语域：市场分析。</p>
@@ -180,6 +196,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s8" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S8</span><span class="time">02:10–02:23</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s8.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s8.jpg" alt="四代传奇：二手市场的神话 场景截图" loading="lazy">
       <h2>四代传奇：二手市场的神话</h2>
       <p class="scene-title-en">The Mark IV Legend: A Second-Hand Myth</p>
       <p class="context"><b>情境</b>RX10 IV的历史传奇——停产后被演唱会用户疯狂追捧，闲鱼一度涨到14000元高位，至今仍是热门租赁机型。语域：趣闻分享。</p>
@@ -188,6 +205,7 @@ footer { margin-top:38px; color:var(--muted); font-size:.78rem; text-align:cente
     </section>
       <section class="scene-card" id="s9" data-scene>
       <div class="scene-topline"><div><span class="scene-id">S9</span><span class="time">02:23–02:38</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/rx10v-professional/s9.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+      <img class="scene-frame" src="images/rx10v-professional/s9.jpg" alt="总结：长焦轻量化的最佳选择 场景截图" loading="lazy">
       <h2>总结：长焦轻量化的最佳选择</h2>
       <p class="scene-title-en">Verdict: The Best Lightweight Telephoto Choice</p>
       <p class="context"><b>情境</b>索尼对市场的敏感正是对需求的回应。如果你希望替代专业长枪短炮的体积重量，同时有不错画质，那RX10V就是匹配度很高的选择。语域：收尾推荐，理性温和。</p>

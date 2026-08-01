@@ -18,6 +18,9 @@
     a { color:inherit; }
     .hero { color:#fff; background:radial-gradient(circle at 85% 10%,rgba(129,230,196,.24),transparent 30%),linear-gradient(125deg,#073f42,#0d7377 56%,#14919b); }
     .hero-inner { width:min(1440px,100%); margin:auto; padding:48px clamp(20px,5vw,72px) 42px; }
+    .hero-flex { display:flex; gap:clamp(18px,3vw,40px); align-items:flex-start; }
+    .hero-cover { width:min(240px,42vw); aspect-ratio:16/10; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.28); box-shadow:0 18px 44px rgba(0,0,0,.32); flex-shrink:0; }
+    .hero-text { min-width:0; flex:1; }
     .eyebrow { margin:0 0 12px; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.8; }
     h1 { max-width:1020px; margin:0; font-size:clamp(2rem,4.2vw,4rem); line-height:1.13; letter-spacing:-.04em; }
     .hero-en { margin:12px 0 24px; font-size:clamp(1rem,2vw,1.3rem); opacity:.82; }
@@ -41,6 +44,7 @@
     .map-link small { display:block; color:var(--muted); font-size:.67rem; line-height:1.4; margin-top:2px; overflow-wrap:anywhere; }
     .content { min-width:0; }
     .scene-card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,34px); margin-bottom:24px; box-shadow:var(--shadow); overflow:hidden; }
+    .scene-frame { display:block; width:100%; max-height:320px; object-fit:cover; border-radius:14px; margin:16px 0 4px; border:1px solid var(--line); box-shadow:0 10px 28px rgba(7,63,66,.1); }
     .scene-topline { display:flex; justify-content:space-between; gap:16px; align-items:center; }
     .scene-id { display:inline-grid; place-items:center; min-width:42px; height:30px; padding:0 10px; color:#fff; background:var(--teal-700); border-radius:8px; font-size:.78rem; font-weight:850; }
     .time { margin-left:10px; color:var(--muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
@@ -102,6 +106,9 @@
     }
     @media (max-width:620px) {
       .hero-inner { padding-top:32px; }
+      .hero-flex { flex-direction:column; align-items:center; }
+      .hero-cover { width:100%; max-width:360px; }
+      .hero-text { text-align:center; }
       .page { padding-inline:10px; gap:18px; }
       .scene-card { border-radius:14px; padding:17px 13px; }
       .scene-topline { align-items:flex-start; }
@@ -125,10 +132,15 @@
 <body>
   <header class="hero">
     <div class="hero-inner">
-      <p class="eyebrow">Scene English · 伦敦旅行 Vlog</p>
-      <h1>蟹 逅 伦 敦！</h1>
-      <p class="hero-en">Crab Encounter London — A Movie-Map Travelogue</p>
-      <div class="hero-meta"><span class="chip">2026-08-01</span><span class="chip">哔哩哔哩</span><span class="chip">07:19</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://www.bilibili.com/video/BV1uT3G6jE3m" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+      <div class="hero-flex">
+        <img class="hero-cover" src="images/crab-london/hero.jpg" alt="蟹 逅 伦 敦！ 封面" loading="lazy">
+        <div class="hero-text">
+          <p class="eyebrow">Scene English · 伦敦旅行 Vlog</p>
+          <h1>蟹 逅 伦 敦！</h1>
+          <p class="hero-en">Crab Encounter London — A Movie-Map Travelogue</p>
+          <div class="hero-meta"><span class="chip">2026-08-01</span><span class="chip">哔哩哔哩</span><span class="chip">07:19</span><span class="chip">9 个场景</span><span class="chip">点下划线单词听发音</span><a class="source-link" href="https://www.bilibili.com/video/BV1uT3G6jE3m" target="_blank" rel="noopener">查看原视频 ↗</a></div>
+        </div>
+      </div>
       <div class="toolbar"><label for="speech-rate">朗读速度</label><select id="speech-rate"><option value="0.85">慢速 0.85×</option><option value="1" selected>正常 1×</option><option value="1.15">快速 1.15×</option></select><button id="stop-speech" class="stop-btn" type="button">■ 停止朗读</button><span id="speech-status" class="speech-status" role="status" aria-live="polite"></span></div>
     </div>
   </header>
@@ -146,6 +158,7 @@
       
       <section class="scene-card" id="s1" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S1</span><span class="time">00:00–00:51</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s1.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s1.jpg" alt="开场：帕丁顿熊的比喻 场景截图" loading="lazy">
         <h2>开场：帕丁顿熊的比喻</h2>
         <p class="scene-title-en">Opening: The Paddington Metaphor</p>
         <p class="context"><b>情境</b>博主开场用帕丁顿熊的故事比喻自己远道而来——带着设备而非果酱，借「请照顾这只熊」的台词引出「请照顾这只蟹」的幽默。语域：温馨叙事，带自嘲幽默。</p>
@@ -171,6 +184,7 @@
 
       <section class="scene-card" id="s2" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S2</span><span class="time">00:55–01:20</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s2.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s2.jpg" alt="初到伦敦：大本钟与天气 场景截图" loading="lazy">
         <h2>初到伦敦：大本钟与天气</h2>
         <p class="scene-title-en">First Impressions: Big Ben &amp; Weather</p>
         <p class="context"><b>情境</b>落地伦敦站在大本钟前，吐槽阴雨绵绵的伦敦典型天气，随口科普伦敦年降雨量不如上海。语域：Vlog 即兴口播，轻松吐槽风格。</p>
@@ -190,6 +204,7 @@
 
       <section class="scene-card" id="s3" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S3</span><span class="time">01:21–01:44</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s3.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s3.jpg" alt="新冠纪念墙 场景截图" loading="lazy">
         <h2>新冠纪念墙</h2>
         <p class="scene-title-en">COVID Memorial Wall</p>
         <p class="context"><b>情境</b>路过满是爱心的墙，发现每一颗爱心代表一位新冠逝者。语气从轻松转为沉静。语域：短暂停驻的观察，语气克制。</p>
@@ -205,6 +220,7 @@
 
       <section class="scene-card" id="s4" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S4</span><span class="time">01:44–02:36</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s4.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s4.jpg" alt="落地第一顿：炸鱼薯条 &amp; 中餐 场景截图" loading="lazy">
         <h2>落地第一顿：炸鱼薯条 &amp; 中餐</h2>
         <p class="scene-title-en">First Meal: Fish &amp; Chips &amp; Chinese</p>
         <p class="context"><b>情境</b>炸鱼薯条仪式感打卡，但中国胃不买账，转头去吃西安肉夹馍，感叹中餐出国后价格涨了但魅力不减。语域：Vlog 美食记录，带吐槽幽默。</p>
@@ -227,6 +243,7 @@
 
       <section class="scene-card" id="s5" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S5</span><span class="time">02:36–02:56</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s5.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s5.jpg" alt="酒吧景观位 场景截图" loading="lazy">
         <h2>酒吧景观位</h2>
         <p class="scene-title-en">Bar with a View</p>
         <p class="context"><b>情境</b>没预约却意外坐到全场景观位，体验感拉满——账单也一样。语域：Vlog 即兴分享，带反差幽默。</p>
@@ -244,6 +261,7 @@
 
       <section class="scene-card" id="s6" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S6</span><span class="time">02:58–04:23</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s6.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s6.jpg" alt="自然历史博物馆 场景截图" loading="lazy">
         <h2>自然历史博物馆</h2>
         <p class="scene-title-en">Natural History Museum</p>
         <p class="context"><b>情境</b>拿电影当旅行地图，来到帕丁顿熊差点被做成标本的自然历史博物馆，看蓝鲸化石和动物标本。语域：旅行 Vlog 讲解，带惊叹。</p>
@@ -269,6 +287,7 @@
 
       <section class="scene-card" id="s7" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S7</span><span class="time">04:27–05:10</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s7.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s7.jpg" alt="诺丁山 &amp; 电影书店 场景截图" loading="lazy">
         <h2>诺丁山 &amp; 电影书店</h2>
         <p class="scene-title-en">Notting Hill &amp; the Bookshop</p>
         <p class="context"><b>情境</b>博主探访《诺丁山》电影取景地：142号其实是纪念品店，真正的灵感来源是一家从未拍过电影的书店。语域：电影冷知识 + 旅行观察，娓娓道来。</p>
@@ -288,6 +307,7 @@
 
       <section class="scene-card" id="s8" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S8</span><span class="time">05:20–06:41</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s8.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s8.jpg" alt="裁缝街 &amp; Kingsman 场景截图" loading="lazy">
         <h2>裁缝街 &amp; Kingsman</h2>
         <p class="scene-title-en">Savile Row &amp; Kingsman</p>
         <p class="context"><b>情境</b>探访伦敦裁缝街 Savile Row，Kingsman 电影灵感诞生地——1849 年开的百年西装店。偷拍被默许，发现普通西装两千多镑一件。语域：Vlog 探店 + 电影花絮。</p>
@@ -312,6 +332,7 @@
 
       <section class="scene-card" id="s9" data-scene>
         <div class="scene-topline"><div><span class="scene-id">S9</span><span class="time">06:44–07:19</span></div><button class="speak-btn scene-speak" type="button" data-audio="audio/crab-london/s9.mp3" aria-label="朗读整个场景"><span aria-hidden="true">▶</span><span>朗读整个场景</span></button></div>
+        <img class="scene-frame" src="images/crab-london/s9.jpg" alt="最后一天：晴天伦敦 场景截图" loading="lazy">
         <h2>最后一天：晴天伦敦</h2>
         <p class="scene-title-en">Final Day: Sunny London</p>
         <p class="context"><b>情境</b>离开伦敦那天终于放晴了，阳光下的伦敦像换了一座城市。临别感言——电影里的地方找到了，电影之外的伦敦还得再来几次。语域：临别收尾，温暖克制。</p>

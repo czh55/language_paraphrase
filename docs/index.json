@@ -11,6 +11,7 @@
     "scenes": 9,
     "sentences": 32,
     "html": "rx10v-professional-场景英译.html",
+    "cover": "images/rx10v-professional/hero.jpg",
     "audio": "audio/rx10v-professional",
     "narration": "audio/rx10v-professional/narration.mp3",
     "speech": true
@@ -27,6 +28,7 @@
     "scenes": 9,
     "sentences": 56,
     "html": "crab-london-场景英译.html",
+    "cover": "images/crab-london/hero.jpg",
     "audio": "audio/crab-london",
     "narration": "audio/crab-london/narration.mp3",
     "speech": true
@@ -43,6 +45,7 @@
     "scenes": 9,
     "sentences": 38,
     "html": "2026-07-28-a7r6-85gm2-场景英译.html",
+    "cover": "images/2026-07-28-a7r6-85gm2/hero.jpg",
     "speech": true
   }
 ]
